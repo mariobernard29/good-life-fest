@@ -9,8 +9,10 @@ export const FEST = {
   name: "Good Life Wellness Fest",
   tagline: "Vive mejor. Muévete mejor. Siéntete mejor.",
   arrival: "Una nueva experiencia de bienestar llega a Los Mochis.",
-  venue: "Lago de los Ávilas",
+  venue: "Lago Ávila",
   city: "Los Mochis, Sinaloa",
+  // Ubicación real en Google Maps (Lago Ávila Eventos, 25.8306, -109.0467).
+  mapsUrl: "https://maps.app.goo.gl/VRNatKywZ2Pkqot16",
   // Fecha tentativa: un solo día.
   date: "Domingo 17 de enero de 2027",
   hours: "8:00 a 21:00 h",
@@ -222,7 +224,7 @@ export const OBJECTIVES = [
 
 export const FAQS = [
   { q: "¿Qué es Good Life Wellness Fest?", a: "Un evento premium de bienestar y estilo de vida que combina clases, conferencias, activaciones, marcas, productos y servicios. No es solo una expo ni una competencia: es una experiencia integral para vivir, probar y experimentar." },
-  { q: "¿Dónde será?", a: "En el Lago de los Ávilas, en Los Mochis, Sinaloa." },
+  { q: "¿Dónde será?", a: "En el Lago Ávila, en Los Mochis, Sinaloa." },
   { q: "¿Cuándo es?", a: "Un solo día: el domingo 17 de enero de 2027, de 8:00 a 21:00 h (hora de Los Mochis)." },
   { q: "¿Cómo compro mi entrada?", a: "En Boletos eliges tu paquete, creas tu cuenta (o inicias sesión) y completas el pago. Tus boletos con código QR aparecen en «Mi cuenta». Por ahora la venta funciona en modo demostración: el pago es simulado y no se cobra nada." },
   { q: "¿A quién va dirigido?", a: "A personas de aproximadamente 18 a 50 años interesadas en fitness, salud, nutrición, running, yoga, belleza, recuperación, salud mental y estilo de vida saludable. Activos, profesionales, empresarios, deportistas y familias." },

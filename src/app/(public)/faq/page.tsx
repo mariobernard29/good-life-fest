@@ -30,6 +30,9 @@ export default function FaqPage() {
             <p className="eyebrow text-cream/60">La sede</p>
             <p className="display mt-2 text-3xl">{FEST.venue}</p>
             <p className="mt-1 text-sm text-cream/75">{FEST.city}</p>
+            <a href={FEST.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-2 inline-block text-sm text-sunset underline underline-offset-4 hover:text-cream">
+              Ver en Google Maps
+            </a>
             <p className="mt-4 text-sm text-cream/75">{FEST.dateLabel}. Un día completo de bienestar.</p>
           </div>
         </aside>

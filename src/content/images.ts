@@ -1,6 +1,6 @@
 /**
  * Fotografías del sitio.
- *  - `local`: fotos reales del Lago de los Ávilas (carpeta /public/images).
+ *  - `local`: fotos reales del Lago Ávila (carpeta /public/images).
  *  - `unsplash`: fotos de referencia con licencia Unsplash (uso libre). Sustitúyelas por
  *    fotografía propia del festival cuando exista.
  */
@@ -11,7 +11,8 @@ const l = (file: string, alt: string): Photo => ({ src: `/images/${file}`, alt, 
 
 export const IMG = {
   // Sede (fotos reales)
-  lakeSunset: l("lago-4.jpg", "Puente de madera sobre el Lago de los Ávilas al atardecer"),
+  lakeHero: l("lago-5.jpg", "Pabellón de cristal, palapa y muelles de madera del Lago Ávila al atardecer"),
+  lakeSunset: l("lago-4.jpg", "Puente de madera sobre el Lago Ávila al atardecer"),
   lakeAerial: l("lago-2.jpg", "Vista aérea del recinto junto al lago"),
   lakeNight: l("lago-noche.jpg", "El recinto iluminado al anochecer"),
   lakeEntrance: l("lago-3.jpg", "Entrada del recinto iluminada"),

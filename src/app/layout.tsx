@@ -15,9 +15,9 @@ const display = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: { default: "Good Life Wellness Fest · Lago de los Ávilas, Los Mochis", template: "%s · Good Life Wellness Fest" },
+  title: { default: "Good Life Wellness Fest · Lago Ávila, Los Mochis", template: "%s · Good Life Wellness Fest" },
   description:
-    "Festival de bienestar en el Lago de los Ávilas, Los Mochis, Sinaloa. Clases, conferencias, experiencias y marcas de bienestar.",
+    "Festival de bienestar en el Lago Ávila, Los Mochis, Sinaloa. Clases, conferencias, experiencias y marcas de bienestar.",
   openGraph: {
     type: "website",
     locale: "es_MX",

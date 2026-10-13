@@ -1,7 +1,6 @@
 import Link from "next/link";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
-import { Logo } from "@/components/brand/logo";
 import { Photo } from "@/components/site/photo";
 import { Countdown } from "@/components/site/countdown";
 import { Chips, CtaBand, Marquee, Mosaic, PhotoCard } from "@/components/site/visual";
@@ -13,14 +12,13 @@ export default function HomePage() {
     <>
       {/* HERO */}
       <section className="relative isolate flex min-h-[calc(100svh-4rem)] items-end overflow-hidden">
-        <Photo photo={IMG.lakeSunset} priority className="absolute inset-0 -z-10" />
+        <Photo photo={IMG.lakeHero} priority className="absolute inset-0 -z-10" />
         <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/90 via-ink/40 to-ink/10" />
         <div className="container-page pb-14 text-cream sm:pb-20">
-          <p className="eyebrow fade-up flex items-center gap-2 text-cream/80">
+          <a href={FEST.mapsUrl} target="_blank" rel="noopener noreferrer" className="eyebrow fade-up flex w-fit items-center gap-2 text-cream/80 hover:text-cream">
             <MapPin className="size-3.5" /> {FEST.venue} · {FEST.city}
-          </p>
-          <h1 className="sr-only">Good Life Wellness Fest</h1>
-          <Logo variant="light" href={null} priority className="fade-up mt-6 w-[min(86vw,560px)] sm:w-[min(80vw,640px)]" />
+          </a>
+          <h1 className="display fade-up mt-6 max-w-3xl text-6xl leading-[0.95] text-balance sm:text-8xl">Good Life Wellness Fest</h1>
           <p className="display fade-up mt-6 max-w-2xl text-3xl text-cream/95 italic sm:text-5xl">{FEST.tagline}</p>
           <div className="fade-up mt-8 flex flex-wrap items-center gap-3">
             <Button asChild size="lg" className="h-12 rounded-full bg-cream px-7 text-ink hover:bg-cream/90">
@@ -190,6 +188,11 @@ export default function HomePage() {
           <p className="mt-5 flex items-center gap-2 text-cream/85">
             <MapPin className="size-4" /> {FEST.city}
           </p>
+          <Button asChild size="lg" className="mt-6 h-12 rounded-full bg-cream px-7 text-ink hover:bg-cream/90">
+            <a href={FEST.mapsUrl} target="_blank" rel="noopener noreferrer">
+              Cómo llegar <ArrowRight />
+            </a>
+          </Button>
           <p className="mt-6 max-w-xl text-lg text-cream/80">Jardines, palmeras, muelles de madera y un pabellón de cristal frente al agua: el escenario para moverte, descubrir y descansar.</p>
         </div>
       </section>

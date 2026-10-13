@@ -27,7 +27,7 @@ begin
     'Good Life Wellness Fest',
     'good-life-wellness-fest',
     'Un día completo de bienestar junto al agua: clases, conferencias, experiencias, retos y un mercado de marcas de bienestar.',
-    'Lago de los Ávilas',
+    'Lago Ávila',
     'Los Mochis, Sinaloa, México',
     (d1 + time '08:00') at time zone tz,
     (d1 + time '21:00') at time zone tz,

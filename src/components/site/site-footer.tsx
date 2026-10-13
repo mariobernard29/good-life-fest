@@ -10,9 +10,9 @@ export function SiteFooter() {
         <div className="space-y-4">
           <Logo variant="light" className="w-44" />
           <p className="max-w-sm text-sm text-cream/70">{FEST.arrival}</p>
-          <p className="text-sm text-cream/70">
+          <a href={FEST.mapsUrl} target="_blank" rel="noopener noreferrer" className="block text-sm text-cream/70 hover:text-cream">
             {FEST.venue} · {FEST.city}
-          </p>
+          </a>
         </div>
         <div>
           <p className="eyebrow mb-4 text-cream/50">Festival</p>
@@ -34,7 +34,7 @@ export function SiteFooter() {
       <div className="border-t border-cream/10">
         <div className="container-page flex flex-col gap-2 py-6 text-xs text-cream/50 sm:flex-row sm:justify-between">
           <p>© {new Date().getFullYear()} Good Life Wellness Fest</p>
-          <p>Fotografías de referencia: Unsplash · Sede: Lago de los Ávilas</p>
+          <p>Fotografías de referencia: Unsplash · Sede: Lago Ávila</p>
         </div>
       </div>
     </footer>

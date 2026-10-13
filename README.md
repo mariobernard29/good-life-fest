@@ -1,7 +1,7 @@
 # Good Life Wellness Fest
 
 **Vive mejor. Muévete mejor. Siéntete mejor.**
-Sitio del festival de bienestar en el **Lago de los Ávilas, Los Mochis, Sinaloa**.
+Sitio del festival de bienestar en el **Lago Ávila, Los Mochis, Sinaloa**.
 
 ## Estado actual: sitio visual
 
