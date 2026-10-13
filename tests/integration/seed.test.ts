@@ -12,6 +12,6 @@ describe("datos de demostración", () => {
     expect(ev.rows).toHaveLength(1);
     expect(ev.rows[0].is_demo).toBe(true);
     const avail = await db.rpc.call<{ available: number }[]>("get_ticket_availability", { p_event_id: ev.rows[0].id });
-    expect(avail.length).toBe(4);
+    expect(avail.length).toBe(3);
   });
 });

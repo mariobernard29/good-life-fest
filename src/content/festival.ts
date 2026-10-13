@@ -11,7 +11,11 @@ export const FEST = {
   arrival: "Una nueva experiencia de bienestar llega a Los Mochis.",
   venue: "Lago de los Ávilas",
   city: "Los Mochis, Sinaloa",
-  dateLabel: "Fecha por anunciar",
+  // Fecha tentativa: un solo día.
+  date: "Domingo 17 de enero de 2027",
+  hours: "8:00 a 21:00 h",
+  dateLabel: "Domingo 17 de enero de 2027 · 8:00 a 21:00 h",
+  startsAt: "2027-01-17T08:00:00-07:00",
   pillarsLine: ["Fitness", "Health", "Nutrition", "Beauty", "Recovery", "Mind", "Lifestyle", "Entertainment"],
   closing: ["Vive la experiencia.", "Descubre tu mejor versión.", "Live the Good Life."],
 };
@@ -219,7 +223,8 @@ export const OBJECTIVES = [
 export const FAQS = [
   { q: "¿Qué es Good Life Wellness Fest?", a: "Un evento premium de bienestar y estilo de vida que combina clases, conferencias, activaciones, marcas, productos y servicios. No es solo una expo ni una competencia: es una experiencia integral para vivir, probar y experimentar." },
   { q: "¿Dónde será?", a: "En el Lago de los Ávilas, en Los Mochis, Sinaloa." },
-  { q: "¿Cuándo es y cuándo salen los boletos?", a: "La fecha y el lanzamiento de boletos se anunciarán próximamente. Antes compartiremos el save the date, las clases, los patrocinadores y los speakers." },
+  { q: "¿Cuándo es?", a: "Un solo día: el domingo 17 de enero de 2027, de 8:00 a 21:00 h (hora de Los Mochis)." },
+  { q: "¿Cuándo salen los boletos?", a: "El lanzamiento de boletos se anunciará próximamente. Antes compartiremos las clases, los patrocinadores y los speakers." },
   { q: "¿A quién va dirigido?", a: "A personas de aproximadamente 18 a 50 años interesadas en fitness, salud, nutrición, running, yoga, belleza, recuperación, salud mental y estilo de vida saludable. Activos, profesionales, empresarios, deportistas y familias." },
   { q: "¿Qué incluye mi entrada?", a: "Dependiendo del paquete, podrás recibir un welcome kit con pulsera oficial, bolsa Good Life, playera, toalla, productos y muestras de patrocinadores, cupones y beneficios. Los paquetes se darán a conocer con el lanzamiento de boletos." },
   { q: "¿Para qué sirve la pulsera Good Life?", a: "Es tu identificación durante todo el festival: acceso, control de clases, dinámicas, activaciones, beneficios, concursos y acceso a experiencias especiales." },

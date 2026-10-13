@@ -30,7 +30,7 @@ export default function FaqPage() {
             <p className="eyebrow text-cream/60">La sede</p>
             <p className="display mt-2 text-3xl">{FEST.venue}</p>
             <p className="mt-1 text-sm text-cream/75">{FEST.city}</p>
-            <p className="mt-4 text-sm text-cream/75">{FEST.dateLabel}. Muy pronto compartiremos el save the date.</p>
+            <p className="mt-4 text-sm text-cream/75">{FEST.dateLabel}. Un día completo de bienestar.</p>
           </div>
         </aside>
       </div>

@@ -11,7 +11,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "test:remote": "cross-env RUN_REMOTE_TESTS=1 vitest run -c vitest.remote.config.mts",
-    "admin:create": "node --env-file=.env.local scripts/create-admin.mjs"
+    "admin:create": "node --env-file=.env.local scripts/create-admin.mjs",
+    "user:create": "node --env-file=.env.local scripts/create-user.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",

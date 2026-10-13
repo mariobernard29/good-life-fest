@@ -11,7 +11,7 @@ export default function ProgramPage() {
   return (
     <>
       <ImageHero photo={IMG.yogaSunset} eyebrow="Programa" title="Un día completo de bienestar">
-        El programa se organiza en bloques. Una misma disciplina podrá tener dos horarios para que más personas puedan disfrutarla. El programa
+        Domingo 17 de enero de 2027, de 8:00 a 21:00 h. El programa se organiza en bloques. Una misma disciplina podrá tener dos horarios para que más personas puedan disfrutarla. El programa
         detallado se anunciará próximamente.
       </ImageHero>
 

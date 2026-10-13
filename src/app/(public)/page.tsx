@@ -3,6 +3,7 @@ import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Logo } from "@/components/brand/logo";
 import { Photo } from "@/components/site/photo";
+import { Countdown } from "@/components/site/countdown";
 import { Chips, CtaBand, Marquee, Mosaic, PhotoCard } from "@/components/site/visual";
 import { IMG } from "@/content/images";
 import { CHALLENGES, COMMUNITY, DIFFERENT, FEST, INTRO, JOURNEY, PILLARS, PREMIUM, VERBS, VISION, WELCOME_KIT, ZONES } from "@/content/festival";
@@ -34,6 +35,7 @@ export default function HomePage() {
           <p className="mt-8 flex items-center gap-2 text-sm text-cream/75">
             <CalendarDays className="size-4" /> {FEST.dateLabel} · {FEST.arrival}
           </p>
+          <Countdown to={FEST.startsAt} />
         </div>
       </section>
 

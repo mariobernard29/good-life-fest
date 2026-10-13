@@ -3,7 +3,7 @@ import { CalendarClock, Gift, Watch } from "lucide-react";
 import { Photo } from "@/components/site/photo";
 import { Chips, ImageHero } from "@/components/site/visual";
 import { IMG } from "@/content/images";
-import { PRE_EVENT, PREMIUM, WELCOME_KIT, WRISTBAND_USES } from "@/content/festival";
+import { FEST, PRE_EVENT, PREMIUM, WELCOME_KIT, WRISTBAND_USES } from "@/content/festival";
 
 export const metadata: Metadata = { title: "Boletos" };
 
@@ -70,7 +70,7 @@ export default function TicketsPage() {
             ))}
           </ul>
         </div>
-        <p className="mt-10 text-muted-foreground">Precios, paquetes y fecha se anunciarán con el lanzamiento oficial.</p>
+        <p className="mt-10 text-muted-foreground">{FEST.dateLabel}. Precios y paquetes se anunciarán con el lanzamiento oficial.</p>
       </section>
     </>
   );
