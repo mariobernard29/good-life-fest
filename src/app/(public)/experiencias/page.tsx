@@ -89,7 +89,7 @@ export default function ExperiencePage() {
         </div>
       </section>
 
-      <CtaBand title="Descubre tu mejor versión." text="Domingo 17 de enero de 2027 · el lanzamiento de boletos, muy pronto." label="Boletos" />
+      <CtaBand title="Descubre tu mejor versión." text="Domingo 17 de enero de 2027 · Lago de los Ávilas." label="Comprar boletos" />
     </>
   );
 }

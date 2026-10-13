@@ -44,3 +44,11 @@ export function getSecretKey(): string {
   return key;
 }
 
+
+/**
+ * Pago simulado (demostración): confirma pedidos sin cobrar. Activo por defecto mientras no
+ * exista pasarela real; desactívalo con DEMO_PAYMENTS=false.
+ */
+export function isDemoPaymentsEnabled(): boolean {
+  return process.env.DEMO_PAYMENTS !== "false";
+}

@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { UserRound } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
 import { MobileNav, NavLinks } from "@/components/site/nav-links";
@@ -18,6 +19,11 @@ export function SiteHeader() {
         <Logo className="w-32 sm:w-36" priority />
         <NavLinks items={PUBLIC_NAV} />
         <div className="flex items-center gap-2">
+          <Button asChild variant="ghost" size="icon-lg" className="rounded-full" aria-label="Mi cuenta">
+            <Link href="/mi-cuenta">
+              <UserRound />
+            </Link>
+          </Button>
           <Button asChild size="lg" className="hidden rounded-full px-5 sm:inline-flex">
             <Link href="/entradas">Boletos</Link>
           </Button>

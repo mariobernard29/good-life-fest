@@ -38,6 +38,16 @@ export const checkoutSchema = z.object({
 });
 export type CheckoutInput = z.input<typeof checkoutSchema>;
 
+/** Compra con sesión iniciada: el comprador es la cuenta; el cliente solo envía cantidades. */
+export const purchaseSchema = z.object({
+  items: z
+    .array(z.object({ ticketTypeId: uuid, quantity: z.number().int().min(0).max(50) }))
+    .transform((items) => items.filter((i) => i.quantity > 0))
+    .refine((items) => items.length > 0, "Selecciona al menos una entrada"),
+  acceptTerms: z.literal(true, { error: "Debes aceptar los términos y condiciones" }),
+});
+export type PurchaseInput = z.input<typeof purchaseSchema>;
+
 // --- Autenticación -----------------------------------------------------------
 export const loginSchema = z.object({
   email,

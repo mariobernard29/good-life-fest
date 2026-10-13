@@ -29,7 +29,7 @@ export default function HomePage() {
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 rounded-full border-cream/50 bg-transparent px-7 text-cream hover:bg-cream/10 hover:text-cream">
-              <Link href="/entradas">Boletos · próximamente</Link>
+              <Link href="/entradas">Comprar boletos</Link>
             </Button>
           </div>
           <p className="mt-8 flex items-center gap-2 text-sm text-cream/75">
@@ -219,7 +219,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <CtaBand title={FEST.closing.join(" ")} text="El lanzamiento de boletos se anunciará muy pronto." label="Boletos" />
+      <CtaBand title={FEST.closing.join(" ")} text={FEST.dateLabel} label="Comprar boletos" />
     </>
   );
 }

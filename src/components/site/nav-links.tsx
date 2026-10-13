@@ -59,6 +59,11 @@ export function MobileNav({ items }: { items: Item[] }) {
             </Link>
           ))}
           <div className="mt-6 grid gap-2">
+            <Button asChild size="lg" variant="outline" className="h-12 rounded-full">
+              <Link href="/mi-cuenta" onClick={() => setOpen(false)}>
+                Mi cuenta
+              </Link>
+            </Button>
             <Button asChild size="lg" className="h-12 rounded-full">
               <Link href="/entradas" onClick={() => setOpen(false)}>
                 Boletos

@@ -5,7 +5,7 @@ import { RegisterForm } from "@/components/forms/auth-forms";
 export const metadata: Metadata = { title: "Crear cuenta" };
 
 export default async function RegisterPage({ searchParams }: PageProps<"/registro">) {
-  const { email } = await searchParams;
+  const { email, next } = await searchParams;
   return (
     <>
       <p className="eyebrow">Crear cuenta</p>
@@ -14,11 +14,11 @@ export default async function RegisterPage({ searchParams }: PageProps<"/registr
         Si compraste sin cuenta, regístrate con el mismo correo: al verificarlo, tus entradas aparecerán automáticamente.
       </p>
       <div className="mt-8">
-        <RegisterForm email={typeof email === "string" ? email : undefined} />
+        <RegisterForm email={typeof email === "string" ? email : undefined} next={typeof next === "string" ? next : undefined} />
       </div>
       <p className="mt-6 text-center text-sm text-muted-foreground">
         ¿Ya tienes cuenta?{" "}
-        <Link href="/login" className="font-medium text-olive hover:underline">
+        <Link href={typeof next === "string" ? `/login?next=${encodeURIComponent(next)}` : "/login"} className="font-medium text-olive hover:underline">
           Inicia sesión
         </Link>
       </p>

@@ -75,6 +75,7 @@ export async function registerAction(_prev: FormState, formData: FormData): Prom
   const raw = formDataToObject(formData);
   const parsed = registerSchema.safeParse(raw);
   const values = { fullName: String(raw.fullName ?? ""), email: String(raw.email ?? ""), phone: String(raw.phone ?? "") };
+  const next = (await safeNext(raw.next)) ?? "/mi-cuenta/entradas";
   if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error), values };
   if (!isSupabaseConfigured()) return { error: userMessage(new AppError("NOT_CONFIGURED")), values };
 
@@ -86,7 +87,7 @@ export async function registerAction(_prev: FormState, formData: FormData): Prom
       email: parsed.data.email,
       password: parsed.data.password,
       options: {
-        emailRedirectTo: `${getSiteUrl()}/auth/callback?next=/mi-cuenta/entradas`,
+        emailRedirectTo: `${getSiteUrl()}/auth/callback?next=${encodeURIComponent(next)}`,
         data: { full_name: parsed.data.fullName, phone: parsed.data.phone ?? "" },
       },
     });
@@ -105,9 +106,9 @@ export async function registerAction(_prev: FormState, formData: FormData): Prom
     logError("registerAction", error);
     return { error: userMessage(error), values };
   }
-  if (hasSession) redirect("/mi-cuenta");
+  if (hasSession) redirect(next);
   return {
-    success: `Te enviamos un correo a ${parsed.data.email}. Confírmalo para activar tu cuenta y ver tus entradas.`,
+    success: `Te enviamos un correo a ${parsed.data.email}. Abre el enlace del correo para activar tu cuenta; te regresaremos a donde te quedaste.`,
   };
 }
 

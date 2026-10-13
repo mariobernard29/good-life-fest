@@ -106,6 +106,11 @@ export default async function SalesPage({ searchParams }: PageProps<"/admin/vent
                   <TableCell className="text-right tabular-nums">{formatMoney(o.total_cents)}</TableCell>
                   <TableCell>
                     <Pill tone={st.tone}>{st.label}</Pill>
+                    {o.notes?.startsWith("PAGO SIMULADO") && (
+                      <span className="ml-1">
+                        <Pill tone="amber">Simulado</Pill>
+                      </span>
+                    )}
                   </TableCell>
                   <TableCell>{o.status === "awaiting_payment" && canSell && <ConfirmPaymentButton orderId={o.id} />}</TableCell>
                 </TableRow>

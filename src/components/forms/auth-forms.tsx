@@ -34,11 +34,12 @@ export function LoginForm({ next, notice }: { next?: string; notice?: string }) 
   );
 }
 
-export function RegisterForm({ email }: { email?: string }) {
+export function RegisterForm({ email, next }: { email?: string; next?: string }) {
   const [state, action] = useActionState(registerAction, initial);
   if (state.success) return <FormMessage success={state.success} />;
   return (
     <form action={action} className="space-y-4">
+      <input type="hidden" name="next" value={next ?? ""} />
       <Field label="Nombre completo" name="fullName" autoComplete="name" required defaultValue={state.values?.fullName} error={state.fieldErrors?.fullName} />
       <Field
         label="Correo electrónico"

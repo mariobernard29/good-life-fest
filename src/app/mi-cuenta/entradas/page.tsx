@@ -7,7 +7,7 @@ import { TicketCard } from "@/components/portal/ticket-card";
 import { getCurrentEvent } from "@/lib/events/current";
 import { getMyOrders, getMyTickets } from "@/lib/portal/queries";
 import { buildQrPayload, renderQrSvg } from "@/lib/tickets/qr";
-import { formatDate, formatDateTime, formatMoney } from "@/lib/format";
+import { formatDate, formatDateTime, formatMoney, formatTimeRange } from "@/lib/format";
 import { requireUserPage } from "@/lib/auth/session";
 
 export const metadata: Metadata = { title: "Mis entradas" };
@@ -23,10 +23,11 @@ const ORDER_STATUS: Record<string, string> = {
   partially_refunded: "Reembolso parcial",
 };
 
-export default async function MyTicketsPage() {
+export default async function MyTicketsPage({ searchParams }: PageProps<"/mi-cuenta/entradas">) {
+  const { compra } = await searchParams;
   const user = await requireUserPage("/mi-cuenta/entradas");
   const [event, tickets, orders] = await Promise.all([getCurrentEvent(), getMyTickets(), getMyOrders()]);
-  const dates = event ? `${formatDate(event.starts_at, event.timezone)} – ${formatDate(event.ends_at, event.timezone)}` : "";
+  const dates = event ? `${formatDate(event.starts_at, event.timezone)} · ${formatTimeRange(event.starts_at, event.ends_at, event.timezone)} h` : "";
 
   const cards = await Promise.all(
     tickets.map(async (t) => ({
@@ -50,6 +51,12 @@ export default async function MyTicketsPage() {
         <h1 className="display mt-1 text-4xl sm:text-5xl">Tus boletos</h1>
         <p className="mt-2 text-sm text-muted-foreground">Toca el código QR para mostrarlo en pantalla completa en la entrada.</p>
       </div>
+      {typeof compra === "string" && /^GLF-[A-F0-9-]+$/.test(compra) && (
+        <div className="rounded-2xl bg-success/10 p-4 text-success">
+          <p className="font-medium">¡Compra confirmada! Pedido <span className="font-mono">{compra}</span></p>
+          <p className="text-sm">Tus boletos ya están aquí. Presenta el código QR en la entrada del festival.</p>
+        </div>
+      )}
 
       {cards.length === 0 ? (
         <EmptyState
