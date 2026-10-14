@@ -90,9 +90,15 @@ export function CtaBand({ title, text, href = "/entradas", label = "Ver boletos"
           {text && <p className="mt-2 text-foreground/70">{text}</p>}
         </div>
         <Button asChild size="lg" className="h-12 shrink-0 rounded-full px-7">
-          <Link href={href}>
-            {label} <ArrowRight />
-          </Link>
+          {href.startsWith("http") ? (
+            <a href={href} target="_blank" rel="noopener noreferrer">
+              {label} <ArrowRight />
+            </a>
+          ) : (
+            <Link href={href}>
+              {label} <ArrowRight />
+            </Link>
+          )}
         </Button>
       </div>
     </section>

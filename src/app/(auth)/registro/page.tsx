@@ -1,10 +1,13 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { RegisterForm } from "@/components/forms/auth-forms";
+import { FEST } from "@/content/festival";
 
 export const metadata: Metadata = { title: "Crear cuenta" };
 
 export default async function RegisterPage({ searchParams }: PageProps<"/registro">) {
+  if (!FEST.ticketsOpen) redirect("/login");
   const { email, next } = await searchParams;
   return (
     <>

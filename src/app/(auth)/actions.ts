@@ -15,6 +15,7 @@ import {
   updatePasswordSchema,
 } from "@/lib/validation/schemas";
 import { getCurrentEvent } from "@/lib/events/current";
+import { FEST } from "@/content/festival";
 import { getStaffAssignments } from "@/lib/auth/staff";
 import { resolvePermissions, staffHome } from "@/lib/auth/permissions";
 
@@ -76,6 +77,7 @@ export async function registerAction(_prev: FormState, formData: FormData): Prom
   const parsed = registerSchema.safeParse(raw);
   const values = { fullName: String(raw.fullName ?? ""), email: String(raw.email ?? ""), phone: String(raw.phone ?? "") };
   const next = (await safeNext(raw.next)) ?? "/mi-cuenta/entradas";
+  if (!FEST.ticketsOpen) return { error: "El registro de cuentas se abrirá con la venta de boletos.", values };
   if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error), values };
   if (!isSupabaseConfigured()) return { error: userMessage(new AppError("NOT_CONFIGURED")), values };
 

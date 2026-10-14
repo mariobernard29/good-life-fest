@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import { redirect } from "next/navigation";
 import { LogIn, ShieldCheck, UserPlus } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/site/photo";
@@ -16,6 +17,7 @@ export const metadata: Metadata = { title: "Comprar entradas" };
 export const dynamic = "force-dynamic";
 
 export default async function BuyPage({ searchParams }: PageProps<"/comprar">) {
+  if (!FEST.ticketsOpen) redirect("/entradas");
   const { tipo } = await searchParams;
   const preselect = typeof tipo === "string" ? tipo : undefined;
   const next = `/comprar${preselect ? `?tipo=${preselect}` : ""}`;

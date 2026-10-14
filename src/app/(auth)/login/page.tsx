@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { LoginForm } from "@/components/forms/auth-forms";
+import { FEST } from "@/content/festival";
 
 export const metadata: Metadata = { title: "Iniciar sesión" };
 
@@ -17,12 +18,14 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
           notice={error === "enlace" ? "El enlace no es válido o expiró. Inicia sesión o solicita uno nuevo." : undefined}
         />
       </div>
-      <p className="mt-6 text-center text-sm text-muted-foreground">
-        ¿No tienes cuenta?{" "}
-        <Link href={typeof next === "string" ? `/registro?next=${encodeURIComponent(next)}` : "/registro"} className="font-medium text-olive hover:underline">
-          Crear cuenta
-        </Link>
-      </p>
+      {FEST.ticketsOpen && (
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          ¿No tienes cuenta?{" "}
+          <Link href={typeof next === "string" ? `/registro?next=${encodeURIComponent(next)}` : "/registro"} className="font-medium text-olive hover:underline">
+            Crear cuenta
+          </Link>
+        </p>
+      )}
     </>
   );
 }

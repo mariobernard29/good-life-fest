@@ -4,7 +4,9 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { useState } from "react";
 import { Menu } from "lucide-react";
+import { InstagramIcon } from "@/components/brand/instagram-icon";
 import { Button } from "@/components/ui/button";
+import { FEST } from "@/content/festival";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
@@ -60,9 +62,9 @@ export function MobileNav({ items }: { items: Item[] }) {
           ))}
           <div className="mt-6 grid gap-2">
             <Button asChild size="lg" variant="outline" className="h-12 rounded-full">
-              <Link href="/mi-cuenta" onClick={() => setOpen(false)}>
-                Mi cuenta
-              </Link>
+              <a href={FEST.instagramUrl} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
+                <InstagramIcon className="size-4" /> Instagram
+              </a>
             </Button>
             <Button asChild size="lg" className="h-12 rounded-full">
               <Link href="/entradas" onClick={() => setOpen(false)}>

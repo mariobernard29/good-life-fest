@@ -27,7 +27,7 @@ export default function HomePage() {
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 rounded-full border-cream/50 bg-transparent px-7 text-cream hover:bg-cream/10 hover:text-cream">
-              <Link href="/entradas">Comprar boletos</Link>
+              <Link href="/entradas">Boletos · Próximamente</Link>
             </Button>
           </div>
           <p className="mt-8 flex items-center gap-2 text-sm text-cream/75">
@@ -145,7 +145,7 @@ export default function HomePage() {
             <div className="p-6">
               <p className="eyebrow">Welcome kit</p>
               <h3 className="display mt-2 text-3xl">Llegas y te recibimos</h3>
-              <p className="mt-2 text-sm text-foreground/70">Según tu paquete, podrá incluir:</p>
+              <p className="mt-2 text-sm text-foreground/70">Al llegar, podrá incluir:</p>
               <div className="mt-4">
                 <Chips items={WELCOME_KIT} />
               </div>
@@ -222,7 +222,7 @@ export default function HomePage() {
         </div>
       </section>
 
-      <CtaBand title={FEST.closing.join(" ")} text={FEST.dateLabel} label="Comprar boletos" />
+      <CtaBand title={FEST.closing.join(" ")} text={FEST.dateLabel} label="Boletos · Próximamente" />
     </>
   );
 }

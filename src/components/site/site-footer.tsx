@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { InstagramIcon } from "@/components/brand/instagram-icon";
 import { Logo } from "@/components/brand/logo";
 import { FEST } from "@/content/festival";
 import { PUBLIC_NAV } from "@/components/site/site-header";
@@ -12,6 +13,9 @@ export function SiteFooter() {
           <p className="max-w-sm text-sm text-cream/70">{FEST.arrival}</p>
           <a href={FEST.mapsUrl} target="_blank" rel="noopener noreferrer" className="block text-sm text-cream/70 hover:text-cream">
             {FEST.venue} · {FEST.city}
+          </a>
+          <a href={FEST.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex w-fit items-center gap-2 text-sm text-cream/70 hover:text-cream">
+            <InstagramIcon className="size-4" /> {FEST.instagramHandle}
           </a>
         </div>
         <div>

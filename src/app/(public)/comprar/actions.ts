@@ -3,6 +3,7 @@
 import { redirect } from "next/navigation";
 import { revalidatePath } from "next/cache";
 import { requireUser } from "@/lib/auth/session";
+import { FEST } from "@/content/festival";
 import { getCurrentEvent, isEventPublic } from "@/lib/events/current";
 import { getRpc } from "@/lib/db/server-rpc";
 import { createAdminClient } from "@/lib/supabase/admin";
@@ -26,7 +27,7 @@ export async function createPurchaseAction(input: PurchaseInput): Promise<Action
   const parsed = purchaseSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "Revisa tu selección.", fieldErrors: fieldErrors(parsed.error) };
   try {
-    if (!isDemoPaymentsEnabled()) throw new AppError("EVENT_NOT_ON_SALE");
+    if (!FEST.ticketsOpen || !isDemoPaymentsEnabled()) throw new AppError("EVENT_NOT_ON_SALE");
     const user = await requireUser();
     await enforceRateLimit("purchase", 10, 60_000, user.id);
     const event = await getCurrentEvent();

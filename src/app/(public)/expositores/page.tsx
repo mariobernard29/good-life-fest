@@ -3,7 +3,7 @@ import { Check, Megaphone, Store } from "lucide-react";
 import { Photo } from "@/components/site/photo";
 import { Chips, CtaBand, ImageHero, PhotoCard } from "@/components/site/visual";
 import { IMG } from "@/content/images";
-import { SPONSOR_BENEFITS, SPONSOR_EXPERIENCES, ZONES } from "@/content/festival";
+import { FEST, SPONSOR_BENEFITS, SPONSOR_EXPERIENCES, ZONES } from "@/content/festival";
 
 export const metadata: Metadata = { title: "Marcas, patrocinadores y stands" };
 
@@ -79,7 +79,7 @@ export default function BrandsPage() {
         </div>
       </section>
 
-      <CtaBand title="¿Quieres participar con tu marca?" text="Muy pronto abriremos el registro de patrocinadores y expositores." href="/faq" label="Preguntas frecuentes" />
+      <CtaBand title="¿Quieres participar con tu marca?" text="Mándanos un DM a nuestro Instagram @goodlifewellnessfestlosmochis y te compartimos toda la información para patrocinadores y expositores." href={FEST.instagramUrl} label="Escríbenos por Instagram" />
     </>
   );
 }
