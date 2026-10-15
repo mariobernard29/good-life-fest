@@ -1,12 +1,12 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { Gift, MapPin, MessageCircle, Watch } from "lucide-react";
+import { MapPin, MessageCircle, Watch } from "lucide-react";
 import { InstagramIcon } from "@/components/brand/instagram-icon";
 import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/site/photo";
 import { Chips, ImageHero } from "@/components/site/visual";
 import { IMG } from "@/content/images";
-import { FEST, HOW_TO_BUY, TICKET_SALES, WELCOME_KIT, WRISTBAND_USES } from "@/content/festival";
+import { FEST, HOW_TO_BUY, TICKET_SALES, WRISTBAND_USES } from "@/content/festival";
 
 export const metadata: Metadata = { title: "Boletos" };
 
@@ -86,22 +86,11 @@ export default function TicketsPage() {
         </p>
       </section>
 
-      {/* Welcome kit + pulsera */}
-      <section className="container-page grid gap-5 md:grid-cols-2">
-        <article className="overflow-hidden rounded-[2rem] border border-border bg-card">
-          <Photo photo={IMG.tote} sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[16/10]" />
-          <div className="p-8">
-            <Gift className="size-7 text-olive" />
-            <h2 className="display mt-3 text-4xl">Welcome kit</h2>
-            <p className="mt-2 text-foreground/75">Al llegar, podrá incluir:</p>
-            <div className="mt-5">
-              <Chips items={WELCOME_KIT} />
-            </div>
-          </div>
-        </article>
-        <article className="overflow-hidden rounded-[2rem] bg-ink text-cream">
-          <Photo photo={IMG.concert} sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[16/10]" />
-          <div className="p-8">
+      {/* Pulsera */}
+      <section className="container-page">
+        <article className="grid overflow-hidden rounded-[2rem] bg-ink text-cream md:grid-cols-2">
+          <Photo photo={IMG.concert} sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[16/10] md:aspect-auto md:min-h-80" />
+          <div className="self-center p-8 md:p-12">
             <Watch className="size-7 text-sunset" />
             <h2 className="display mt-3 text-4xl">Pulsera Good Life</h2>
             <p className="mt-2 text-cream/80">El elemento que te identifica durante todo el festival.</p>

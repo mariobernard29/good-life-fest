@@ -73,7 +73,7 @@ export default function BrandsPage() {
             </div>
           </div>
           <div className="grid grid-cols-2 gap-3">
-            <Photo photo={IMG.expo} sizes="25vw" className="aspect-[3/4] rounded-3xl" />
+            <Photo photo={experience.photo} sizes="25vw" className="aspect-[3/4] rounded-3xl" />
             <Photo photo={IMG.sneakers} sizes="25vw" className="mt-10 aspect-[3/4] rounded-3xl" />
           </div>
         </div>

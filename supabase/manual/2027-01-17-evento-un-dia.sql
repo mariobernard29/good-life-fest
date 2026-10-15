@@ -15,7 +15,7 @@ begin
   where id = ev;
 
   update public.ticket_types set name = 'Pase General', description = 'Acceso al festival de 8:00 a 21:00 h.', quantity_total = 650,
-    benefits = array['Acceso todo el día', 'Reserva de clases y conferencias', 'Kit de bienvenida']
+    benefits = array['Acceso todo el día', 'Reserva de clases y conferencias']
   where event_id = ev and name = 'Pase Fin de Semana';
   update public.ticket_types set benefits = array['Acceso todo el día', 'Zona lounge VIP', 'Brunch de autor', 'Reserva prioritaria']
   where event_id = ev and name = 'Pase VIP';

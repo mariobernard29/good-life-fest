@@ -128,7 +128,7 @@ export const ZONES: { name: string; kicker: string; text: string; items: string[
     name: "Good Life Stage",
     kicker: "Escenario principal",
     text: "Uno de los puntos centrales del evento. Aquí suceden las conversaciones, los lanzamientos y los momentos que todos recordarán.",
-    items: ["Conferencias", "Pláticas de especialistas", "Entrevistas", "Presentaciones", "Lanzamientos", "Retos", "Activaciones de patrocinadores", "Reconocimientos", "Experiencias especiales"],
+    items: ["Conferencias", "Pláticas de especialistas", "Entrevistas", "Presentaciones", "Lanzamientos", "Retos", "Activaciones de patrocinadores", "Experiencias especiales"],
     photo: IMG.stage,
   },
   {
@@ -136,7 +136,7 @@ export const ZONES: { name: string; kicker: string; text: string; items: string[
     kicker: "Prueba y vive",
     text: "Una zona para probar productos y vivir experiencias. Aquí el patrocinador deja de ser solamente un logotipo y se convierte en parte de la experiencia.",
     items: ["Degustaciones", "Demostraciones", "Dinámicas", "Pruebas de producto", "Juegos", "Concursos", "Regalos", "Activaciones"],
-    photo: IMG.expo,
+    photo: IMG.experienceHall,
   },
   {
     name: "Good Life Market",
@@ -154,10 +154,9 @@ export const ZONES: { name: string; kicker: string; text: string; items: string[
   },
 ];
 
-export const CHALLENGES = ["Reto funcional", "Reto de fuerza", "Reto de resistencia", "Reto de movilidad", "Reto de pasos", "Reto de hidratación", "Retos de patrocinadores"];
+export const CHALLENGES = ["Reto funcional", "Reto de fuerza", "Reto de resistencia", "Reto de movilidad"];
 export const CHALLENGE_PRIZES = ["Premios", "Productos", "Experiencias", "Reconocimientos"];
 
-export const WELCOME_KIT = ["Pulsera oficial", "Bolsa Good Life", "Playera oficial", "Toalla", "Productos de patrocinadores", "Muestras", "Cupones", "Beneficios", "Regalos", "Material informativo"];
 /**
  * Dónde y cómo se compran las entradas (se muestra en /entradas cuando FEST.salesOpen).
  * Completa los puntos de venta y el número de WhatsApp antes de abrir la venta.
@@ -259,7 +258,7 @@ export const FAQS = [
   { q: "¿Cómo compro mi entrada?", a: "Las entradas se venden en nuestros puntos de venta físicos y por mensaje (WhatsApp o DM en Instagram @goodlifewellnessfestlosmochis). Al comprar registramos tu nombre, correo, teléfono y edad; te llegará un correo para crear tu contraseña y entrar a tu portal." },
   { q: "¿Cómo aparto mi lugar en las clases?", a: "Con tu cuenta activada entra a «Mi cuenta» → «Reservar». Los cupos son limitados; si activas las notificaciones te avisaremos antes de cada clase que apartes." },
   { q: "¿A quién va dirigido?", a: "A personas de aproximadamente 18 a 50 años interesadas en fitness, salud, nutrición, running, yoga, belleza, recuperación, salud mental y estilo de vida saludable. Activos, profesionales, empresarios, deportistas y familias." },
-  { q: "¿Qué incluye mi entrada?", a: "Podrás recibir un welcome kit con pulsera oficial, bolsa Good Life, playera, toalla, productos y muestras de patrocinadores, cupones y beneficios. Los detalles se darán a conocer con el lanzamiento de boletos." },
+  { q: "¿Qué incluye mi entrada?", a: "Acceso al festival con tu pulsera oficial Good Life y la reserva de clases y actividades desde tu portal. Los detalles se darán a conocer con el lanzamiento de boletos." },
   { q: "¿Para qué sirve la pulsera Good Life?", a: "Es tu identificación durante todo el festival: acceso, control de clases, dinámicas, activaciones, beneficios, concursos y acceso a experiencias especiales." },
   { q: "¿Habrá cupo limitado?", a: "Sí. La propuesta es menos personas, mayor experiencia y mayor valor: capacidad controlada para ofrecer mejor atención, comodidad e interacción con las marcas." },
   { q: "¿Puedo tomar más de una clase?", a: "Sí. El programa se organiza por bloques (mañana, mediodía, tarde y cierre) y una misma disciplina podrá tener dos horarios para que más personas la disfruten." },

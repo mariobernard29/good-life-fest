@@ -5,7 +5,7 @@ import { Photo } from "@/components/site/photo";
 import { Countdown } from "@/components/site/countdown";
 import { Chips, CtaBand, Marquee, Mosaic, PhotoCard } from "@/components/site/visual";
 import { IMG } from "@/content/images";
-import { CHALLENGES, COMMUNITY, DIFFERENT, FEST, INTRO, JOURNEY, PILLARS, PREMIUM, VERBS, VISION, WELCOME_KIT, ZONES } from "@/content/festival";
+import { CHALLENGES, COMMUNITY, DIFFERENT, FEST, INTRO, JOURNEY, PILLARS, PREMIUM, VERBS, VISION, ZONES } from "@/content/festival";
 
 export default function HomePage() {
   return (
@@ -126,11 +126,11 @@ export default function HomePage() {
         ))}
       </section>
 
-      {/* RETOS + KIT + PULSERA */}
+      {/* RETOS + PULSERA */}
       <section className="bg-secondary/50 py-20 md:py-28">
-        <div className="container-page grid gap-5 lg:grid-cols-3">
+        <div className="container-page grid gap-5 md:grid-cols-2">
           <article className="overflow-hidden rounded-3xl bg-card">
-            <Photo photo={IMG.battleRopes} sizes="(min-width: 1024px) 33vw, 100vw" className="aspect-[4/3]" />
+            <Photo photo={IMG.battleRopes} sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[4/3]" />
             <div className="p-6">
               <p className="eyebrow">Retos Good Life</p>
               <h3 className="display mt-2 text-3xl">Compite todo el día</h3>
@@ -141,18 +141,7 @@ export default function HomePage() {
             </div>
           </article>
           <article className="overflow-hidden rounded-3xl bg-card">
-            <Photo photo={IMG.tote} sizes="(min-width: 1024px) 33vw, 100vw" className="aspect-[4/3]" />
-            <div className="p-6">
-              <p className="eyebrow">Welcome kit</p>
-              <h3 className="display mt-2 text-3xl">Llegas y te recibimos</h3>
-              <p className="mt-2 text-sm text-foreground/70">Al llegar, podrá incluir:</p>
-              <div className="mt-4">
-                <Chips items={WELCOME_KIT} />
-              </div>
-            </div>
-          </article>
-          <article className="overflow-hidden rounded-3xl bg-card">
-            <Photo photo={IMG.handsUp} sizes="(min-width: 1024px) 33vw, 100vw" className="aspect-[4/3]" />
+            <Photo photo={IMG.handsUp} sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[4/3]" />
             <div className="p-6">
               <p className="eyebrow">Pulsera Good Life</p>
               <h3 className="display mt-2 text-3xl">Tu llave del festival</h3>

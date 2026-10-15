@@ -46,7 +46,7 @@ begin
 
   insert into public.ticket_types (event_id, name, description, price_cents, quantity_total, max_per_order, benefits, access_areas, sale_status, sort_order) values
     (v_event, 'Pase General', 'Acceso al festival de 8:00 a 21:00 h.', 180000, 650, 6,
-      array['Acceso todo el día', 'Reserva de clases y conferencias', 'Kit de bienvenida'], array['general'], 'on_sale', 1),
+      array['Acceso todo el día', 'Reserva de clases y conferencias'], array['general'], 'on_sale', 1),
     (v_event, 'Pase VIP', 'Experiencia completa con zona lounge y amenidades.', 350000, 80, 4,
       array['Acceso todo el día', 'Zona lounge VIP', 'Brunch de autor', 'Reserva prioritaria'], array['general', 'vip'], 'on_sale', 2),
     (v_event, 'Cortesía / Staff aliado', 'Uso interno: cortesías y acreditaciones.', 0, 70, 10,

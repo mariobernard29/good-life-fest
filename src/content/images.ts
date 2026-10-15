@@ -76,6 +76,7 @@ export const IMG = {
   // Stage, marcas, entretenimiento
   expo: u("photo-1761195689615-9469b65dac01", "Personas interactuando en un stand", "Unsplash"),
   convention: u("photo-1785123463585-1ba21ff9ff57", "Personas recorriendo una exposición", "Unsplash"),
+  experienceHall: u("photo-1785123379992-5102aee2c088", "Personas recorriendo un salón de exposiciones con stands", "Aaron Douglas"),
   apparel: u("photo-1763771522867-c26bf75f12bc", "Exhibición de ropa deportiva", "Unsplash"),
   sneakers: u("photo-1760302318631-a8d342cd4951", "Tenis deportivos en exhibición", "Unsplash"),
   crowd: u("photo-1533174072545-7a4b6ad7a6c3", "Personas reunidas en un festival al aire libre", "Danny Howe"),
