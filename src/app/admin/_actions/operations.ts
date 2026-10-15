@@ -117,7 +117,7 @@ export async function addStaffAction(_prev: AdminFormState, formData: FormData):
     const admin = createAdminClient();
     const { data: profile } = await admin.from("profiles").select("id").ilike("email", d.email.replace(/[\\%_]/g, "\\$&")).maybeSingle();
     if (!profile) {
-      return { fieldErrors: { email: ["Esa persona aún no tiene cuenta. Pídele que se registre en /registro y vuelve a intentarlo."] } };
+      return { fieldErrors: { email: ["Esa persona aún no tiene cuenta. Regístrala primero en Asistentes → Registrar participante (o con npm run user:create) y vuelve a intentarlo."] } };
     }
     const row = {
       user_id: profile.id,

@@ -27,7 +27,7 @@ export async function createPurchaseAction(input: PurchaseInput): Promise<Action
   const parsed = purchaseSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "Revisa tu selección.", fieldErrors: fieldErrors(parsed.error) };
   try {
-    if (!FEST.ticketsOpen || !isDemoPaymentsEnabled()) throw new AppError("EVENT_NOT_ON_SALE");
+    if (!FEST.onlineSales || !isDemoPaymentsEnabled()) throw new AppError("EVENT_NOT_ON_SALE");
     const user = await requireUser();
     await enforceRateLimit("purchase", 10, 60_000, user.id);
     const event = await getCurrentEvent();
@@ -72,7 +72,7 @@ async function loadOwnPendingOrder(orderId: string) {
 export async function simulatePaymentAction(orderId: string): Promise<ActionResult<null>> {
   let reference: string;
   try {
-    if (!isDemoPaymentsEnabled()) throw new AppError("EVENT_NOT_ON_SALE");
+    if (!FEST.onlineSales || !isDemoPaymentsEnabled()) throw new AppError("EVENT_NOT_ON_SALE");
     const { user, order } = await loadOwnPendingOrder(orderId);
     await enforceRateLimit("purchase-pay", 10, 60_000, user.id);
     if (order.status === "paid") redirect(`/mi-cuenta/entradas?compra=${order.reference}`);

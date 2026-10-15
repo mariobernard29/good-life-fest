@@ -18,11 +18,18 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
           notice={error === "enlace" ? "El enlace no es válido o expiró. Inicia sesión o solicita uno nuevo." : undefined}
         />
       </div>
-      {FEST.ticketsOpen && (
+      {FEST.selfSignup ? (
         <p className="mt-6 text-center text-sm text-muted-foreground">
           ¿No tienes cuenta?{" "}
           <Link href={typeof next === "string" ? `/registro?next=${encodeURIComponent(next)}` : "/registro"} className="font-medium text-olive hover:underline">
             Crear cuenta
+          </Link>
+        </p>
+      ) : (
+        <p className="mt-6 text-center text-sm text-muted-foreground">
+          ¿Aún no tienes cuenta? Se crea al comprar tu entrada en un punto de venta o por mensaje.{" "}
+          <Link href="/entradas" className="font-medium text-olive hover:underline">
+            Cómo comprar
           </Link>
         </p>
       )}

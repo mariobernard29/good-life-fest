@@ -97,7 +97,7 @@ function BookableCard({ s, ticketId, hasTickets }: { s: BookableSession; ticketI
   } else if (!hasTickets) {
     footer = (
       <Button asChild variant="outline" className="w-full rounded-full">
-        <Link href="/entradas">Necesitas una entrada</Link>
+        <Link href="/entradas">Necesitas una entrada · Cómo comprar</Link>
       </Button>
     );
   } else if (s.status !== "published" || s.started) {

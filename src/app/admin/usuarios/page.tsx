@@ -33,7 +33,7 @@ export default async function StaffPage() {
       <div className="grid gap-6 lg:grid-cols-[1fr_1.6fr]">
         <Panel title="Asignar rol">
           <ActionForm action={addStaffAction} submitLabel="Asignar">
-            <Field label="Correo de la persona" name="email" type="email" required hint="Debe haber creado su cuenta en el sitio." />
+            <Field label="Correo de la persona" name="email" type="email" required hint="Debe tener una cuenta creada en el sitio." />
             <SelectField label="Rol" name="role" defaultValue="checkin_staff" options={roles.map((r) => ({ value: r, label: ROLE_LABELS[r] }))} />
             <CheckboxField label="Puede emitir cortesías" name="issueComplimentary" hint="Permiso adicional para taquilla (los administradores ya lo tienen)." />
           </ActionForm>

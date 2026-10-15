@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { UserRound } from "lucide-react";
 import { InstagramIcon } from "@/components/brand/instagram-icon";
 import { Logo } from "@/components/brand/logo";
 import { FEST } from "@/content/festival";
@@ -24,6 +25,11 @@ export function SiteHeader() {
             <a href={FEST.instagramUrl} target="_blank" rel="noopener noreferrer">
               <InstagramIcon className="size-5" />
             </a>
+          </Button>
+          <Button asChild variant="ghost" size="icon-lg" className="rounded-full" aria-label="Mi cuenta">
+            <Link href="/mi-cuenta">
+              <UserRound className="size-5" />
+            </Link>
           </Button>
           <Button asChild size="lg" className="hidden rounded-full px-5 sm:inline-flex">
             <Link href="/entradas">Boletos</Link>

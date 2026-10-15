@@ -11,6 +11,8 @@ export type CheckInResponse = {
     ticket_type: string;
     status: string;
     checked_in_at: string | null;
+    /** Solo para boletos de este evento: null = pulsera pendiente. */
+    wristband_delivered_at?: string | null;
   };
 };
 

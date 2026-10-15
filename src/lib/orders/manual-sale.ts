@@ -1,6 +1,7 @@
 import type { RpcClient } from "@/lib/db/rpc";
 
 export type ManualSaleMode = "paid" | "pending" | "complimentary";
+export type SaleSource = "punto_fisico" | "mensaje";
 
 export type ManualSaleRequest = {
   eventId: string;
@@ -14,6 +15,10 @@ export type ManualSaleRequest = {
   mode: ManualSaleMode;
   paymentMethod?: "cash" | "card_terminal" | "transfer";
   notes?: string;
+  /** Cómo se compró: en un punto físico o por mensaje. */
+  saleSource?: SaleSource;
+  /** Si la pulsera se entregó en el momento de la venta. */
+  wristbandDelivered?: boolean;
 };
 
 export type ManualSaleResult = {
@@ -46,6 +51,8 @@ export function createManualSale(rpc: RpcClient, req: ManualSaleRequest) {
     p_payment_confirmed: req.mode !== "pending",
     p_complimentary: req.mode === "complimentary",
     p_notes: req.notes ?? null,
+    p_sale_source: req.saleSource ?? null,
+    p_wristband_delivered: req.wristbandDelivered ?? false,
   });
 }
 

@@ -4,6 +4,7 @@ import Link from "next/link";
 import { useActionState } from "react";
 import { Field, FormMessage, SubmitButton } from "@/components/forms/fields";
 import {
+  completeRegistrationAction,
   loginAction,
   recoverAction,
   registerAction,
@@ -84,6 +85,20 @@ export function UpdatePasswordForm() {
       <Field label="Confirmar contraseña" name="confirmPassword" type="password" autoComplete="new-password" required error={state.fieldErrors?.confirmPassword} />
       <FormMessage error={state.error} />
       <SubmitButton className="w-full rounded-full">Guardar contraseña</SubmitButton>
+    </form>
+  );
+}
+
+export function CompleteRegistrationForm() {
+  const [state, action] = useActionState(completeRegistrationAction, initial);
+  return (
+    <form action={action} className="space-y-4">
+      <Field label="Crea tu contraseña" name="password" type="password" autoComplete="new-password" required error={state.fieldErrors?.password} hint="Mínimo 8 caracteres." />
+      <Field label="Confirma tu contraseña" name="confirmPassword" type="password" autoComplete="new-password" required error={state.fieldErrors?.confirmPassword} />
+      <FormMessage error={state.error} />
+      <SubmitButton className="w-full rounded-full" pendingText="Guardando…">
+        Activar mi cuenta
+      </SubmitButton>
     </form>
   );
 }

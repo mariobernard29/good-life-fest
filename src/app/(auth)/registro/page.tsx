@@ -7,7 +7,7 @@ import { FEST } from "@/content/festival";
 export const metadata: Metadata = { title: "Crear cuenta" };
 
 export default async function RegisterPage({ searchParams }: PageProps<"/registro">) {
-  if (!FEST.ticketsOpen) redirect("/login");
+  if (!FEST.selfSignup) redirect("/login");
   const { email, next } = await searchParams;
   return (
     <>

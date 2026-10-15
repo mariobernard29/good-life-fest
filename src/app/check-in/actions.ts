@@ -4,6 +4,7 @@ import { requireStaff } from "@/lib/auth/staff";
 import { getRpc } from "@/lib/db/server-rpc";
 import { checkInTicket, type CheckInResponse } from "@/lib/checkin/service";
 import { searchAttendees } from "@/lib/admin/attendees";
+import { createAdminClient } from "@/lib/supabase/admin";
 import { enforceRateLimit } from "@/lib/security/rate-limit";
 import { logError, userMessage, type ActionResult } from "@/lib/errors";
 import { checkInSchema, checkInSearchSchema } from "@/lib/validation/schemas";
@@ -22,6 +23,16 @@ export async function checkInAction(input: { input: string; accessArea: string; 
       accessArea: parsed.data.accessArea,
       method: parsed.data.method,
     });
+    // Estado de la pulsera para entregarla en la entrada (solo boletos de este evento).
+    if (res.ticket?.id && res.result !== "wrong_event" && res.result !== "invalid") {
+      const { data } = await createAdminClient()
+        .from("tickets")
+        .select("wristband_delivered_at")
+        .eq("id", res.ticket.id)
+        .eq("event_id", ctx.event.id)
+        .maybeSingle();
+      if (data) res.ticket.wristband_delivered_at = data.wristband_delivered_at;
+    }
     return { ok: true, data: res };
   } catch (error) {
     logError("checkInAction", error);
@@ -29,7 +40,7 @@ export async function checkInAction(input: { input: string; accessArea: string; 
   }
 }
 
-export type CheckInSearchResult = { code: string; name: string; type: string; status: string; email: string };
+export type CheckInSearchResult = { code: string; name: string; type: string; status: string; email: string; wristband: boolean };
 
 /** Búsqueda alternativa al escaneo: por correo, nombre o código. */
 export async function searchTicketsAction(query: string): Promise<ActionResult<CheckInSearchResult[]>> {
@@ -47,6 +58,7 @@ export async function searchTicketsAction(query: string): Promise<ActionResult<C
         type: r.ticket_types?.name ?? "",
         status: r.status,
         email: r.profiles?.email ?? r.attendee_email ?? r.order_items?.orders?.buyer_email ?? "",
+        wristband: Boolean(r.wristband_delivered_at),
       })),
     };
   } catch (error) {

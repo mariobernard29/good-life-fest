@@ -1,10 +1,11 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AdminHeader, FilterSelect, Pagination, Pill, TableWrap } from "@/components/admin/ui";
+import { AdminHeader, ExportLinks, FilterSelect, Pagination, Pill, TableWrap } from "@/components/admin/ui";
 import { AdminCancelReservationButton } from "@/components/admin/row-actions";
 import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { requireStaffPage } from "@/lib/auth/staff";
+import { hasPermission } from "@/lib/auth/permissions";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { PAGE_SIZE, pageRange, parsePage, str } from "@/lib/admin/common";
 import { formatDateTime } from "@/lib/format";
@@ -38,7 +39,15 @@ export default async function ReservationsAdminPage({ searchParams }: PageProps<
 
   return (
     <>
-      <AdminHeader title="Reservas" description="Orden de llegada: la lista de espera se atiende FIFO al liberarse un lugar." />
+      <AdminHeader
+        title="Reservas"
+        description="Orden de llegada: la lista de espera se atiende FIFO al liberarse un lugar."
+        actions={
+          hasPermission(ctx.permissions, "exports.download") && (
+            <ExportLinks href="/admin/exportar/clases" label={activityId || conferenceId ? "Esta sesión" : "Asistencia por clase"} params={{ actividad: activityId, conferencia: conferenceId }} />
+          )
+        }
+      />
       <form className="mb-4 flex flex-wrap gap-2">
         <FilterSelect name="actividad" label="Clase" value={activityId} options={(acts ?? []).map((a) => ({ value: a.id, label: a.name }))} />
         <FilterSelect name="conferencia" label="Conferencia" value={conferenceId} options={(confs ?? []).map((c) => ({ value: c.id, label: c.title }))} />

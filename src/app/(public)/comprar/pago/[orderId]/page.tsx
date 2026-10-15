@@ -13,6 +13,7 @@ export const metadata: Metadata = { title: "Pago", robots: { index: false } };
 export const dynamic = "force-dynamic";
 
 export default async function PaymentPage({ params }: PageProps<"/comprar/pago/[orderId]">) {
+  if (!FEST.onlineSales) redirect("/entradas");
   const { orderId } = await params;
   await requireUserPage(`/comprar/pago/${orderId}`);
   // RLS: el usuario solo puede leer sus propios pedidos.

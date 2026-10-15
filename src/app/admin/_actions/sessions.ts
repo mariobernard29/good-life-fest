@@ -7,6 +7,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { getRpc } from "@/lib/db/server-rpc";
 import { cancelReservation, cancelSession, updateSessionCapacity, type SessionKind } from "@/lib/reservations/service";
 import { audit } from "@/lib/admin/common";
+import { notifyPromotionsAfterResponse } from "@/lib/push/dispatch";
 import { AppError, logError, userMessage, type ActionResult } from "@/lib/errors";
 import { activitySchema, conferenceSchema, fieldErrors, formDataToObject } from "@/lib/validation/schemas";
 import { zonedLocalToUtc } from "@/lib/format";
@@ -98,6 +99,7 @@ async function saveSession(kind: SessionKind, formData: FormData): Promise<Admin
             resolution: resolution as "keep_existing" | "move_excess_to_waitlist" | null,
             actorId: ctx.user.id,
           });
+          notifyPromotionsAfterResponse(r.promoted, ctx.event);
           if (r.overbooked > 0) warning = `Atención: quedan ${r.overbooked} reservas por encima del nuevo cupo (se mantuvieron).`;
           if (r.moved_to_waitlist > 0) warning = `${r.moved_to_waitlist} reservas pasaron a lista de espera.`;
         } catch (error) {
@@ -164,6 +166,7 @@ export async function adminCancelReservationAction(reservationId: string): Promi
     const { data } = await createAdminClient().from("reservations").select("event_id").eq("id", reservationId).maybeSingle();
     if (!data || data.event_id !== ctx.event.id) throw new AppError("RESERVATION_NOT_FOUND");
     const r = await cancelReservation(getRpc(), { reservationId, actorId: ctx.user.id, asAdmin: true });
+    notifyPromotionsAfterResponse(r.promoted, ctx.event);
     revalidatePath("/admin/reservas");
     return { ok: true, data: null, message: r.promoted.length ? "Reserva cancelada; se asignó el lugar a la lista de espera." : "Reserva cancelada." };
   } catch (error) {

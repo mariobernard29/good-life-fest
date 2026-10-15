@@ -27,6 +27,10 @@ export const ERROR_MESSAGES = {
   INVALID_STATUS: "Estado no válido.",
   INVALID_PAYMENT_METHOD: "Selecciona una forma de pago válida.",
   FORBIDDEN_COMPLIMENTARY: "No tienes permiso para emitir cortesías.",
+  INVALID_SALE_SOURCE: "Indica si la entrada se compró en un punto físico o por mensaje.",
+  // Registro de participantes
+  PARTICIPANT_ALREADY_REGISTERED: "Esta persona ya tiene una entrada para el festival.",
+  EMAIL_NOT_SENT: "No se pudo enviar el correo. Intenta reenviarlo en unos minutos.",
   COMPLIMENTARY_REASON_REQUIRED: "Indica el motivo de la cortesía (mínimo 5 caracteres).",
   // Boletos
   TICKET_NOT_FOUND: "No encontramos el boleto.",

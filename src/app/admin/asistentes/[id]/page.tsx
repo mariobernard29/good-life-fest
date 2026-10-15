@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeft } from "lucide-react";
 import { AdminHeader, CHANNEL_LABEL, ORDER_STATUS, PAYMENT_LABEL, Panel, Pill, TICKET_STATUS } from "@/components/admin/ui";
-import { VoidTicketButton } from "@/components/admin/row-actions";
+import { ResendActivationButton, VoidTicketButton, WristbandToggle } from "@/components/admin/row-actions";
 import { Button } from "@/components/ui/button";
 import { requireStaffPage } from "@/lib/auth/staff";
 import { hasPermission } from "@/lib/auth/permissions";
@@ -11,6 +11,7 @@ import { createAdminClient } from "@/lib/supabase/admin";
 import { buildQrPayload, renderQrSvg } from "@/lib/tickets/qr";
 import { formatDateTime, formatMoney } from "@/lib/format";
 import { audit } from "@/lib/admin/common";
+import { SALE_SOURCE_LABEL } from "@/lib/participants/labels";
 
 export const metadata: Metadata = { title: "Detalle de asistente" };
 
@@ -31,7 +32,7 @@ export default async function AttendeeDetailPage({ params }: PageProps<"/admin/a
   const admin = createAdminClient();
   const { data: t } = await admin
     .from("tickets")
-    .select("*, ticket_types(name, access_areas), profiles(email, full_name, phone), order_items(quantity, unit_price_cents, orders(id, reference, buyer_name, buyer_email, buyer_phone, total_cents, status, channel, payment_method, created_at, paid_at, notes))")
+    .select("*, ticket_types(name, access_areas), profiles(id, email, full_name, phone, age, activated_at), order_items(quantity, unit_price_cents, orders(id, reference, buyer_name, buyer_email, buyer_phone, total_cents, status, channel, payment_method, sale_source, created_at, paid_at, notes))")
     .eq("id", id)
     .eq("event_id", ctx.event.id)
     .maybeSingle();
@@ -47,6 +48,9 @@ export default async function AttendeeDetailPage({ params }: PageProps<"/admin/a
   ]);
 
   const order = (t.order_items as { orders: Record<string, string | number | null> } | null)?.orders;
+  const profile = t.profiles as { id: string; email: string; phone: string | null; age: number | null; activated_at: string | null } | null;
+  const wristbandAt = t.wristband_delivered_at as string | null;
+  const activeTicket = t.status !== "cancelled" && t.status !== "refunded";
   const st = TICKET_STATUS[t.status as string];
   const qr = t.status === "valid" ? await renderQrSvg(buildQrPayload(t.qr_token as string)) : null;
   if (qr) {
@@ -89,11 +93,37 @@ export default async function AttendeeDetailPage({ params }: PageProps<"/admin/a
               <dt className="text-muted-foreground">Check-in</dt>
               <dd>{t.checked_in_at ? formatDateTime(t.checked_in_at as string) : "—"}</dd>
             </div>
-            <div className="flex justify-between">
-              <dt className="text-muted-foreground">Cuenta</dt>
-              <dd className="text-right">{(t.profiles as { email: string } | null)?.email ?? "Sin vincular"}</dd>
+            <div className="flex justify-between gap-2">
+              <dt className="text-muted-foreground">Pulsera</dt>
+              <dd className="text-right">
+                <Pill tone={wristbandAt ? "green" : "amber"}>{wristbandAt ? "Entregada" : "Pendiente"}</Pill>
+                {wristbandAt && <span className="block text-xs text-muted-foreground">{formatDateTime(wristbandAt)}</span>}
+              </dd>
             </div>
+            <div className="flex justify-between gap-2">
+              <dt className="text-muted-foreground">Cuenta</dt>
+              <dd className="min-w-0 text-right">
+                <span className="break-all">{profile?.email ?? "Sin vincular"}</span>
+                {profile && <span className="block text-xs text-muted-foreground">{profile.activated_at ? "Activada" : "Sin activar (no ha creado su contraseña)"}</span>}
+              </dd>
+            </div>
+            {profile?.phone && (
+              <div className="flex justify-between">
+                <dt className="text-muted-foreground">Teléfono</dt>
+                <dd>{profile.phone}</dd>
+              </div>
+            )}
+            {profile?.age != null && (
+              <div className="flex justify-between">
+                <dt className="text-muted-foreground">Edad</dt>
+                <dd>{profile.age} años</dd>
+              </div>
+            )}
           </dl>
+          <div className="mt-4 flex flex-wrap gap-2">
+            {hasPermission(ctx.permissions, "wristbands.manage") && activeTicket && <WristbandToggle ticketId={id} delivered={Boolean(wristbandAt)} />}
+            {profile && !profile.activated_at && hasPermission(ctx.permissions, "participants.register") && <ResendActivationButton profileId={profile.id} />}
+          </div>
           {qr && (
             <div className="mt-4">
               <div className="mx-auto w-44 rounded-xl bg-white p-2 ring-1 ring-border [&_svg]:h-auto [&_svg]:w-full" dangerouslySetInnerHTML={{ __html: qr }} />
@@ -108,18 +138,18 @@ export default async function AttendeeDetailPage({ params }: PageProps<"/admin/a
                 <dt className="text-muted-foreground">Referencia</dt>
                 <dd className="font-mono">{order.reference}</dd>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-2">
                 <dt className="text-muted-foreground">Comprador</dt>
-                <dd className="text-right">
+                <dd className="min-w-0 text-right">
                   {order.buyer_name}
                   <br />
-                  <span className="text-xs text-muted-foreground">{order.buyer_email}</span>
+                  <span className="text-xs break-all text-muted-foreground">{order.buyer_email}</span>
                 </dd>
               </div>
-              <div className="flex justify-between">
+              <div className="flex justify-between gap-2">
                 <dt className="text-muted-foreground">Canal</dt>
-                <dd>
-                  {CHANNEL_LABEL[order.channel as string]} · {PAYMENT_LABEL[order.payment_method as string]}
+                <dd className="text-right">
+                  {order.sale_source ? SALE_SOURCE_LABEL[order.sale_source as string] : CHANNEL_LABEL[order.channel as string]} · {PAYMENT_LABEL[order.payment_method as string]}
                 </dd>
               </div>
               <div className="flex justify-between">

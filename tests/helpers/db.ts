@@ -46,9 +46,10 @@ export async function createTestDb() {
     async call<T>(fn: string, args: Record<string, unknown>): Promise<T> {
       const names = Object.keys(args);
       const params = names.map((n, i) => `${n} => $${i + 1}`).join(", ");
+      // Los arreglos van tal cual: PGlite los serializa según el tipo (uuid[] o jsonb).
       const values = names.map((n) => {
         const v = args[n];
-        return v !== null && typeof v === "object" ? JSON.stringify(v) : v;
+        return v !== null && typeof v === "object" && !Array.isArray(v) ? JSON.stringify(v) : v;
       });
       try {
         const res = await pg.query<{ result: T }>(`select public.${fn}(${params}) as result`, values);

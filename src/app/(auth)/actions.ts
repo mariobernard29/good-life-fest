@@ -18,6 +18,11 @@ import { getCurrentEvent } from "@/lib/events/current";
 import { FEST } from "@/content/festival";
 import { getStaffAssignments } from "@/lib/auth/staff";
 import { resolvePermissions, staffHome } from "@/lib/auth/permissions";
+import { createAdminClient } from "@/lib/supabase/admin";
+import { createAuthLink } from "@/lib/auth/links";
+import { isEmailConfigured, sendEmail } from "@/lib/email/send";
+import { recoveryEmail } from "@/lib/email/templates";
+import { ACTIVATION_PATH, markAccountActivated } from "@/lib/participants/register";
 
 export type FormState = { error?: string; success?: string; fieldErrors?: Record<string, string[]>; values?: Record<string, string> };
 
@@ -77,7 +82,8 @@ export async function registerAction(_prev: FormState, formData: FormData): Prom
   const parsed = registerSchema.safeParse(raw);
   const values = { fullName: String(raw.fullName ?? ""), email: String(raw.email ?? ""), phone: String(raw.phone ?? "") };
   const next = (await safeNext(raw.next)) ?? "/mi-cuenta/entradas";
-  if (!FEST.ticketsOpen) return { error: "El registro de cuentas se abrirá con la venta de boletos.", values };
+  // Las cuentas se crean en el registro manual (punto físico o mensaje); el registro libre está cerrado.
+  if (!FEST.selfSignup) return { error: "Tu cuenta se crea al comprar tu entrada en un punto de venta o por mensaje.", values };
   if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error), values };
   if (!isSupabaseConfigured()) return { error: userMessage(new AppError("NOT_CONFIGURED")), values };
 
@@ -119,10 +125,30 @@ export async function recoverAction(_prev: FormState, formData: FormData): Promi
   if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error) };
   try {
     await enforceRateLimit("recover", 5, 15 * 60_000);
-    const supabase = await createSupabaseServerClient();
-    await supabase.auth.resetPasswordForEmail(parsed.data.email, {
-      redirectTo: `${getSiteUrl()}/auth/callback?next=/actualizar-contrasena`,
-    });
+    await enforceRateLimit("recover-email", 3, 15 * 60_000, parsed.data.email);
+    if (isEmailConfigured()) {
+      // Enviamos nuestro propio correo; si la cuenta aún no se activa, el enlace
+      // lleva a completar el registro en lugar de "nueva contraseña".
+      const { data: profile } = await createAdminClient()
+        .from("profiles")
+        .select("full_name, activated_at")
+        .eq("email", parsed.data.email)
+        .maybeSingle();
+      if (profile) {
+        const activation = !profile.activated_at;
+        const { url } = await createAuthLink({
+          type: "recovery",
+          email: parsed.data.email,
+          next: activation ? ACTIVATION_PATH : "/actualizar-contrasena",
+        });
+        await sendEmail(parsed.data.email, recoveryEmail({ name: profile.full_name, url, activation }));
+      }
+    } else {
+      const supabase = await createSupabaseServerClient();
+      await supabase.auth.resetPasswordForEmail(parsed.data.email, {
+        redirectTo: `${getSiteUrl()}/auth/callback?next=/actualizar-contrasena`,
+      });
+    }
   } catch (error) {
     logError("recoverAction", error);
     if (error instanceof AppError && error.code === "RATE_LIMITED") return { error: userMessage(error) };
@@ -141,7 +167,25 @@ export async function updatePasswordAction(_prev: FormState, formData: FormData)
   if (error) {
     return { error: error.code === "same_password" ? "Usa una contraseña distinta a la anterior." : "No pudimos actualizar la contraseña." };
   }
+  await markAccountActivated(userData.user.id);
   redirect("/mi-cuenta?contrasena=actualizada");
+}
+
+/** Último paso del registro manual: la persona crea su contraseña y entra al portal. */
+export async function completeRegistrationAction(_prev: FormState, formData: FormData): Promise<FormState> {
+  const parsed = updatePasswordSchema.safeParse(formDataToObject(formData));
+  if (!parsed.success) return { fieldErrors: fieldErrors(parsed.error) };
+  const supabase = await createSupabaseServerClient();
+  const { data: userData } = await supabase.auth.getUser();
+  if (!userData.user) return { error: "El enlace expiró. Pide uno nuevo en «¿Olvidaste tu contraseña?»." };
+  const { error } = await supabase.auth.updateUser({ password: parsed.data.password });
+  if (error && error.code !== "same_password") {
+    logError("completeRegistrationAction", error);
+    return { error: error.code === "weak_password" ? "La contraseña es demasiado débil." : "No pudimos guardar tu contraseña. Intenta de nuevo." };
+  }
+  await markAccountActivated(userData.user.id);
+  await claimGuestTickets(userData.user.id);
+  redirect("/mi-cuenta?bienvenida=1");
 }
 
 export async function signOutAction() {

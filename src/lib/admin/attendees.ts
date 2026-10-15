@@ -9,14 +9,17 @@ export type AttendeeRow = {
   attendee_email: string | null;
   status: string;
   checked_in_at: string | null;
+  wristband_delivered_at: string | null;
   issued_at: string;
   ticket_types: { name: string } | null;
-  profiles: { email: string; full_name: string } | null;
-  order_items: { orders: { reference: string; buyer_email: string; buyer_name: string; status: string; channel: string } | null } | null;
+  profiles: { id: string; email: string; full_name: string; activated_at: string | null } | null;
+  order_items: {
+    orders: { reference: string; buyer_email: string; buyer_name: string; status: string; channel: string; sale_source: string | null } | null;
+  } | null;
 };
 
 const SELECT =
-  "id, public_code, attendee_name, attendee_email, status, checked_in_at, issued_at, ticket_types(name), profiles(email, full_name), order_items!inner(orders!inner(reference, buyer_email, buyer_name, status, channel))";
+  "id, public_code, attendee_name, attendee_email, status, checked_in_at, wristband_delivered_at, issued_at, ticket_types(name), profiles(id, email, full_name, activated_at), order_items!inner(orders!inner(reference, buyer_email, buyer_name, status, channel, sale_source))";
 
 /**
  * Búsqueda paginada de boletos/asistentes por nombre, correo (asistente, cuenta
@@ -24,7 +27,7 @@ const SELECT =
  */
 export async function searchAttendees(
   eventId: string,
-  opts: { q?: string; ticketTypeId?: string; status?: string; payment?: string; checkin?: string; page: number },
+  opts: { q?: string; ticketTypeId?: string; status?: string; payment?: string; checkin?: string; wristband?: string; page: number },
 ) {
   const admin = createAdminClient();
   let query = admin
@@ -39,6 +42,8 @@ export async function searchAttendees(
   if (opts.checkin === "si") query = query.not("checked_in_at", "is", null);
   if (opts.checkin === "no") query = query.is("checked_in_at", null);
   if (opts.payment) query = query.eq("order_items.orders.status", opts.payment);
+  if (opts.wristband === "entregada") query = query.not("wristband_delivered_at", "is", null);
+  if (opts.wristband === "pendiente") query = query.is("wristband_delivered_at", null);
 
   const q = opts.q?.trim();
   if (q) {

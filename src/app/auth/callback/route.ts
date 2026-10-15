@@ -5,14 +5,14 @@ import { getRpc } from "@/lib/db/server-rpc";
 import { logError } from "@/lib/errors";
 
 /**
- * Destino de los enlaces de correo de Supabase (confirmación y recuperación).
- * Soporta el flujo PKCE (?code=) y el de token_hash (?token_hash=&type=).
+ * Destino de los enlaces de correo (activación del registro manual, confirmación
+ * y recuperación). Soporta el flujo PKCE (?code=) y el de token_hash (?token_hash=&type=).
  * Tras verificar el correo, vincula las compras hechas como invitado.
  */
 export async function GET(request: NextRequest) {
   const url = request.nextUrl;
-  const nextParam = url.searchParams.get("next") ?? "/mi-cuenta";
-  const next = nextParam.startsWith("/") && !nextParam.startsWith("//") ? nextParam : "/mi-cuenta";
+  const nextParam = url.searchParams.get("next");
+  const next = nextParam && nextParam.startsWith("/") && !nextParam.startsWith("//") ? nextParam : null;
   const supabase = await createSupabaseServerClient();
 
   const code = url.searchParams.get("code");
@@ -34,5 +34,7 @@ export async function GET(request: NextRequest) {
       .call("claim_guest_tickets", { p_user_id: data.user.id })
       .catch((e) => logError("auth.callback.claim", e));
   }
-  return NextResponse.redirect(new URL(type === "recovery" ? "/actualizar-contrasena" : next, url.origin));
+  // Invitaciones del registro manual llegan con next=/completar-registro.
+  const destination = next ?? (type === "recovery" ? "/actualizar-contrasena" : "/mi-cuenta");
+  return NextResponse.redirect(new URL(destination, url.origin));
 }

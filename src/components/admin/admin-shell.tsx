@@ -6,6 +6,7 @@ import { useState } from "react";
 import {
   AlertTriangle,
   BadgeDollarSign,
+  BellRing,
   CalendarRange,
   ClipboardList,
   DoorOpen,
@@ -35,6 +36,7 @@ const NAV: { group: string; items: { href: string; label: string; icon: React.El
       { href: "/admin/asistentes", label: "Asistentes", icon: Users, perm: "attendees.view" },
       { href: "/admin/accesos", label: "Accesos", icon: DoorOpen, perm: "checkin.view_log" },
       { href: "/admin/incidencias", label: "Incidencias", icon: AlertTriangle, perm: "incidents.manage" },
+      { href: "/admin/notificaciones", label: "Notificaciones", icon: BellRing, perm: "notifications.send" },
     ],
   },
   {

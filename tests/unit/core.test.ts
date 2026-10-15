@@ -35,13 +35,16 @@ describe("Formato y zona horaria America/Mazatlan", () => {
 describe("Permisos", () => {
   it("cada rol obtiene solo lo necesario", () => {
     const checkin = resolvePermissions([{ role: "checkin_staff", permissions: [] }]);
-    expect([...checkin]).toEqual(["checkin.perform"]);
+    expect([...checkin]).toEqual(["checkin.perform", "wristbands.manage"]);
     expect(staffHome(checkin)).toBe("/check-in");
 
     const ticketing = resolvePermissions([{ role: "ticketing_staff", permissions: [] }]);
     expect(ticketing.has("sales.manual")).toBe(true);
     expect(ticketing.has("sales.complimentary")).toBe(false);
     expect(ticketing.has("staff.manage")).toBe(false);
+    expect(ticketing.has("participants.register")).toBe(true);
+    expect(ticketing.has("exports.download")).toBe(false);
+    expect(ticketing.has("notifications.send")).toBe(false);
 
     const withExtra = resolvePermissions([{ role: "ticketing_staff", permissions: ["issue_complimentary", "desconocido"] }]);
     expect(withExtra.has("sales.complimentary")).toBe(true);

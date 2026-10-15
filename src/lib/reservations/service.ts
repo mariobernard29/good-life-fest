@@ -50,7 +50,7 @@ export function updateSessionCapacity(
   rpc: RpcClient,
   input: { kind: SessionKind; sessionId: string; capacity: number; resolution: CapacityResolution | null; actorId: string },
 ) {
-  return rpc.call<{ capacity: number; confirmed: number; moved_to_waitlist: number; overbooked: number }>(
+  return rpc.call<{ capacity: number; confirmed: number; moved_to_waitlist: number; promoted: string[]; overbooked: number }>(
     "update_session_capacity",
     {
       p_activity_id: input.kind === "activity" ? input.sessionId : null,

@@ -31,7 +31,7 @@ export default async function CheckInPage() {
           {ctx.user.email}
         </p>
       </header>
-      <CheckInStation areas={areas.length ? areas : ["general"]} />
+      <CheckInStation areas={areas.length ? areas : ["general"]} canWristband={hasPermission(ctx.permissions, "wristbands.manage")} />
     </div>
   );
 }

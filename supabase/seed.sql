@@ -77,7 +77,7 @@ begin
     (v_event, 'Expositor Demo · Suplementos', 'Nutrición', 'Marca de demostración.', 'B2', 4, true);
 
   insert into public.faqs (event_id, question, answer, sort_order) values
-    (v_event, '¿Cómo recibo mi entrada?', 'Después del pago, crea tu cuenta o inicia sesión con el mismo correo de la compra. Tus entradas aparecerán en “Mi cuenta” con un código QR individual.', 1),
+    (v_event, '¿Cómo recibo mi entrada?', 'Compra en un punto de venta o por mensaje. Al registrarte te llega un correo para crear tu contraseña; tus entradas aparecerán en “Mi cuenta” con un código QR individual.', 1),
     (v_event, '¿Necesito reservar las clases?', 'Sí. Las clases tienen cupo limitado y se reservan desde “Mi cuenta” con una entrada válida. Algunas conferencias son de acceso libre.', 2),
     (v_event, '¿Puedo cancelar una reserva?', 'Sí, hasta el plazo indicado en cada clase. Al cancelar, el lugar se libera para otra persona.', 3),
     (v_event, '¿Qué debo llevar?', 'Ropa cómoda, tapete si lo prefieres, botella reutilizable y protector solar.', 4),

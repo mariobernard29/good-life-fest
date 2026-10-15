@@ -2,10 +2,12 @@
 
 import { useCallback, useRef, useState, useTransition } from "react";
 import dynamic from "next/dynamic";
-import { AlertOctagon, CheckCircle2, Clock, Keyboard, Loader2, Search, TriangleAlert, WifiOff, XCircle } from "lucide-react";
+import { AlertOctagon, CheckCircle2, Clock, Keyboard, Loader2, Search, TriangleAlert, Watch, WifiOff, XCircle } from "lucide-react";
+import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { checkInAction, searchTicketsAction, type CheckInSearchResult } from "@/app/check-in/actions";
+import { setWristbandAction } from "@/app/admin/_actions/participants";
 import { CHECK_IN_LABELS } from "@/lib/checkin/labels";
 import type { CheckInResponse } from "@/lib/checkin/service";
 import { formatTime } from "@/lib/format";
@@ -24,7 +26,7 @@ const TONE_STYLES = {
   error: "bg-[#a83a26] text-white",
 };
 
-export function CheckInStation({ areas }: { areas: string[] }) {
+export function CheckInStation({ areas, canWristband }: { areas: string[]; canWristband: boolean }) {
   const [area, setArea] = useState(areas[0]);
   const [outcome, setOutcome] = useState<Outcome | null>(null);
   const [pending, start] = useTransition();
@@ -79,6 +81,7 @@ export function CheckInStation({ areas }: { areas: string[] }) {
       </div>
 
       <ResultCard outcome={outcome} pending={pending} onDismiss={() => setOutcome(null)} />
+      {canWristband && !pending && outcome?.kind === "result" && <WristbandBar key={outcome.data.ticket?.id} response={outcome.data} />}
 
       <div className="mt-4 grid grid-cols-2 gap-2">
         <Button variant={mode === "scan" ? "secondary" : "ghost"} className="h-11 rounded-full text-cream data-[variant=secondary]:text-ink" onClick={() => setMode("scan")}>
@@ -214,6 +217,7 @@ function ManualSearch({ onValidate, disabled }: { onValidate: (code: string) => 
               <p className="truncate text-xs text-cream/60">
                 {r.type} · <span className="font-mono">{r.code}</span> · {r.email}
               </p>
+              <p className={cn("text-xs", r.wristband ? "text-cream/60" : "text-[#f2c46d]")}>{r.wristband ? "Pulsera entregada" : "Pulsera pendiente"}</p>
             </div>
             <Button size="sm" className="shrink-0 rounded-full bg-cream text-ink hover:bg-cream/90" disabled={disabled || r.status !== "valid"} onClick={() => onValidate(r.code)}>
               {r.status === "valid" ? "Validar" : r.status === "checked_in" ? "Ya ingresó" : "No válido"}
@@ -221,6 +225,50 @@ function ManualSearch({ onValidate, disabled }: { onValidate: (code: string) => 
           </li>
         ))}
       </ul>
+    </div>
+  );
+}
+
+/** Entrega de pulsera en la entrada (sobre todo para quien compró por mensaje). */
+function WristbandBar({ response }: { response: CheckInResponse }) {
+  const ticket = response.ticket;
+  const [deliveredAt, setDeliveredAt] = useState(ticket?.wristband_delivered_at ?? null);
+  const [saving, start] = useTransition();
+  if (!ticket || ticket.wristband_delivered_at === undefined) return null;
+  if (response.result === "cancelled" || response.result === "refunded") return null;
+
+  if (deliveredAt) {
+    return (
+      <p className="mt-3 flex items-center gap-2 rounded-2xl bg-cream/10 px-4 py-3 text-sm text-cream/80">
+        <Watch className="size-4" /> Pulsera entregada · {formatTime(deliveredAt)}
+      </p>
+    );
+  }
+  return (
+    <div className="mt-3 flex items-center justify-between gap-3 rounded-2xl bg-[#f2c46d] px-4 py-3 text-ink">
+      <p className="flex items-center gap-2 text-sm font-semibold">
+        <Watch className="size-5" /> Pulsera pendiente
+      </p>
+      <Button
+        size="sm"
+        className="shrink-0 rounded-full bg-ink text-cream hover:bg-ink/90"
+        disabled={saving}
+        onClick={() =>
+          start(async () => {
+            try {
+              const res = await setWristbandAction(ticket.id, true);
+              if (res.ok) {
+                setDeliveredAt(res.data.deliveredAt ?? new Date().toISOString());
+                toast.success(res.message ?? "Pulsera entregada");
+              } else toast.error(res.error);
+            } catch {
+              toast.error("Error de conexión. Intenta de nuevo.");
+            }
+          })
+        }
+      >
+        {saving ? <Loader2 className="animate-spin" /> : null} Entregar pulsera
+      </Button>
     </div>
   );
 }

@@ -122,6 +122,69 @@ export const manualSaleSchema = z
   });
 export type ManualSaleInput = z.input<typeof manualSaleSchema>;
 
+// --- Registro manual de participantes -------------------------------------------
+export const SALE_SOURCES = ["punto_fisico", "mensaje"] as const;
+export const participantSchema = z
+  .object({
+    fullName: name,
+    email,
+    phone: z
+      .string()
+      .trim()
+      .max(30, "Teléfono demasiado largo")
+      .regex(/^[0-9+()\s-]+$/, "Teléfono inválido")
+      .refine((v) => v.replace(/\D/g, "").length >= 7, "Ingresa un teléfono válido"),
+    age: z.coerce.number({ error: "Ingresa la edad" }).int("Edad inválida").min(1, "Edad inválida").max(120, "Edad inválida"),
+    ticketTypeId: uuid,
+    saleSource: z.enum(SALE_SOURCES),
+    mode: z.enum(["paid", "pending", "complimentary"]),
+    paymentMethod: z.enum(PAYMENT_METHODS).optional(),
+    wristbandDelivered: z.boolean(),
+    notes: z.string().trim().max(1000).optional().default(""),
+  })
+  .superRefine((d, ctx) => {
+    if (d.mode !== "complimentary" && !d.paymentMethod) {
+      ctx.addIssue({ code: "custom", path: ["paymentMethod"], message: "Selecciona la forma de pago" });
+    }
+    if (d.mode === "complimentary" && d.notes.length < 5) {
+      ctx.addIssue({ code: "custom", path: ["notes"], message: "Indica el motivo de la cortesía" });
+    }
+  });
+export type ParticipantInput = z.input<typeof participantSchema>;
+
+// --- Notificaciones push ---------------------------------------------------------
+export const pushSubscriptionSchema = z.object({
+  endpoint: z.url().max(1000).refine((v) => v.startsWith("https://"), "Endpoint inválido"),
+  keys: z.object({ p256dh: z.string().min(10).max(200), auth: z.string().min(4).max(100) }),
+  userAgent: z.string().max(300).optional(),
+});
+export type PushSubscriptionInput = z.input<typeof pushSubscriptionSchema>;
+
+export const notificationSchema = z
+  .object({
+    title: z.string().trim().min(2, "Mínimo 2 caracteres").max(80, "Máximo 80 caracteres"),
+    body: z.string().trim().min(1, "Escribe el mensaje").max(300, "Máximo 300 caracteres"),
+    url: z
+      .string()
+      .trim()
+      .max(300)
+      .refine((v) => v === "" || /^\/[^/]/.test(v), "Usa una ruta del sitio, p. ej. /mi-cuenta/reservas")
+      .optional()
+      .default(""),
+    // "all" | "activity:<uuid>" | "conference:<uuid>"
+    target: z.string().regex(/^(all|(activity|conference):[0-9a-f-]{36})$/i, "Elige a quién enviarlo"),
+    when: z.enum(["now", "scheduled"]),
+    sendAt: localDateTime.optional().or(z.literal("")),
+    alsoAnnounce: checkbox,
+  })
+  .superRefine((d, ctx) => {
+    if (d.when === "scheduled" && !d.sendAt) ctx.addIssue({ code: "custom", path: ["sendAt"], message: "Indica la fecha y hora de envío" });
+  });
+
+export const reminderSettingsSchema = z.object({
+  reminderMinutes: z.coerce.number().int().min(0).max(24 * 60),
+});
+
 // --- Administración ----------------------------------------------------------
 export const ticketTypeSchema = z
   .object({

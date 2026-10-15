@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import { requireUserPage } from "@/lib/auth/session";
 import { getMyProfile } from "@/lib/portal/queries";
 import { ProfileForm } from "@/components/portal/profile-form";
+import { NotificationsSettings } from "@/components/portal/notifications-prompt";
 import { signOutAction } from "@/app/(auth)/actions";
 import { Button } from "@/components/ui/button";
 
@@ -23,6 +24,7 @@ export default async function ProfilePage() {
         <p className="mt-1 text-xs text-muted-foreground">{user.emailConfirmed ? "Correo verificado" : "Correo sin verificar: revisa tu bandeja de entrada."}</p>
       </div>
       <ProfileForm fullName={profile?.full_name ?? ""} phone={profile?.phone ?? ""} />
+      <NotificationsSettings />
       <form action={signOutAction}>
         <Button type="submit" variant="outline" className="h-11 w-full rounded-full">
           Cerrar sesión

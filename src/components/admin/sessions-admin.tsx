@@ -1,5 +1,5 @@
 import Link from "next/link";
-import { AlertTriangle, Pencil, Plus, Users } from "lucide-react";
+import { AlertTriangle, FileDown, Pencil, Plus, Users } from "lucide-react";
 import { AdminHeader, Panel, Pill, TableWrap } from "@/components/admin/ui";
 import { SessionForm, type SessionFormValues } from "@/components/admin/session-form";
 import { CancelSessionButton } from "@/components/admin/row-actions";
@@ -20,7 +20,17 @@ const STATUS: Record<string, { label: string; tone: "green" | "gray" | "amber" |
 type Row = { id: string; title: string; person: string; location: string; starts_at: string; ends_at: string; capacity: number; status: string; requiresReservation: boolean };
 
 /** Página compartida de administración para clases y conferencias. */
-export async function SessionsAdmin({ kind, event, sp }: { kind: "activity" | "conference"; event: EventRow; sp: Record<string, string | string[] | undefined> }) {
+export async function SessionsAdmin({
+  kind,
+  event,
+  sp,
+  canExport = false,
+}: {
+  kind: "activity" | "conference";
+  event: EventRow;
+  sp: Record<string, string | string[] | undefined>;
+  canExport?: boolean;
+}) {
   const admin = createAdminClient();
   const base = kind === "activity" ? "/admin/actividades" : "/admin/conferencias";
   const [{ data }, avail] = await Promise.all([
@@ -145,6 +155,13 @@ export async function SessionsAdmin({ kind, event, sp }: { kind: "activity" | "c
                     <Pill tone={STATUS[r.status].tone}>{STATUS[r.status].label}</Pill>
                   </TableCell>
                   <TableCell className="text-right whitespace-nowrap">
+                    {r.requiresReservation && canExport && (
+                      <Button asChild size="icon-sm" variant="ghost" aria-label="Lista de asistentes en PDF">
+                        <a href={`/admin/exportar/clases?formato=pdf&${kind === "activity" ? "actividad" : "conferencia"}=${r.id}`} download>
+                          <FileDown />
+                        </a>
+                      </Button>
+                    )}
                     {r.requiresReservation && (
                       <Button asChild size="icon-sm" variant="ghost" aria-label="Ver reservas">
                         <Link href={`/admin/reservas?${kind === "activity" ? "actividad" : "conferencia"}=${r.id}`}>

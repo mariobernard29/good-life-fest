@@ -1,16 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { AdminHeader, CHANNEL_LABEL, FilterSelect, ORDER_STATUS, PAYMENT_LABEL, Pagination, Panel, Pill, SearchForm, TableWrap } from "@/components/admin/ui";
-import { ManualSaleForm } from "@/components/admin/manual-sale-form";
+import { UserPlus } from "lucide-react";
+import { AdminHeader, CHANNEL_LABEL, FilterSelect, ORDER_STATUS, PAYMENT_LABEL, Pagination, Pill, SearchForm, TableWrap } from "@/components/admin/ui";
 import { ConfirmPaymentButton } from "@/components/admin/row-actions";
+import { Button } from "@/components/ui/button";
 import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
 import { requireStaffPage } from "@/lib/auth/staff";
 import { hasPermission } from "@/lib/auth/permissions";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { getRpc } from "@/lib/db/server-rpc";
 import { likePattern, PAGE_SIZE, pageRange, parsePage, str } from "@/lib/admin/common";
 import { formatDateTime, formatMoney } from "@/lib/format";
-import type { TicketAvailability, TicketTypeRow } from "@/lib/types";
+import { SALE_SOURCE_LABEL } from "@/lib/participants/labels";
 
 export const metadata: Metadata = { title: "Ventas y taquilla" };
 
@@ -25,7 +25,7 @@ export default async function SalesPage({ searchParams }: PageProps<"/admin/vent
 
   let query = admin
     .from("orders")
-    .select("id, reference, buyer_name, buyer_email, total_cents, status, channel, payment_method, created_at, paid_at, notes, order_items(quantity, ticket_types(name))", { count: "exact" })
+    .select("id, reference, buyer_name, buyer_email, total_cents, status, channel, payment_method, sale_source, created_at, paid_at, notes, order_items(quantity, ticket_types(name))", { count: "exact" })
     .eq("event_id", ctx.event.id)
     .order("created_at", { ascending: false })
     .range(...pageRange(page));
@@ -35,29 +35,23 @@ export default async function SalesPage({ searchParams }: PageProps<"/admin/vent
   const { data: orders, count } = await query;
 
   const canSell = hasPermission(ctx.permissions, "sales.manual");
-  const [{ data: types }, availability] = canSell
-    ? await Promise.all([
-        admin.from("ticket_types").select("*").eq("event_id", ctx.event.id).in("sale_status", ["on_sale", "box_office_only"]).order("sort_order"),
-        getRpc().call<TicketAvailability[]>("get_ticket_availability", { p_event_id: ctx.event.id }),
-      ])
-    : [{ data: [] }, [] as TicketAvailability[]];
+  const canRegister = hasPermission(ctx.permissions, "participants.register");
 
   return (
     <>
-      <AdminHeader title="Ventas y taquilla" description="Pedidos en línea y ventas físicas. Todas comparten el mismo inventario." />
-      {canSell && (
-        <Panel title="Registrar venta física o cortesía" className="mb-6">
-          <ManualSaleForm
-            ticketTypes={((types ?? []) as TicketTypeRow[]).map((t) => ({
-              id: t.id,
-              name: t.name,
-              priceCents: t.price_cents,
-              available: availability.find((a) => a.ticket_type_id === t.id)?.available ?? 0,
-            }))}
-            canComplimentary={hasPermission(ctx.permissions, "sales.complimentary")}
-          />
-        </Panel>
-      )}
+      <AdminHeader
+        title="Ventas y taquilla"
+        description="Las entradas se venden en puntos físicos y por mensaje. Cada venta se registra junto con la persona."
+        actions={
+          canRegister && (
+            <Button asChild className="rounded-full">
+              <Link href="/admin/asistentes/nuevo">
+                <UserPlus /> Registrar participante
+              </Link>
+            </Button>
+          )
+        }
+      />
 
       <SearchForm placeholder="Buscar por referencia, correo o nombre" defaultValue={q}>
         <FilterSelect name="estado" label="Estado" value={status} options={Object.entries(ORDER_STATUS).map(([value, v]) => ({ value, label: v.label }))} />
@@ -101,7 +95,7 @@ export default async function SalesPage({ searchParams }: PageProps<"/admin/vent
                   </TableCell>
                   <TableCell className="text-xs">{items.map((i) => `${i.quantity} × ${i.ticket_types?.name ?? ""}`).join(", ")}</TableCell>
                   <TableCell className="text-xs">
-                    {CHANNEL_LABEL[o.channel]} · {PAYMENT_LABEL[o.payment_method]}
+                    {o.sale_source ? SALE_SOURCE_LABEL[o.sale_source] : CHANNEL_LABEL[o.channel]} · {PAYMENT_LABEL[o.payment_method]}
                   </TableCell>
                   <TableCell className="text-right tabular-nums">{formatMoney(o.total_cents)}</TableCell>
                   <TableCell>

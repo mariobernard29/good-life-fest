@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Ban, CheckCircle2, Loader2, Trash2, XCircle } from "lucide-react";
+import { Ban, CheckCircle2, Loader2, MailPlus, Trash2, Undo2, Watch, XCircle } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogFooter, DialogHeader, DialogTitle, DialogTrigger } from "@/components/ui/dialog";
@@ -11,6 +11,8 @@ import { confirmPaymentAction, voidTicketAction } from "@/app/admin/_actions/sal
 import { adminCancelReservationAction, cancelSessionAction } from "@/app/admin/_actions/sessions";
 import { deleteContentAction } from "@/app/admin/_actions/catalog";
 import { deleteSettingItemAction, setDemoFlagAction, setStaffActiveAction } from "@/app/admin/_actions/operations";
+import { resendActivationAction, setWristbandAction } from "@/app/admin/_actions/participants";
+import { cancelNotificationAction } from "@/app/admin/_actions/notifications";
 
 function useRun() {
   const [pending, start] = useTransition();
@@ -121,6 +123,47 @@ export function DemoFlagToggle({ isDemo }: { isDemo: boolean }) {
   return (
     <Button size="sm" variant="outline" disabled={pending} onClick={() => run(() => setDemoFlagAction(!isDemo))}>
       {isDemo ? "Retirar aviso de demostración" : "Mostrar aviso de demostración"}
+    </Button>
+  );
+}
+
+/** Pulsera entregada / pendiente. `compact` muestra solo el botón principal (tablas). */
+export function WristbandToggle({ ticketId, delivered, compact }: { ticketId: string; delivered: boolean; compact?: boolean }) {
+  const { pending, run } = useRun();
+  if (delivered) {
+    return (
+      <Button
+        size="sm"
+        variant="ghost"
+        className="text-muted-foreground"
+        disabled={pending}
+        onClick={() => confirm("¿Regresar la pulsera a pendiente?") && run(() => setWristbandAction(ticketId, false))}
+      >
+        {pending ? <Loader2 className="animate-spin" /> : <Undo2 />} {compact ? "Deshacer" : "Marcar como pendiente"}
+      </Button>
+    );
+  }
+  return (
+    <Button size="sm" variant="outline" disabled={pending} onClick={() => run(() => setWristbandAction(ticketId, true))}>
+      {pending ? <Loader2 className="animate-spin" /> : <Watch />} Entregar pulsera
+    </Button>
+  );
+}
+
+export function ResendActivationButton({ profileId }: { profileId: string }) {
+  const { pending, run } = useRun();
+  return (
+    <Button size="sm" variant="ghost" disabled={pending} onClick={() => run(() => resendActivationAction(profileId))}>
+      {pending ? <Loader2 className="animate-spin" /> : <MailPlus />} Reenviar correo
+    </Button>
+  );
+}
+
+export function CancelNotificationButton({ id }: { id: string }) {
+  const { pending, run } = useRun();
+  return (
+    <Button size="sm" variant="ghost" className="text-destructive" disabled={pending} onClick={() => confirm("¿Cancelar este aviso programado?") && run(() => cancelNotificationAction(id))}>
+      {pending ? <Loader2 className="animate-spin" /> : <XCircle />} Cancelar
     </Button>
   );
 }

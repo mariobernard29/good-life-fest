@@ -52,3 +52,23 @@ export function getSecretKey(): string {
 export function isDemoPaymentsEnabled(): boolean {
   return process.env.DEMO_PAYMENTS !== "false";
 }
+
+/** Correo transaccional (Resend). `null` si falta configurarlo. */
+export function getEmailConfig(): { apiKey: string; from: string } | null {
+  const apiKey = process.env.RESEND_API_KEY;
+  const from = process.env.EMAIL_FROM;
+  return apiKey && from ? { apiKey, from } : null;
+}
+
+/** Web Push (VAPID). `null` si falta configurarlo. */
+export function getPushConfig(): { publicKey: string; privateKey: string; subject: string } | null {
+  const publicKey = process.env.NEXT_PUBLIC_VAPID_PUBLIC_KEY;
+  const privateKey = process.env.VAPID_PRIVATE_KEY;
+  const subject = process.env.VAPID_SUBJECT;
+  return publicKey && privateKey && subject ? { publicKey, privateKey, subject } : null;
+}
+
+/** Secreto con el que el programador (pg_cron) llama al despachador de notificaciones. */
+export function getCronSecret(): string | undefined {
+  return process.env.CRON_SECRET || undefined;
+}

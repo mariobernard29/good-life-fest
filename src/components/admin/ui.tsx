@@ -1,6 +1,6 @@
 import Link from "next/link";
 import type { ReactNode } from "react";
-import { ChevronLeft, ChevronRight, Search } from "lucide-react";
+import { ChevronLeft, ChevronRight, Download, FileSpreadsheet, FileText, Search } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { cn } from "@/lib/utils";
 
@@ -163,4 +163,30 @@ export function Pagination({ page, total, pageSize, params }: { page: number; to
 
 export function TableWrap({ children }: { children: ReactNode }) {
   return <div className="overflow-x-auto rounded-2xl border border-border bg-card">{children}</div>;
+}
+
+/** Botones de descarga Excel / PDF hacia un route handler de /admin/exportar. */
+export function ExportLinks({ href, label, params }: { href: string; label?: string; params?: Record<string, string | undefined> }) {
+  const url = (formato: "xlsx" | "pdf") => {
+    const sp = new URLSearchParams({ formato });
+    Object.entries(params ?? {}).forEach(([k, v]) => v && sp.set(k, v));
+    return `${href}?${sp.toString()}`;
+  };
+  return (
+    <div className="flex items-center gap-1 rounded-full border border-border bg-card p-1" role="group" aria-label={`Exportar ${label ?? ""}`.trim()}>
+      <span className="flex items-center gap-1.5 pr-1 pl-2.5 text-xs text-muted-foreground">
+        <Download className="size-3.5" /> {label ? `Exportar ${label.toLowerCase()}` : "Exportar"}
+      </span>
+      <Button asChild size="sm" variant="ghost" className="rounded-full">
+        <a href={url("xlsx")} download>
+          <FileSpreadsheet /> Excel
+        </a>
+      </Button>
+      <Button asChild size="sm" variant="ghost" className="rounded-full">
+        <a href={url("pdf")} download>
+          <FileText /> PDF
+        </a>
+      </Button>
+    </div>
+  );
 }

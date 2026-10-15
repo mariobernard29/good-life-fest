@@ -66,6 +66,11 @@ export function MobileNav({ items }: { items: Item[] }) {
                 <InstagramIcon className="size-4" /> Instagram
               </a>
             </Button>
+            <Button asChild size="lg" variant="outline" className="h-12 rounded-full">
+              <Link href="/mi-cuenta" onClick={() => setOpen(false)}>
+                Mi cuenta
+              </Link>
+            </Button>
             <Button asChild size="lg" className="h-12 rounded-full">
               <Link href="/entradas" onClick={() => setOpen(false)}>
                 Boletos

@@ -3,6 +3,8 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, Bell, CalendarHeart, QrCode, Sparkles } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import { NotificationsPrompt } from "@/components/portal/notifications-prompt";
+import { reminderMinutes } from "@/lib/push/dispatch";
 import { requireUserPage } from "@/lib/auth/session";
 import { getCurrentEvent, isEventPublic } from "@/lib/events/current";
 import { getAnnouncements } from "@/lib/events/public";
@@ -13,7 +15,7 @@ export const metadata: Metadata = { title: "Mi cuenta" };
 
 export default async function PortalHome({ searchParams }: PageProps<"/mi-cuenta">) {
   const user = await requireUserPage("/mi-cuenta");
-  const { contrasena } = await searchParams;
+  const { contrasena, bienvenida } = await searchParams;
   const event = await getCurrentEvent();
   const [profile, tickets, reservations, announcements] = await Promise.all([
     getMyProfile(user.id),
@@ -29,6 +31,7 @@ export default async function PortalHome({ searchParams }: PageProps<"/mi-cuenta
   return (
     <div className="space-y-8">
       {contrasena === "actualizada" && <p className="rounded-xl bg-success/10 px-4 py-3 text-sm text-success">Tu contraseña se actualizó.</p>}
+      {bienvenida && <p className="rounded-xl bg-success/10 px-4 py-3 text-sm text-success">¡Tu cuenta quedó activada! Ya puedes apartar tu lugar en las clases.</p>}
       <section>
         <p className="eyebrow">Mi cuenta</p>
         <h1 className="display mt-1 text-5xl">Hola, {firstName}</h1>
@@ -38,6 +41,8 @@ export default async function PortalHome({ searchParams }: PageProps<"/mi-cuenta
           </p>
         )}
       </section>
+
+      <NotificationsPrompt reminderMinutes={reminderMinutes(event?.settings)} highlight={Boolean(bienvenida)} />
 
       {/* Acceso rápido al QR */}
       <Link
@@ -49,7 +54,7 @@ export default async function PortalHome({ searchParams }: PageProps<"/mi-cuenta
           <p className="display mt-1 text-3xl">
             {valid.length === 0 ? "Sin entradas activas" : valid.length === 1 ? "1 entrada activa" : `${valid.length} entradas activas`}
           </p>
-          <p className="mt-1 text-sm text-cream/70">{valid.length ? "Toca para mostrar tu código QR" : "Compra o vincula tu entrada"}</p>
+          <p className="mt-1 text-sm text-cream/70">{valid.length ? "Toca para mostrar tu código QR" : "Aún no tienes entrada en esta cuenta"}</p>
         </div>
         <div className="grid size-16 shrink-0 place-items-center rounded-2xl bg-cream text-ink">
           <QrCode className="size-8" />

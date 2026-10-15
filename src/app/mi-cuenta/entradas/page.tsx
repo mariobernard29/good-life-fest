@@ -64,12 +64,12 @@ export default async function MyTicketsPage({ searchParams }: PageProps<"/mi-cue
           title="Aún no tienes entradas"
           action={
             <Button asChild className="rounded-full">
-              <Link href="/entradas">Comprar entradas</Link>
+              <Link href="/entradas">Cómo comprar</Link>
             </Button>
           }
         >
           {user.emailConfirmed
-            ? `Si compraste con otro correo, crea una cuenta con ese correo para verlas. Correo de esta cuenta: ${user.email}.`
+            ? `Las entradas se venden en puntos físicos y por mensaje; al registrarte con este correo (${user.email}) aparecerán aquí. Si diste otro correo, entra con esa cuenta.`
             : "Confirma tu correo electrónico para vincular las compras hechas con él."}
         </EmptyState>
       ) : (

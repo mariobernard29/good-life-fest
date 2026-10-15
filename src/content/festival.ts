@@ -15,8 +15,14 @@ export const FEST = {
   mapsUrl: "https://maps.app.goo.gl/VRNatKywZ2Pkqot16",
   instagramUrl: "https://www.instagram.com/goodlifewellnessfestlosmochis/",
   instagramHandle: "@goodlifewellnessfestlosmochis",
-  // Venta de boletos y registro de cuentas cerrados hasta el lanzamiento.
-  ticketsOpen: false,
+  // Las entradas se venden SOLO en puntos físicos o por mensaje (WhatsApp / DM).
+  // El personal registra a cada persona y le llega un correo para activar su cuenta.
+  // salesOpen: muestra los puntos de venta y el contacto en /entradas.
+  salesOpen: false,
+  // Compra en línea (/comprar) y registro libre (/registro): desactivados; el código
+  // se conserva por si algún día se reactivan.
+  onlineSales: false,
+  selfSignup: false,
   // Fecha tentativa: un solo día.
   date: "Domingo 17 de enero de 2027",
   hours: "8:00 a 21:00 h",
@@ -152,6 +158,26 @@ export const CHALLENGES = ["Reto funcional", "Reto de fuerza", "Reto de resisten
 export const CHALLENGE_PRIZES = ["Premios", "Productos", "Experiencias", "Reconocimientos"];
 
 export const WELCOME_KIT = ["Pulsera oficial", "Bolsa Good Life", "Playera oficial", "Toalla", "Productos de patrocinadores", "Muestras", "Cupones", "Beneficios", "Regalos", "Material informativo"];
+/**
+ * Dónde y cómo se compran las entradas (se muestra en /entradas cuando FEST.salesOpen).
+ * Completa los puntos de venta y el número de WhatsApp antes de abrir la venta.
+ */
+export const TICKET_SALES: {
+  /** Número de WhatsApp con lada, solo dígitos (p. ej. "526681234567"). Vacío = no se muestra. */
+  whatsapp: string;
+  points: { name: string; address: string; hours?: string; mapsUrl?: string }[];
+} = {
+  whatsapp: "",
+  points: [],
+};
+
+export const HOW_TO_BUY: { title: string; text: string }[] = [
+  { title: "Compra tu entrada", text: "En un punto de venta físico o por mensaje (WhatsApp o DM en Instagram)." },
+  { title: "Te registramos", text: "Capturamos tu nombre, correo, teléfono y edad. Si compras por mensaje, recoges tu pulsera antes del festival o en la entrada." },
+  { title: "Activa tu cuenta", text: "Te llega un correo: crea tu contraseña y entra a tu portal con tu código QR." },
+  { title: "Aparta tus clases", text: "Reserva tu lugar en clases y actividades y activa los avisos para no perderte nada." },
+];
+
 export const WRISTBAND_USES = ["Acceso", "Identificación", "Control de clases", "Dinámicas", "Activaciones", "Beneficios", "Concursos", "Acceso a experiencias especiales"];
 
 export const AUDIENCE = [
@@ -230,7 +256,8 @@ export const FAQS = [
   { q: "¿Qué es Good Life Wellness Fest?", a: "Un evento premium de bienestar y estilo de vida que combina clases, conferencias, activaciones, marcas, productos y servicios. No es solo una expo ni una competencia: es una experiencia integral para vivir, probar y experimentar." },
   { q: "¿Dónde será?", a: "En el Lago Ávila, en Los Mochis, Sinaloa." },
   { q: "¿Cuándo es?", a: "Un solo día: el domingo 17 de enero de 2027, de 8:00 a 21:00 h (hora de Los Mochis)." },
-  { q: "¿Cómo compro mi entrada?", a: "La venta de boletos se abrirá próximamente. Síguenos en Instagram (@goodlifewellnessfestlosmochis) para enterarte en cuanto esté disponible." },
+  { q: "¿Cómo compro mi entrada?", a: "Las entradas se venden en nuestros puntos de venta físicos y por mensaje (WhatsApp o DM en Instagram @goodlifewellnessfestlosmochis). Al comprar registramos tu nombre, correo, teléfono y edad; te llegará un correo para crear tu contraseña y entrar a tu portal." },
+  { q: "¿Cómo aparto mi lugar en las clases?", a: "Con tu cuenta activada entra a «Mi cuenta» → «Reservar». Los cupos son limitados; si activas las notificaciones te avisaremos antes de cada clase que apartes." },
   { q: "¿A quién va dirigido?", a: "A personas de aproximadamente 18 a 50 años interesadas en fitness, salud, nutrición, running, yoga, belleza, recuperación, salud mental y estilo de vida saludable. Activos, profesionales, empresarios, deportistas y familias." },
   { q: "¿Qué incluye mi entrada?", a: "Podrás recibir un welcome kit con pulsera oficial, bolsa Good Life, playera, toalla, productos y muestras de patrocinadores, cupones y beneficios. Los detalles se darán a conocer con el lanzamiento de boletos." },
   { q: "¿Para qué sirve la pulsera Good Life?", a: "Es tu identificación durante todo el festival: acceso, control de clases, dinámicas, activaciones, beneficios, concursos y acceso a experiencias especiales." },

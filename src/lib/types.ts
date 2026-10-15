@@ -10,6 +10,8 @@ export type EventSettings = {
   contact_whatsapp?: string;
   instagram_url?: string;
   hero_tagline?: string;
+  /** Minutos antes de cada clase reservada para el recordatorio push (0 = desactivado; por defecto 30). */
+  reminder_minutes?: number;
 };
 
 export type EventRow = {

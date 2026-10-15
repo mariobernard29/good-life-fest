@@ -21,7 +21,9 @@ export const PERMISSIONS = [
   "orders.view",
   "sales.manual",
   "sales.complimentary",
+  "participants.register",
   "attendees.view",
+  "wristbands.manage",
   "tickets.void",
   "sessions.manage",
   "reservations.manage",
@@ -31,6 +33,8 @@ export const PERMISSIONS = [
   "content.manage",
   "staff.manage",
   "settings.manage",
+  "exports.download",
+  "notifications.send",
 ] as const;
 export type Permission = (typeof PERMISSIONS)[number];
 
@@ -41,12 +45,14 @@ const ROLE_PERMISSIONS: Record<StaffRole, readonly Permission[]> = {
     "dashboard.view",
     "orders.view",
     "sales.manual",
+    "participants.register",
     "attendees.view",
+    "wristbands.manage",
     "checkin.perform",
     "checkin.view_log",
     "incidents.manage",
   ],
-  checkin_staff: ["checkin.perform"],
+  checkin_staff: ["checkin.perform", "wristbands.manage"],
 };
 
 /** Permisos adicionales asignables individualmente (columna event_staff.permissions). */
