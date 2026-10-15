@@ -18,6 +18,11 @@ export const IMG = {
   lakeEntrance: l("lago-3.jpg", "Entrada del recinto iluminada"),
   lakeLogo: l("hero-logo-lago.jpg", "Logotipo de Good Life Wellness Fest sobre el lago"),
 
+  // Charlas y market
+  stage: l("charlas-1.jpg", "Charla de bienestar al aire libre frente al público"),
+  talk: l("charlas-2.jpg", "Panel de bienestar en el escenario con público"),
+  market: l("wellness-market.jpg", "Perchero con ropa deportiva en el wellness market"),
+
   // Fitness & movement
   yogaPark: u("photo-1687436874774-fa0d4616bec9", "Grupo practicando yoga al aire libre", "Marea Wellness"),
   yogaBeach: u("photo-1545205597-3d9d02c29597", "Cinco mujeres practicando yoga frente al mar", "Kaylee Garrett"),
@@ -69,12 +74,8 @@ export const IMG = {
   handsUp: u("photo-1608405059861-b21a68ae76a2", "Grupo con los brazos en alto", "Amau Mexia"),
 
   // Stage, marcas, entretenimiento
-  stage: u("photo-1773828755374-0ee802d9f44b", "Conferencista frente a un gran público", "Marwen Larafa"),
-  speaker: u("photo-1559223694-98ed5e272fef", "Ponente en el escenario", "Product School"),
-  speakerWoman: u("photo-1560523159-94c9d18bcf27", "Ponente en el escenario", "Product School"),
   expo: u("photo-1761195689615-9469b65dac01", "Personas interactuando en un stand", "Unsplash"),
   convention: u("photo-1785123463585-1ba21ff9ff57", "Personas recorriendo una exposición", "Unsplash"),
-  market: u("photo-1599033183537-54ff77f58f75", "Mercado con puestos de comida", "Unsplash"),
   apparel: u("photo-1763771522867-c26bf75f12bc", "Exhibición de ropa deportiva", "Unsplash"),
   sneakers: u("photo-1760302318631-a8d342cd4951", "Tenis deportivos en exhibición", "Unsplash"),
   crowd: u("photo-1533174072545-7a4b6ad7a6c3", "Personas reunidas en un festival al aire libre", "Danny Howe"),

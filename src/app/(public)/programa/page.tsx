@@ -42,14 +42,14 @@ export default function ProgramPage() {
           </div>
           <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-4">
             {[
-              { p: IMG.functional, t: "Funcional" },
+              { p: IMG.hiit, t: "Hyrox principiantes" },
+              { p: IMG.battleRopes, t: "Hyrox avanzados" },
               { p: IMG.yogaPark, t: "Yoga" },
-              { p: IMG.pilates, t: "Pilates" },
-              { p: IMG.spinning, t: "Spinning" },
-              { p: IMG.hiit, t: "HIIT" },
-              { p: IMG.dance, t: "Dance fitness" },
+              { p: IMG.meditation, t: "Meditación" },
               { p: IMG.mobility, t: "Movilidad" },
-              { p: IMG.boxing, t: "Entrenamientos especiales" },
+              { p: IMG.groupField, t: "Funcional fitness" },
+              { p: IMG.functional, t: "CrossFit" },
+              { p: IMG.jump, t: "Y más por anunciar" },
             ].map((c) => (
               <PhotoCard key={c.t} photo={c.p} title={c.t} className="min-h-64" sizes="(min-width: 1024px) 25vw, 50vw" />
             ))}

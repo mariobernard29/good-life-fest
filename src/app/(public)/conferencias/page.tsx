@@ -24,10 +24,7 @@ export default function StagePage() {
             <Chips items={stage.items} />
           </div>
         </div>
-        <div className="grid grid-cols-2 gap-3">
-          <Photo photo={IMG.speaker} sizes="25vw" className="aspect-[3/4] rounded-3xl" />
-          <Photo photo={IMG.speakerWoman} sizes="25vw" className="mt-10 aspect-[3/4] rounded-3xl" />
-        </div>
+        <Photo photo={IMG.talk} sizes="(min-width: 768px) 50vw, 100vw" className="aspect-square rounded-3xl" />
       </section>
 
       {/* Speaker principal */}

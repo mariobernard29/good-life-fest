@@ -52,8 +52,8 @@ export const PILLARS: Pillar[] = [
     slug: "fitness",
     title: "Fitness & Movement",
     lead: "El movimiento como parte fundamental de una vida saludable.",
-    items: ["Funcional", "Yoga", "Pilates", "Spinning", "HIIT", "Dance fitness", "Movilidad", "Fuerza", "Entrenamientos especiales", "Retos fitness"],
-    photos: [IMG.yogaPark, IMG.spinning, IMG.pilates],
+    items: ["Hyrox principiantes", "Hyrox avanzados", "Yoga", "Meditación", "Movilidad", "Funcional fitness", "CrossFit", "Y más por anunciar"],
+    photos: [IMG.yogaPark, IMG.functional, IMG.battleRopes],
   },
   {
     n: "02",
@@ -137,7 +137,7 @@ export const ZONES: { name: string; kicker: string; text: string; items: string[
     kicker: "Área comercial",
     text: "Marcas que presentan y venden sus productos para tu bienestar.",
     items: ["Fitness", "Ropa deportiva", "Suplementos", "Alimentos", "Bebidas", "Belleza", "Salud", "Tecnología", "Wellness", "Servicios"],
-    photo: IMG.apparel,
+    photo: IMG.market,
   },
   {
     name: "Food & Wellness",
