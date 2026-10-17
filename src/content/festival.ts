@@ -46,7 +46,7 @@ export const VERBS: { title: string; text: string; photo: Photo }[] = [
   { title: "Te nutres", text: "Nutrición, alimentación saludable y productos wellness.", photo: IMG.acai },
   { title: "Te recuperas", text: "Recovery, movilidad, relajación y cuidado corporal.", photo: IMG.massage },
   { title: "Te cuidas", text: "Salud, prevención, belleza y bienestar.", photo: IMG.skincare },
-  { title: "Te conectas", text: "Marcas, profesionales, comunidad y nuevas experiencias.", photo: IMG.expo },
+  { title: "Te conectas", text: "Marcas, profesionales, comunidad y nuevas experiencias.", photo: IMG.talk },
   { title: "Te diviertes", text: "Música, dinámicas, retos, activaciones y entretenimiento.", photo: IMG.dancingSunset },
 ];
 
