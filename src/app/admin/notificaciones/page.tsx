@@ -86,7 +86,7 @@ export default async function NotificationsAdminPage() {
         <Panel title="Nuevo aviso">
           <ActionForm action={createNotificationAction} submitLabel="Enviar / programar aviso">
             <Field label="Título" name="title" maxLength={80} required placeholder="¡Bienvenida al festival!" />
-            <TextareaField label="Mensaje" name="body" maxLength={300} rows={3} required placeholder="Las puertas abren a las 8:00. Recoge tu pulsera en la entrada." />
+            <TextareaField label="Mensaje" name="body" maxLength={300} rows={3} required placeholder="Las puertas abren a las 6:30. Recoge tu pulsera en la entrada." />
             <div className="grid gap-4 sm:grid-cols-2">
               <SelectField label="Destinatarios" name="target" options={targets} defaultValue="all" />
               <Field label="Abrir al tocar (opcional)" name="url" placeholder="/mi-cuenta/reservas" hint="Ruta del sitio; por defecto, Mi cuenta." />

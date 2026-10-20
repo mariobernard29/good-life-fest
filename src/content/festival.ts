@@ -24,10 +24,10 @@ export const FEST = {
   onlineSales: false,
   selfSignup: false,
   // Fecha tentativa: un solo día.
-  date: "Domingo 17 de enero de 2027",
-  hours: "8:00 a 21:00 h",
-  dateLabel: "Domingo 17 de enero de 2027 · 8:00 a 21:00 h",
-  startsAt: "2027-01-17T08:00:00-07:00",
+  date: "Domingo 24 de enero de 2027",
+  hours: "6:30 a 18:00 h",
+  dateLabel: "Domingo 24 de enero de 2027 · 6:30 a 18:00 h",
+  startsAt: "2027-01-24T06:30:00-07:00",
   pillarsLine: ["Fitness", "Health", "Nutrition", "Beauty", "Recovery", "Mind", "Lifestyle", "Entertainment"],
   closing: ["Vive la experiencia.", "Descubre tu mejor versión.", "Live the Good Life."],
 };
@@ -254,7 +254,7 @@ export const OBJECTIVES = [
 export const FAQS = [
   { q: "¿Qué es Good Life Wellness Fest?", a: "Un evento premium de bienestar y estilo de vida que combina clases, conferencias, activaciones, marcas, productos y servicios. No es solo una expo ni una competencia: es una experiencia integral para vivir, probar y experimentar." },
   { q: "¿Dónde será?", a: "En el Lago Ávila, en Los Mochis, Sinaloa." },
-  { q: "¿Cuándo es?", a: "Un solo día: el domingo 17 de enero de 2027, de 8:00 a 21:00 h (hora de Los Mochis)." },
+  { q: "¿Cuándo es?", a: "Un solo día: el domingo 24 de enero de 2027, de 6:30 a 18:00 h (hora de Los Mochis)." },
   { q: "¿Cómo compro mi entrada?", a: "Las entradas se venden en nuestros puntos de venta físicos y por mensaje (WhatsApp o DM en Instagram @goodlifewellnessfestlosmochis). Al comprar registramos tu nombre, correo, teléfono y edad; te llegará un correo para crear tu contraseña y entrar a tu portal." },
   { q: "¿Cómo aparto mi lugar en las clases?", a: "Con tu cuenta activada entra a «Mi cuenta» → «Reservar». Los cupos son limitados; si activas las notificaciones te avisaremos antes de cada clase que apartes." },
   { q: "¿A quién va dirigido?", a: "A personas de aproximadamente 18 a 50 años interesadas en fitness, salud, nutrición, running, yoga, belleza, recuperación, salud mental y estilo de vida saludable. Activos, profesionales, empresarios, deportistas y familias." },

@@ -159,7 +159,7 @@ export function toClassRosters(sessions: SessionSource[], reservations: Reservat
     });
 }
 
-/** Nombre de archivo seguro: «participantes-2027-01-17.xlsx». */
+/** Nombre de archivo seguro: «participantes-2027-01-24.xlsx». */
 export function exportFileName(base: string, ext: "xlsx" | "pdf", now = new Date()) {
   const slug = base
     .normalize("NFD")
