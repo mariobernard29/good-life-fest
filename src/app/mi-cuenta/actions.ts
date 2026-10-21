@@ -88,7 +88,7 @@ export async function updateProfileAction(_prev: ProfileState, formData: FormDat
   }
 }
 
-/** Cambia el nombre impreso en un boleto propio (no altera propiedad ni QR). */
+/** Cambia el nombre impreso en un boleto propio (no altera la propiedad). */
 export async function updateAttendeeNameAction(input: { ticketId: string; attendeeName: string }): Promise<ActionResult<null>> {
   const parsed = ticketAttendeeSchema.safeParse(input);
   if (!parsed.success) return { ok: false, error: "Nombre inválido.", fieldErrors: fieldErrors(parsed.error) };

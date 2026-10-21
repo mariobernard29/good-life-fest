@@ -55,7 +55,7 @@ export function VoidTicketButton({ ticketId }: { ticketId: string }) {
       <DialogContent>
         <DialogHeader>
           <DialogTitle>Anular boleto</DialogTitle>
-          <DialogDescription>El QR dejará de dar acceso y se cancelarán sus reservas. Esta acción queda auditada. Si corresponde una devolución de dinero, gestiónala por separado.</DialogDescription>
+          <DialogDescription>El boleto quedará cancelado y se cancelarán sus reservas. Esta acción queda auditada. Si corresponde una devolución de dinero, gestiónala por separado.</DialogDescription>
         </DialogHeader>
         <Textarea placeholder="Motivo (obligatorio)" value={reason} onChange={(e) => setReason(e.target.value)} />
         <DialogFooter>

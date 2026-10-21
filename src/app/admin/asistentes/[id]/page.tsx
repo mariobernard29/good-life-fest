@@ -8,23 +8,10 @@ import { Button } from "@/components/ui/button";
 import { requireStaffPage } from "@/lib/auth/staff";
 import { hasPermission } from "@/lib/auth/permissions";
 import { createAdminClient } from "@/lib/supabase/admin";
-import { buildQrPayload, renderQrSvg } from "@/lib/tickets/qr";
 import { formatDateTime, formatMoney } from "@/lib/format";
-import { audit } from "@/lib/admin/common";
 import { SALE_SOURCE_LABEL } from "@/lib/participants/labels";
 
 export const metadata: Metadata = { title: "Detalle de asistente" };
-
-const CHECKIN_LABEL: Record<string, string> = {
-  accepted: "Acceso autorizado",
-  already_used: "Ya utilizado",
-  invalid: "Inválido",
-  payment_pending: "Pago pendiente",
-  cancelled: "Cancelado",
-  refunded: "Reembolsado",
-  wrong_event: "Otro evento",
-  not_allowed: "Zona no incluida",
-};
 
 export default async function AttendeeDetailPage({ params }: PageProps<"/admin/asistentes/[id]">) {
   const ctx = await requireStaffPage("attendees.view", "/admin/asistentes");
@@ -38,25 +25,17 @@ export default async function AttendeeDetailPage({ params }: PageProps<"/admin/a
     .maybeSingle();
   if (!t) notFound();
 
-  const [{ data: reservations }, { data: checkins }] = await Promise.all([
-    admin
-      .from("reservations")
-      .select("id, status, reserved_at, cancelled_at, activities(name, starts_at), conferences(title, starts_at)")
-      .eq("ticket_id", id)
-      .order("reserved_at", { ascending: false }),
-    admin.from("check_ins").select("id, result, access_area, method, created_at").eq("ticket_id", id).order("created_at", { ascending: false }).limit(20),
-  ]);
+  const { data: reservations } = await admin
+    .from("reservations")
+    .select("id, status, reserved_at, cancelled_at, activities(name, starts_at), conferences(title, starts_at)")
+    .eq("ticket_id", id)
+    .order("reserved_at", { ascending: false });
 
   const order = (t.order_items as { orders: Record<string, string | number | null> } | null)?.orders;
   const profile = t.profiles as { id: string; email: string; phone: string | null; age: number | null; activated_at: string | null } | null;
   const wristbandAt = t.wristband_delivered_at as string | null;
   const activeTicket = t.status !== "cancelled" && t.status !== "refunded";
   const st = TICKET_STATUS[t.status as string];
-  const qr = t.status === "valid" ? await renderQrSvg(buildQrPayload(t.qr_token as string)) : null;
-  if (qr) {
-    // Ver un QR válido es una acción sensible: queda auditada.
-    await audit({ actorId: ctx.user.id, eventId: ctx.event.id, action: "ticket.qr_viewed", entity: "ticket", entityId: id });
-  }
 
   return (
     <>
@@ -82,16 +61,12 @@ export default async function AttendeeDetailPage({ params }: PageProps<"/admin/a
               <dd>{(t.ticket_types as { name: string } | null)?.name}</dd>
             </div>
             <div className="flex justify-between">
-              <dt className="text-muted-foreground">Accesos</dt>
+              <dt className="text-muted-foreground">Zonas</dt>
               <dd>{((t.ticket_types as { access_areas: string[] } | null)?.access_areas ?? []).join(", ")}</dd>
             </div>
             <div className="flex justify-between">
               <dt className="text-muted-foreground">Emitido</dt>
               <dd>{formatDateTime(t.issued_at as string)}</dd>
-            </div>
-            <div className="flex justify-between">
-              <dt className="text-muted-foreground">Check-in</dt>
-              <dd>{t.checked_in_at ? formatDateTime(t.checked_in_at as string) : "—"}</dd>
             </div>
             <div className="flex justify-between gap-2">
               <dt className="text-muted-foreground">Pulsera</dt>
@@ -124,12 +99,6 @@ export default async function AttendeeDetailPage({ params }: PageProps<"/admin/a
             {hasPermission(ctx.permissions, "wristbands.manage") && activeTicket && <WristbandToggle ticketId={id} delivered={Boolean(wristbandAt)} />}
             {profile && !profile.activated_at && hasPermission(ctx.permissions, "participants.register") && <ResendActivationButton profileId={profile.id} />}
           </div>
-          {qr && (
-            <div className="mt-4">
-              <div className="mx-auto w-44 rounded-xl bg-white p-2 ring-1 ring-border [&_svg]:h-auto [&_svg]:w-full" dangerouslySetInnerHTML={{ __html: qr }} />
-              <p className="mt-2 text-center text-xs text-muted-foreground">Para entregar en taquilla. No compartas este QR con terceros.</p>
-            </div>
-          )}
         </Panel>
         <Panel title="Pedido">
           {order ? (
@@ -166,20 +135,6 @@ export default async function AttendeeDetailPage({ params }: PageProps<"/admin/a
             </dl>
           ) : (
             <p className="text-sm text-muted-foreground">Sin pedido asociado.</p>
-          )}
-        </Panel>
-        <Panel title="Historial de accesos">
-          {(checkins ?? []).length === 0 ? (
-            <p className="text-sm text-muted-foreground">Sin intentos de acceso.</p>
-          ) : (
-            <ul className="space-y-2 text-sm">
-              {checkins!.map((c) => (
-                <li key={c.id} className="flex justify-between gap-2">
-                  <span>{CHECKIN_LABEL[c.result] ?? c.result}</span>
-                  <span className="text-xs text-muted-foreground">{formatDateTime(c.created_at)}</span>
-                </li>
-              ))}
-            </ul>
           )}
         </Panel>
         <Panel title="Historial de reservas" className="lg:col-span-3">

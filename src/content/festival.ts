@@ -173,7 +173,7 @@ export const TICKET_SALES: {
 export const HOW_TO_BUY: { title: string; text: string }[] = [
   { title: "Compra tu entrada", text: "En un punto de venta físico o por mensaje (WhatsApp o DM en Instagram)." },
   { title: "Te registramos", text: "Capturamos tu nombre, correo, teléfono y edad. Si compras por mensaje, recoges tu pulsera antes del festival o en la entrada." },
-  { title: "Activa tu cuenta", text: "Te llega un correo: crea tu contraseña y entra a tu portal con tu código QR." },
+  { title: "Activa tu cuenta", text: "Te llega un correo: crea tu contraseña y entra a tu portal: ahí está tu boleto virtual y reservas tus clases." },
   { title: "Aparta tus clases", text: "Reserva tu lugar en clases y actividades y activa los avisos para no perderte nada." },
 ];
 

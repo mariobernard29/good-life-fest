@@ -36,7 +36,7 @@ describe("Permisos", () => {
   it("cada rol obtiene solo lo necesario", () => {
     const checkin = resolvePermissions([{ role: "checkin_staff", permissions: [] }]);
     expect([...checkin]).toEqual(["checkin.perform", "wristbands.manage"]);
-    expect(staffHome(checkin)).toBe("/check-in");
+    expect(staffHome(checkin)).toBe("/pulseras");
 
     const ticketing = resolvePermissions([{ role: "ticketing_staff", permissions: [] }]);
     expect(ticketing.has("sales.manual")).toBe(true);

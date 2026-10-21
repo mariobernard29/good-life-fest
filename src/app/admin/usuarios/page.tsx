@@ -14,8 +14,8 @@ export const metadata: Metadata = { title: "Personal y permisos" };
 const ROLE_HELP: Record<StaffRole, string> = {
   super_admin: "Todo, en todos los eventos.",
   event_admin: "Todo el evento: ventas, programa, personal, configuración, anulaciones y cortesías.",
-  ticketing_staff: "Taquilla: ventas físicas, asistentes, accesos, incidencias. Cortesías solo con permiso adicional.",
-  checkin_staff: "Solo validación de accesos en /check-in.",
+  ticketing_staff: "Taquilla: ventas físicas, asistentes, pulseras, incidencias. Cortesías solo con permiso adicional.",
+  checkin_staff: "Solo entrega de pulseras en /pulseras.",
 };
 
 export default async function StaffPage() {

@@ -6,7 +6,6 @@ import { EmptyState } from "@/components/site/blocks";
 import { TicketCard } from "@/components/portal/ticket-card";
 import { getCurrentEvent } from "@/lib/events/current";
 import { getMyOrders, getMyTickets } from "@/lib/portal/queries";
-import { buildQrPayload, renderQrSvg } from "@/lib/tickets/qr";
 import { formatDate, formatDateTime, formatMoney, formatTimeRange } from "@/lib/format";
 import { requireUserPage } from "@/lib/auth/session";
 
@@ -29,32 +28,28 @@ export default async function MyTicketsPage({ searchParams }: PageProps<"/mi-cue
   const [event, tickets, orders] = await Promise.all([getCurrentEvent(), getMyTickets(), getMyOrders()]);
   const dates = event ? `${formatDate(event.starts_at, event.timezone)} · ${formatTimeRange(event.starts_at, event.ends_at, event.timezone)} h` : "";
 
-  const cards = await Promise.all(
-    tickets.map(async (t) => ({
-      id: t.id,
-      code: t.public_code,
-      attendeeName: t.attendee_name,
-      typeName: t.ticket_types?.name ?? "Entrada",
-      status: t.status,
-      // El QR solo se genera en el servidor para boletos válidos del propio usuario.
-      qrSvg: t.status === "valid" ? await renderQrSvg(buildQrPayload(t.qr_token)) : null,
-      checkedInAt: t.checked_in_at,
-      eventName: event?.name ?? "Good Life Wellness Fest",
-      eventDates: dates,
-    })),
-  );
+  const cards = tickets.map((t) => ({
+    id: t.id,
+    code: t.public_code,
+    attendeeName: t.attendee_name,
+    typeName: t.ticket_types?.name ?? "Entrada",
+    status: t.status,
+    wristbandDeliveredAt: t.wristband_delivered_at,
+    eventName: event?.name ?? "Good Life Wellness Fest",
+    eventDates: dates,
+  }));
 
   return (
     <div className="space-y-8">
       <div>
         <p className="eyebrow">Mis entradas</p>
         <h1 className="display mt-1 text-4xl sm:text-5xl">Tus boletos</h1>
-        <p className="mt-2 text-sm text-muted-foreground">Toca el código QR para mostrarlo en pantalla completa en la entrada.</p>
+        <p className="mt-2 text-sm text-muted-foreground">Tu boleto virtual confirma tu compra. El acceso al festival es con tu pulsera Good Life; si aún no la tienes, recógela el día del evento antes de empezar.</p>
       </div>
       {typeof compra === "string" && /^GLF-[A-F0-9-]+$/.test(compra) && (
         <div className="rounded-2xl bg-success/10 p-4 text-success">
           <p className="font-medium">¡Compra confirmada! Pedido <span className="font-mono">{compra}</span></p>
-          <p className="text-sm">Tus boletos ya están aquí. Presenta el código QR en la entrada del festival.</p>
+          <p className="text-sm">Tus boletos virtuales ya están aquí y ya puedes reservar tus clases. Tu pulsera se entrega el día del evento antes de empezar.</p>
         </div>
       )}
 

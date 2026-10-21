@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useTransition } from "react";
-import { Maximize2, Pencil, Sun } from "lucide-react";
+import { CalendarDays, Pencil, Ticket, Watch } from "lucide-react";
 import { toast } from "sonner";
 import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
@@ -12,8 +12,8 @@ import { cn } from "@/lib/utils";
 import type { TicketStatus } from "@/lib/types";
 
 const STATUS: Record<TicketStatus, { label: string; className: string }> = {
-  valid: { label: "Válido", className: "bg-success/15 text-success" },
-  checked_in: { label: "Utilizado", className: "bg-secondary text-muted-foreground" },
+  valid: { label: "Activo", className: "bg-success/15 text-success" },
+  checked_in: { label: "Activo", className: "bg-success/15 text-success" },
   pending_payment: { label: "Pago pendiente", className: "bg-warning/15 text-warning" },
   cancelled: { label: "Cancelado", className: "bg-destructive/10 text-destructive" },
   refunded: { label: "Reembolsado", className: "bg-destructive/10 text-destructive" },
@@ -25,77 +25,70 @@ export type TicketCardData = {
   attendeeName: string;
   typeName: string;
   status: TicketStatus;
-  qrSvg: string | null;
-  checkedInAt: string | null;
+  wristbandDeliveredAt: string | null;
   eventName: string;
   eventDates: string;
 };
 
+/** Boleto virtual: comprobante de compra. El acceso al festival es con la pulsera física. */
 export function TicketCard({ t }: { t: TicketCardData }) {
-  const usable = t.status === "valid";
+  const active = t.status === "valid" || t.status === "checked_in";
   return (
-    <article className="overflow-hidden rounded-3xl border border-border bg-card">
-      <div className="flex items-center justify-between gap-3 bg-ink px-5 py-4 text-cream">
+    <article className={cn("overflow-hidden rounded-3xl border border-border bg-card", !active && "opacity-75")}>
+      <div className="flex items-start justify-between gap-3 bg-ink px-5 py-5 text-cream">
         <div>
-          <p className="text-[0.65rem] tracking-[0.25em] text-cream/60 uppercase">{t.eventName}</p>
-          <p className="display text-2xl leading-tight">{t.typeName}</p>
+          <p className="text-[0.65rem] tracking-[0.25em] text-cream/60 uppercase">Boleto virtual · {t.eventName}</p>
+          <p className="display mt-1 text-3xl leading-tight">{t.typeName}</p>
         </div>
-        <Badge className={cn("rounded-full border-0", STATUS[t.status].className)}>{STATUS[t.status].label}</Badge>
+        <Badge className={cn("shrink-0 rounded-full border-0", STATUS[t.status].className)}>{STATUS[t.status].label}</Badge>
       </div>
-      <div className="grid gap-5 p-5 sm:grid-cols-[180px_1fr] sm:items-center">
-        {t.qrSvg && usable ? (
-          <FullscreenQr t={t}>
-            <button type="button" className="group relative mx-auto block w-44 rounded-2xl bg-white p-3 ring-1 ring-border" aria-label="Abrir código QR en pantalla completa">
-              <span className="block [&_svg]:h-auto [&_svg]:w-full" dangerouslySetInnerHTML={{ __html: t.qrSvg }} />
-              <span className="absolute right-2 bottom-2 grid size-7 place-items-center rounded-full bg-ink text-cream opacity-90">
-                <Maximize2 className="size-3.5" />
-              </span>
-            </button>
-          </FullscreenQr>
-        ) : (
-          <div className="mx-auto grid size-44 place-items-center rounded-2xl bg-secondary p-4 text-center text-sm text-muted-foreground">
-            {t.status === "checked_in" ? "Acceso registrado" : t.status === "pending_payment" ? "Disponible al confirmar el pago" : "Boleto sin acceso"}
-          </div>
-        )}
-        <dl className="space-y-3 text-sm">
-          <div>
-            <dt className="text-xs text-muted-foreground">Asistente</dt>
-            <dd className="flex items-center gap-2 font-medium">
-              {t.attendeeName || "Sin nombre"} {usable && <EditName ticketId={t.id} current={t.attendeeName} />}
-            </dd>
-          </div>
-          <div>
-            <dt className="text-xs text-muted-foreground">Código</dt>
-            <dd className="font-mono tracking-wider">{t.code}</dd>
-          </div>
-          <div>
-            <dt className="text-xs text-muted-foreground">Fechas</dt>
-            <dd>{t.eventDates}</dd>
-          </div>
-        </dl>
-      </div>
-    </article>
-  );
-}
 
-function FullscreenQr({ t, children }: { t: TicketCardData; children: React.ReactNode }) {
-  return (
-    <Dialog>
-      <DialogTrigger asChild>{children}</DialogTrigger>
-      <DialogContent className="h-[100dvh] max-h-none w-screen max-w-none rounded-none border-0 bg-white p-6 sm:h-auto sm:max-w-md sm:rounded-3xl">
-        <DialogHeader className="text-center">
-          <DialogTitle className="display text-3xl text-ink">{t.typeName}</DialogTitle>
-          <DialogDescription className="text-ink/70">{t.attendeeName}</DialogDescription>
-        </DialogHeader>
-        <div className="mx-auto flex w-full max-w-[min(88vw,420px)] flex-1 flex-col items-center justify-center gap-5">
-          <div className="w-full bg-white [&_svg]:h-auto [&_svg]:w-full" dangerouslySetInnerHTML={{ __html: t.qrSvg ?? "" }} />
-          <p className="font-mono text-xl tracking-[0.2em] text-ink">{t.code}</p>
-          <p className="flex items-center gap-2 text-xs text-ink/60">
-            <Sun className="size-4" /> Sube el brillo de tu pantalla para escanear más rápido.
-          </p>
+      {/* Línea de corte del boleto */}
+      <div className="relative h-0 border-t border-dashed border-border">
+        <span className="absolute -top-3 -left-3 size-6 rounded-full bg-background" />
+        <span className="absolute -top-3 -right-3 size-6 rounded-full bg-background" />
+      </div>
+
+      <dl className="grid gap-4 p-5 text-sm sm:grid-cols-2">
+        <div className="sm:col-span-2">
+          <dt className="text-xs text-muted-foreground">Asistente</dt>
+          <dd className="flex items-center gap-2 text-lg font-medium">
+            {t.attendeeName || "Sin nombre"} {t.status === "valid" && <EditName ticketId={t.id} current={t.attendeeName} />}
+          </dd>
         </div>
-      </DialogContent>
-    </Dialog>
+        <div>
+          <dt className="text-xs text-muted-foreground">Folio</dt>
+          <dd className="flex items-center gap-1.5 font-mono tracking-wider">
+            <Ticket className="size-3.5 text-olive" /> {t.code}
+          </dd>
+        </div>
+        <div>
+          <dt className="text-xs text-muted-foreground">Fecha</dt>
+          <dd className="flex items-center gap-1.5">
+            <CalendarDays className="size-3.5 text-olive" /> {t.eventDates}
+          </dd>
+        </div>
+      </dl>
+
+      {active ? (
+        <div className={cn("mx-5 mb-5 flex items-start gap-3 rounded-2xl p-4 text-sm", t.wristbandDeliveredAt ? "bg-success/10 text-success" : "bg-warning/10 text-foreground")}>
+          <Watch className={cn("mt-0.5 size-5 shrink-0", !t.wristbandDeliveredAt && "text-warning")} />
+          {t.wristbandDeliveredAt ? (
+            <p>
+              <span className="font-medium">Pulsera entregada.</span> Llévala puesta el día del festival: es tu entrada.
+            </p>
+          ) : (
+            <p>
+              <span className="font-medium">Pulsera pendiente.</span> Recógela en el módulo de pulseras el día del evento antes de empezar; da tu nombre o el folio de este boleto.
+            </p>
+          )}
+        </div>
+      ) : (
+        <p className="mx-5 mb-5 rounded-2xl bg-secondary p-4 text-sm text-muted-foreground">
+          {t.status === "pending_payment" ? "Tu boleto se activa al confirmar el pago." : "Este boleto ya no es válido."}
+        </p>
+      )}
+    </article>
   );
 }
 
@@ -113,7 +106,7 @@ function EditName({ ticketId, current }: { ticketId: string; current: string }) 
       <DialogContent className="sm:max-w-sm">
         <DialogHeader>
           <DialogTitle>Nombre del asistente</DialogTitle>
-          <DialogDescription>Este nombre aparecerá al validar el boleto en la entrada.</DialogDescription>
+          <DialogDescription>Con este nombre te buscaremos al entregarte tu pulsera.</DialogDescription>
         </DialogHeader>
         <form
           onSubmit={(e) => {

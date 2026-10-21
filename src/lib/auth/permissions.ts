@@ -11,7 +11,7 @@ export const ROLE_LABELS: Record<Role, string> = {
   super_admin: "Superadministrador",
   event_admin: "Administrador del evento",
   ticketing_staff: "Taquilla",
-  checkin_staff: "Control de acceso",
+  checkin_staff: "Entrega de pulseras",
   attendee: "Asistente",
 };
 
@@ -88,6 +88,6 @@ export function assignableRoles(actorRoles: StaffRole[]): StaffRole[] {
 /** Página de inicio adecuada para cada perfil de personal. */
 export function staffHome(perms: ReadonlySet<Permission>): string {
   if (perms.has("dashboard.view")) return "/admin";
-  if (perms.has("checkin.perform")) return "/check-in";
+  if (perms.has("wristbands.manage")) return "/pulseras";
   return "/mi-cuenta";
 }

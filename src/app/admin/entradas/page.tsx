@@ -64,7 +64,7 @@ export default async function TicketTypesPage({ searchParams }: PageProps<"/admi
               <Field label="Orden" name="sortOrder" type="number" min={0} defaultValue={editing?.sort_order ?? 0} />
               <Field label="Apertura de venta (opcional)" name="salesStartAt" type="datetime-local" defaultValue={utcToZonedLocal(editing?.sales_start_at, tz)} />
               <Field label="Cierre de venta (opcional)" name="salesEndAt" type="datetime-local" defaultValue={utcToZonedLocal(editing?.sales_end_at, tz)} />
-              <Field label="Accesos (separados por coma)" name="accessAreas" defaultValue={(editing?.access_areas ?? ["general"]).join(", ")} hint="Ej. general, vip. El check-in valida contra esta lista." />
+              <Field label="Accesos (separados por coma)" name="accessAreas" defaultValue={(editing?.access_areas ?? ["general"]).join(", ")} hint="Ej. general, vip. Solo informativo." />
             </div>
             <TextareaField label="Descripción" name="description" defaultValue={editing?.description} rows={2} />
             <TextareaField label="Beneficios (uno por línea)" name="benefits" defaultValue={(editing?.benefits ?? []).join("\n")} rows={3} />

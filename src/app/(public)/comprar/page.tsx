@@ -31,7 +31,7 @@ export default async function BuyPage({ searchParams }: PageProps<"/comprar">) {
           <p className="eyebrow">Comprar entradas · Paso 1 de 3</p>
           <h1 className="display mt-3 text-5xl text-balance sm:text-6xl">Crea tu cuenta para comprar</h1>
           <p className="mt-4 text-lg text-foreground/75">
-            Tus boletos con código QR quedan guardados en tu cuenta. Desde ahí los presentas en la entrada y reservas tus clases.
+            Tu boleto virtual queda guardado en tu cuenta y desde ahí reservas tus clases. Tu pulsera Good Life, que es tu acceso, se entrega el día del evento antes de empezar.
           </p>
           <div className="mt-8 flex flex-col gap-3 sm:flex-row">
             <Button asChild size="lg" className="h-12 rounded-full px-7">
@@ -48,7 +48,7 @@ export default async function BuyPage({ searchParams }: PageProps<"/comprar">) {
           <ol className="mt-10 space-y-2 text-sm text-muted-foreground">
             <li>1. Crea tu cuenta y confirma tu correo.</li>
             <li>2. Elige tus entradas.</li>
-            <li>3. Paga y recibe tus boletos con QR en «Mi cuenta».</li>
+            <li>3. Paga y recibe tu boleto virtual en «Mi cuenta».</li>
           </ol>
         </div>
         <Photo photo={IMG.handsUp} sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[4/5] rounded-[2rem]" />

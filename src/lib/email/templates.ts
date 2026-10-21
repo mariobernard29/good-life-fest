@@ -44,7 +44,7 @@ export function activationEmail({ name, url }: { name: string; url: string }): E
   const hi = firstName(name) ? `¡Hola, ${firstName(name)}!` : "¡Hola!";
   const paragraphs = [
     `Ya tienes tu entrada para ${FEST.name} (${FEST.date}).`,
-    "Confirma tu correo y crea tu contraseña para entrar a tu portal: ahí verás tu código QR, podrás apartar tu lugar en las clases y actividades y activar los avisos del festival.",
+    "Confirma tu correo y crea tu contraseña para entrar a tu portal: ahí verás tu boleto virtual, podrás apartar tu lugar en las clases y actividades y activar los avisos del festival.",
   ];
   const footer = "El enlace es personal y vence en 24 horas. Si no compraste una entrada, ignora este correo.";
   return {

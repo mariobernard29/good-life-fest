@@ -2,17 +2,14 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowLeft } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
-import { CheckInStation } from "@/components/checkin/check-in-station";
+import { WristbandStation } from "@/components/pulseras/wristband-station";
 import { requireStaffPage } from "@/lib/auth/staff";
 import { hasPermission } from "@/lib/auth/permissions";
-import { createAdminClient } from "@/lib/supabase/admin";
 
-export const metadata: Metadata = { title: "Control de acceso", robots: { index: false } };
+export const metadata: Metadata = { title: "Entrega de pulseras", robots: { index: false } };
 
-export default async function CheckInPage() {
-  const ctx = await requireStaffPage("checkin.perform", "/check-in");
-  const { data } = await createAdminClient().from("ticket_types").select("access_areas").eq("event_id", ctx.event.id);
-  const areas = [...new Set((data ?? []).flatMap((t) => t.access_areas as string[]))].sort((a, b) => (a === "general" ? -1 : b === "general" ? 1 : a.localeCompare(b)));
+export default async function WristbandsPage() {
+  const ctx = await requireStaffPage("wristbands.manage", "/pulseras");
 
   return (
     <div className="min-h-svh bg-ink text-cream">
@@ -26,12 +23,12 @@ export default async function CheckInPage() {
           <Logo variant="light" className="w-28" href={null} />
         </div>
         <p className="text-right text-xs text-cream/60">
-          Control de acceso
+          Entrega de pulseras
           <br />
           {ctx.user.email}
         </p>
       </header>
-      <CheckInStation areas={areas.length ? areas : ["general"]} canWristband={hasPermission(ctx.permissions, "wristbands.manage")} />
+      <WristbandStation />
     </div>
   );
 }

@@ -38,7 +38,7 @@ export default async function CompleteRegistrationPage() {
       <p className="eyebrow">Último paso</p>
       <h1 className="display mt-2 text-5xl">{first ? `¡Hola, ${first}!` : "¡Bienvenida, bienvenido!"}</h1>
       <p className="mt-3 text-muted-foreground">
-        Crea tu contraseña para entrar a tu portal: ahí verás tu código QR, apartarás tu lugar en las clases y activarás los avisos del festival.
+        Crea tu contraseña para entrar a tu portal: ahí verás tu boleto virtual, apartarás tu lugar en las clases y activarás los avisos del festival.
       </p>
       <p className="mt-4 rounded-xl bg-secondary px-4 py-3 text-sm">
         Tu cuenta: <span className="font-medium">{profile?.email ?? user.email}</span>

@@ -10,7 +10,6 @@ import { hasPermission } from "@/lib/auth/permissions";
 import { createAdminClient } from "@/lib/supabase/admin";
 import { PAGE_SIZE, parsePage, str } from "@/lib/admin/common";
 import { searchAttendees } from "@/lib/admin/attendees";
-import { formatDateTime } from "@/lib/format";
 import { SALE_SOURCE_LABEL } from "@/lib/participants/labels";
 
 export const metadata: Metadata = { title: "Asistentes" };
@@ -25,7 +24,6 @@ export default async function AttendeesPage({ searchParams }: PageProps<"/admin/
     ticketTypeId: str(sp.tipo),
     status: str(sp.estado),
     payment: str(sp.pago),
-    checkin: str(sp.checkin),
     wristband: str(sp.pulsera),
   };
   const page = parsePage(sp.pagina);
@@ -60,7 +58,6 @@ export default async function AttendeesPage({ searchParams }: PageProps<"/admin/
         <FilterSelect name="estado" label="Boleto" value={filters.status} options={Object.entries(TICKET_STATUS).map(([value, v]) => ({ value, label: v.label }))} />
         <FilterSelect name="pago" label="Pago" value={filters.payment} options={Object.entries(ORDER_STATUS).map(([value, v]) => ({ value, label: v.label }))} />
         <FilterSelect name="pulsera" label="Pulsera" value={filters.wristband} options={[{ value: "entregada", label: "Entregada" }, { value: "pendiente", label: "Pendiente" }]} />
-        <FilterSelect name="checkin" label="Check-in" value={filters.checkin} options={[{ value: "si", label: "Ya ingresó" }, { value: "no", label: "No ha ingresado" }]} />
       </SearchForm>
       <TableWrap>
         <Table>
@@ -73,13 +70,12 @@ export default async function AttendeesPage({ searchParams }: PageProps<"/admin/
               <TableHead>Boleto</TableHead>
               <TableHead>Pulsera</TableHead>
               <TableHead>Cuenta</TableHead>
-              <TableHead>Check-in</TableHead>
             </TableRow>
           </TableHeader>
           <TableBody>
             {rows.length === 0 && (
               <TableRow>
-                <TableCell colSpan={8} className="py-10 text-center text-muted-foreground">
+                <TableCell colSpan={7} className="py-10 text-center text-muted-foreground">
                   Sin resultados.
                 </TableCell>
               </TableRow>
@@ -127,7 +123,6 @@ export default async function AttendeesPage({ searchParams }: PageProps<"/admin/
                       <Pill tone="gray">Sin cuenta</Pill>
                     )}
                   </TableCell>
-                  <TableCell className="text-xs text-muted-foreground">{r.checked_in_at ? formatDateTime(r.checked_in_at) : "—"}</TableCell>
                 </TableRow>
               );
             })}
@@ -138,7 +133,7 @@ export default async function AttendeesPage({ searchParams }: PageProps<"/admin/
         page={page}
         total={total}
         pageSize={PAGE_SIZE}
-        params={{ q: filters.q, tipo: filters.ticketTypeId, estado: filters.status, pago: filters.payment, checkin: filters.checkin, pulsera: filters.wristband }}
+        params={{ q: filters.q, tipo: filters.ticketTypeId, estado: filters.status, pago: filters.payment, pulsera: filters.wristband }}
       />
     </>
   );

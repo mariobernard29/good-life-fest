@@ -11,11 +11,11 @@ export type MyTicket = {
   id: string;
   event_id: string;
   public_code: string;
-  qr_token: string;
   attendee_name: string;
   status: TicketStatus;
   issued_at: string;
   checked_in_at: string | null;
+  wristband_delivered_at: string | null;
   ticket_types: { name: string; benefits: string[]; access_areas: string[] } | null;
 };
 
@@ -40,7 +40,7 @@ export const getMyTickets = cache(async () => {
   const supabase = await createSupabaseServerClient();
   const { data, error } = await supabase
     .from("tickets")
-    .select("id, event_id, public_code, qr_token, attendee_name, status, issued_at, checked_in_at, ticket_types(name, benefits, access_areas)")
+    .select("id, event_id, public_code, attendee_name, status, issued_at, checked_in_at, wristband_delivered_at, ticket_types(name, benefits, access_areas)")
     .order("issued_at", { ascending: true });
   if (error) console.error("[getMyTickets]", error.message);
   return (data ?? []) as unknown as MyTicket[];

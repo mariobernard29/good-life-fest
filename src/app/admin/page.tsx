@@ -31,18 +31,19 @@ type Stats = {
 
 export default async function DashboardPage() {
   const ctx = await requireStaffPage("dashboard.view");
-  const [s, { count: wristbandsPending }] = await Promise.all([
-    getRpc().call<Stats>("get_dashboard_stats", { p_event_id: ctx.event.id }),
+  const activeTickets = () =>
     createAdminClient()
       .from("tickets")
       .select("id", { count: "exact", head: true })
       .eq("event_id", ctx.event.id)
-      .in("status", ["valid", "checked_in", "pending_payment"])
-      .is("wristband_delivered_at", null),
+      .in("status", ["valid", "checked_in", "pending_payment"]);
+  const [s, { count: wristbandsPending }, { count: wristbandsDelivered }] = await Promise.all([
+    getRpc().call<Stats>("get_dashboard_stats", { p_event_id: ctx.event.id }),
+    activeTickets().is("wristband_delivered_at", null),
+    activeTickets().not("wristband_delivered_at", "is", null),
   ]);
   const available = Math.max(Math.min(s.tickets_total_inventory, s.capacity) - s.tickets_issued - s.tickets_pending_payment - s.tickets_held, 0);
   const occupancy = s.capacity ? Math.round((s.tickets_issued / s.capacity) * 100) : 0;
-  const checkinPct = s.tickets_issued ? Math.round((s.checked_in / s.tickets_issued) * 100) : 0;
   const reservable = s.conferences.filter((c) => c.requires_reservation);
 
   return (
@@ -56,7 +57,9 @@ export default async function DashboardPage() {
           <StatTile label="Pulseras pendientes" value={wristbandsPending ?? 0} tone={wristbandsPending ? "warning" : undefined} hint="Compras por mensaje · ver lista →" />
         </Link>
         <StatTile label="Asistentes registrados" value={s.registered_attendees} hint="Con cuenta vinculada" />
-        <StatTile label="Check-ins" value={s.checked_in} hint={`${checkinPct}% de las entradas vendidas`} />
+        <Link href="/admin/asistentes?pulsera=entregada" className="contents">
+          <StatTile label="Pulseras entregadas" value={wristbandsDelivered ?? 0} hint="Ver lista →" />
+        </Link>
         <StatTile label="Ocupación del festival" value={`${occupancy}%`} hint={`${s.tickets_issued} de ${s.capacity} personas`} />
         <StatTile label="Pago por confirmar (taquilla)" value={s.tickets_pending_payment} tone={s.tickets_pending_payment ? "warning" : undefined} />
         <Link href="/admin/incidencias" className="contents">

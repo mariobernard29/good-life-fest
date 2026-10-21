@@ -37,7 +37,6 @@ const PARTICIPANT_COLUMNS: Column<ParticipantRow>[] = [
   { header: "Cuenta", key: "account", width: 12 },
   { header: "Boleto", key: "ticketStatus", width: 14 },
   { header: "Registro", key: "registeredAt", width: 20 },
-  { header: "Check-in", key: "checkedInAt", width: 20 },
 ];
 
 const ROSTER_COLUMNS: Column<RosterRow & { n: number }>[] = [

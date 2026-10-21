@@ -2,12 +2,12 @@
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { CalendarHeart, Home, QrCode, Sparkles, UserRound } from "lucide-react";
+import { CalendarHeart, Home, Sparkles, Ticket, UserRound } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 const ITEMS = [
   { href: "/mi-cuenta", label: "Inicio", icon: Home, exact: true },
-  { href: "/mi-cuenta/entradas", label: "Entradas", icon: QrCode },
+  { href: "/mi-cuenta/entradas", label: "Entradas", icon: Ticket },
   { href: "/mi-cuenta/programa", label: "Reservar", icon: Sparkles },
   { href: "/mi-cuenta/reservas", label: "Mi agenda", icon: CalendarHeart },
   { href: "/mi-cuenta/perfil", label: "Perfil", icon: UserRound },

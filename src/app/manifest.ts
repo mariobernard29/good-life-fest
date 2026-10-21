@@ -9,7 +9,7 @@ export default function manifest(): MetadataRoute.Manifest {
   return {
     name: FEST.name,
     short_name: "Good Life Fest",
-    description: "Tu entrada, tu código QR y tus clases del festival.",
+    description: "Tu boleto virtual y tus clases del festival.",
     lang: "es-MX",
     start_url: "/mi-cuenta",
     scope: "/",

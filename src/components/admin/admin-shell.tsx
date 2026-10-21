@@ -9,17 +9,16 @@ import {
   BellRing,
   CalendarRange,
   ClipboardList,
-  DoorOpen,
   Handshake,
   LayoutDashboard,
   Menu,
   Mic2,
-  ScanLine,
   Settings,
   Store,
   Ticket,
   UserCog,
   Users,
+  Watch,
 } from "lucide-react";
 import { Logo } from "@/components/brand/logo";
 import { Button } from "@/components/ui/button";
@@ -34,7 +33,6 @@ const NAV: { group: string; items: { href: string; label: string; icon: React.El
       { href: "/admin", label: "Dashboard", icon: LayoutDashboard, perm: "dashboard.view", exact: true },
       { href: "/admin/ventas", label: "Ventas y taquilla", icon: BadgeDollarSign, perm: "orders.view" },
       { href: "/admin/asistentes", label: "Asistentes", icon: Users, perm: "attendees.view" },
-      { href: "/admin/accesos", label: "Accesos", icon: DoorOpen, perm: "checkin.view_log" },
       { href: "/admin/incidencias", label: "Incidencias", icon: AlertTriangle, perm: "incidents.manage" },
       { href: "/admin/notificaciones", label: "Notificaciones", icon: BellRing, perm: "notifications.send" },
     ],
@@ -92,9 +90,9 @@ function NavList({ permissions, onNavigate }: { permissions: Set<string>; onNavi
           </div>
         );
       })}
-      {permissions.has("checkin.perform") && (
-        <Link href="/check-in" onClick={onNavigate} className="flex items-center justify-center gap-2 rounded-lg bg-olive px-3 py-2.5 text-sm font-medium text-primary-foreground">
-          <ScanLine className="size-4" /> Abrir control de acceso
+      {permissions.has("wristbands.manage") && (
+        <Link href="/pulseras" onClick={onNavigate} className="flex items-center justify-center gap-2 rounded-lg bg-olive px-3 py-2.5 text-sm font-medium text-primary-foreground">
+          <Watch className="size-4" /> Abrir entrega de pulseras
         </Link>
       )}
     </nav>

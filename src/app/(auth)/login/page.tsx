@@ -11,7 +11,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
     <>
       <p className="eyebrow">Mi cuenta</p>
       <h1 className="display mt-2 text-5xl">Bienvenida, bienvenido</h1>
-      <p className="mt-3 text-muted-foreground">Consulta tus entradas, tu código QR y reserva tus clases.</p>
+      <p className="mt-3 text-muted-foreground">Consulta tu boleto virtual y reserva tus clases.</p>
       <div className="mt-8">
         <LoginForm
           next={typeof next === "string" ? next : undefined}
