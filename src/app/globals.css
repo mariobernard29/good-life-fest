@@ -153,6 +153,96 @@
   }
 }
 
+/* Aparición al hacer scroll */
+.reveal {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity 0.9s cubic-bezier(0.2, 0.7, 0.2, 1), transform 0.9s cubic-bezier(0.2, 0.7, 0.2, 1);
+}
+.reveal.is-in {
+  opacity: 1;
+  transform: none;
+}
+
+/* Palabras del héroe entrando una por una */
+.word-in > span {
+  display: inline-block;
+  animation: word-in 1s cubic-bezier(0.2, 0.7, 0.2, 1) both;
+}
+@keyframes word-in {
+  from { opacity: 0; transform: translateY(0.45em) rotate(2deg); filter: blur(6px); }
+  to { opacity: 1; transform: none; filter: none; }
+}
+
+/* Montaje de video del héroe */
+.hero-clip {
+  opacity: 0;
+  transform: scale(1.08);
+  transition: opacity 1.4s ease, transform 7s ease-out;
+}
+.hero-clip.is-active {
+  opacity: 1;
+  transform: scale(1);
+}
+
+/* Grano de película sobre video */
+.film-grain::after {
+  content: "";
+  position: absolute;
+  inset: -50%;
+  z-index: -1;
+  pointer-events: none;
+  opacity: 0.09;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='160' height='160'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+  animation: grain 0.9s steps(4) infinite;
+}
+@keyframes grain {
+  0% { transform: translate(0, 0); }
+  25% { transform: translate(-3%, 2%); }
+  50% { transform: translate(2%, -3%); }
+  75% { transform: translate(-2%, -1%); }
+  100% { transform: translate(0, 0); }
+}
+
+.spin-slow { animation: spin 22s linear infinite; }
+@keyframes spin { to { transform: rotate(360deg); } }
+
+.play-pulse { box-shadow: 0 0 0 0 rgba(244, 238, 227, 0.6); animation: play-pulse 2.4s ease-out infinite; }
+@keyframes play-pulse {
+  0% { box-shadow: 0 0 0 0 rgba(244, 238, 227, 0.55); }
+  100% { box-shadow: 0 0 0 28px rgba(244, 238, 227, 0); }
+}
+
+/* Mapa de la sede */
+.venue-map { background: #f1eadc; }
+.venue-map .maplibregl-ctrl-group { border-radius: 999px; overflow: hidden; box-shadow: none; border: 1px solid #dccfb6; }
+.venue-map .maplibregl-ctrl-attrib { background: rgba(244, 238, 227, 0.85); font-size: 10px; }
+.map-pin { position: relative; display: flex; align-items: center; justify-content: center; width: 44px; height: 44px; }
+.map-pin__dot {
+  position: relative; z-index: 1; display: flex; align-items: center; justify-content: center;
+  width: 38px; height: 38px; border-radius: 999px; background: var(--ink); color: var(--sunset);
+  font-size: 18px; border: 3px solid var(--cream); box-shadow: 0 8px 20px -6px rgba(30, 35, 28, 0.6);
+}
+.map-pin__pulse { position: absolute; inset: 0; border-radius: 999px; background: rgba(197, 138, 74, 0.45); animation: pin-pulse 2.2s ease-out infinite; }
+@keyframes pin-pulse { from { transform: scale(0.6); opacity: 1; } to { transform: scale(2.6); opacity: 0; } }
+.map-pin__label {
+  position: absolute; left: 52px; top: 50%; transform: translateY(-50%); white-space: nowrap;
+  background: var(--cream); color: var(--ink); border-radius: 14px; padding: 6px 12px;
+  font-family: var(--font-display), Georgia, serif; font-size: 20px; line-height: 1.05;
+  box-shadow: 0 10px 24px -12px rgba(30, 35, 28, 0.5);
+}
+.map-pin__label small { display: block; font-family: var(--font-sans); font-size: 9px; letter-spacing: 0.22em; text-transform: uppercase; color: var(--olive); }
+.map-tag {
+  background: var(--olive); color: var(--cream); border-radius: 999px; padding: 4px 10px;
+  font-size: 10px; letter-spacing: 0.18em; text-transform: uppercase; font-weight: 600;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .reveal { opacity: 1; transform: none; transition: none; }
+  .word-in > span, .film-grain::after, .spin-slow, .play-pulse, .map-pin__pulse { animation: none; }
+  .hero-clip { transition: none; transform: none; }
+}
+
 /* Cinta de pilares en movimiento */
 .marquee {
   display: flex;

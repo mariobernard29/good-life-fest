@@ -12,7 +12,8 @@
     "test:watch": "vitest",
     "test:remote": "cross-env RUN_REMOTE_TESTS=1 vitest run -c vitest.remote.config.mts",
     "admin:create": "node --env-file=.env.local scripts/create-admin.mjs",
-    "user:create": "node --env-file=.env.local scripts/create-user.mjs"
+    "user:create": "node --env-file=.env.local scripts/create-user.mjs",
+    "postinstall": "node scripts/copy-maplibre-worker.mjs"
   },
   "dependencies": {
     "@hookform/resolvers": "^5.9.1",
@@ -25,7 +26,8 @@
     "jspdf": "^4.2.1",
     "jspdf-autotable": "^5.0.9",
     "lucide-react": "^1.55.0",
-    "next": "16.4.0",
+    "maplibre-gl": "^6.16.0",
+    "next": "16.4.5",
     "next-themes": "^0.4.6",
     "qrcode": "^1.5.4",
     "radix-ui": "^1.8.1",
@@ -51,7 +53,7 @@
     "@types/web-push": "^3.6.4",
     "cross-env": "^10.1.0",
     "eslint": "^9",
-    "eslint-config-next": "16.4.0",
+    "eslint-config-next": "16.4.5",
     "tailwindcss": "^4",
     "typescript": "^5",
     "vitest": "^5.0.4"
