@@ -14,6 +14,8 @@ const eslintConfig = defineConfig([
     "next-env.d.ts",
     // Proyectos de video (HyperFrames) con sus propias dependencias.
     "videos/**",
+    // Código de terceros copiado tal cual (worker de MapLibre).
+    "public/vendor/**",
   ]),
 ]);
 
