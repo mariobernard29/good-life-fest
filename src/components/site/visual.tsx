@@ -81,7 +81,7 @@ export function Mosaic({ photos, className }: { photos: [PhotoData, PhotoData, P
   );
 }
 
-export function CtaBand({ title, text, href = "/entradas", label = "Ver boletos" }: { title: string; text?: string; href?: string; label?: string }) {
+export function CtaBand({ title, text, href = "/festival/entradas", label = "Ver boletos" }: { title: string; text?: string; href?: string; label?: string }) {
   return (
     <section className="container-page mt-24">
       <div className="grain flex flex-col items-start gap-6 rounded-[2rem] bg-accent px-8 py-14 sm:flex-row sm:items-center sm:justify-between sm:px-14">

@@ -59,7 +59,7 @@ export default async function MyTicketsPage({ searchParams }: PageProps<"/mi-cue
           title="Aún no tienes entradas"
           action={
             <Button asChild className="rounded-full">
-              <Link href="/entradas">Cómo comprar</Link>
+              <Link href="/festival/entradas">Cómo comprar</Link>
             </Button>
           }
         >

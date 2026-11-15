@@ -6,7 +6,7 @@ import { Check, Loader2, Minus, Plus, ShoppingBag } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
 import { Checkbox } from "@/components/ui/checkbox";
-import { createPurchaseAction } from "@/app/(public)/comprar/actions";
+import { createPurchaseAction } from "@/app/(festival)/comprar/actions";
 import { formatMoney } from "@/lib/format";
 import { cn } from "@/lib/utils";
 

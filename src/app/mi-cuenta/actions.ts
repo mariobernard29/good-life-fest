@@ -23,8 +23,8 @@ import {
 
 function revalidatePortal() {
   revalidatePath("/mi-cuenta", "layout");
-  revalidatePath("/experiencias");
-  revalidatePath("/conferencias");
+  revalidatePath("/festival/experiencias");
+  revalidatePath("/festival/conferencias");
 }
 
 /** Reserva una sesión. El servidor valida propiedad del boleto, cupo y reglas en SQL. */

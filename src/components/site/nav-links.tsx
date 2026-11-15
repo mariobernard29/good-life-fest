@@ -6,18 +6,18 @@ import { useState } from "react";
 import { Menu } from "lucide-react";
 import { InstagramIcon } from "@/components/brand/instagram-icon";
 import { Button } from "@/components/ui/button";
-import { FEST } from "@/content/festival";
 import { Sheet, SheetContent, SheetHeader, SheetTitle, SheetTrigger } from "@/components/ui/sheet";
 import { cn } from "@/lib/utils";
 
 type Item = { href: string; label: string };
+type Cta = { href: string; label: string };
 
 export function NavLinks({ items }: { items: Item[] }) {
   const pathname = usePathname();
   return (
     <nav aria-label="Principal" className="hidden items-center gap-1 lg:flex">
       {items.map((item) => {
-        const active = pathname === item.href || pathname.startsWith(`${item.href}/`);
+        const active = !item.href.includes("#") && (pathname === item.href || pathname.startsWith(`${item.href}/`));
         return (
           <Link
             key={item.href}
@@ -36,7 +36,18 @@ export function NavLinks({ items }: { items: Item[] }) {
   );
 }
 
-export function MobileNav({ items }: { items: Item[] }) {
+export function MobileNav({
+  items,
+  instagramUrl,
+  cta,
+  extra,
+}: {
+  items: Item[];
+  instagramUrl: string;
+  cta: Cta;
+  /** Enlace secundario (p. ej. volver a la marca o ir al festival). */
+  extra?: Cta;
+}) {
   const [open, setOpen] = useState(false);
   return (
     <Sheet open={open} onOpenChange={setOpen}>
@@ -62,18 +73,25 @@ export function MobileNav({ items }: { items: Item[] }) {
           ))}
           <div className="mt-6 grid gap-2">
             <Button asChild size="lg" variant="outline" className="h-12 rounded-full">
-              <a href={FEST.instagramUrl} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
+              <a href={instagramUrl} target="_blank" rel="noopener noreferrer" onClick={() => setOpen(false)}>
                 <InstagramIcon className="size-4" /> Instagram
               </a>
             </Button>
+            {extra && (
+              <Button asChild size="lg" variant="outline" className="h-12 rounded-full">
+                <Link href={extra.href} onClick={() => setOpen(false)}>
+                  {extra.label}
+                </Link>
+              </Button>
+            )}
             <Button asChild size="lg" variant="outline" className="h-12 rounded-full">
               <Link href="/mi-cuenta" onClick={() => setOpen(false)}>
                 Mi cuenta
               </Link>
             </Button>
             <Button asChild size="lg" className="h-12 rounded-full">
-              <Link href="/entradas" onClick={() => setOpen(false)}>
-                Boletos
+              <Link href={cta.href} onClick={() => setOpen(false)}>
+                {cta.label}
               </Link>
             </Button>
           </div>

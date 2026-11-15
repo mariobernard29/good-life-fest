@@ -4,7 +4,7 @@ import { useTransition } from "react";
 import { CreditCard, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { Button } from "@/components/ui/button";
-import { cancelPurchaseAction, simulatePaymentAction } from "@/app/(public)/comprar/actions";
+import { cancelPurchaseAction, simulatePaymentAction } from "@/app/(festival)/comprar/actions";
 
 export function PaymentActions({ orderId, totalLabel }: { orderId: string; totalLabel: string }) {
   const [paying, startPay] = useTransition();

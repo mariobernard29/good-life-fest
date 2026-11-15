@@ -98,7 +98,7 @@ export async function simulatePaymentAction(orderId: string): Promise<ActionResu
     return { ok: false, error: userMessage(error) };
   }
   revalidatePath("/mi-cuenta", "layout");
-  revalidatePath("/entradas");
+  revalidatePath("/festival/entradas");
   redirect(`/mi-cuenta/entradas?compra=${reference}`);
 }
 
@@ -113,6 +113,6 @@ export async function cancelPurchaseAction(orderId: string): Promise<ActionResul
     logError("cancelPurchaseAction", error);
     return { ok: false, error: userMessage(error) };
   }
-  revalidatePath("/entradas");
-  redirect("/entradas");
+  revalidatePath("/festival/entradas");
+  redirect("/festival/entradas");
 }

@@ -79,7 +79,7 @@ export default function BrandsPage() {
         </div>
       </section>
 
-      <CtaBand title="¿Quieres participar con tu marca?" text="Mándanos un DM a nuestro Instagram @goodlifewellnessfestlosmochis y te compartimos toda la información para patrocinadores y expositores." href={FEST.instagramUrl} label="Escríbenos por Instagram" />
+      <CtaBand title="¿Quieres participar con tu marca?" text="Mándanos un DM a nuestro Instagram @goodlifewellnesslm y te compartimos toda la información para patrocinadores y expositores." href={FEST.instagramUrl} label="Escríbenos por Instagram" />
     </>
   );
 }

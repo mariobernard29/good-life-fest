@@ -28,7 +28,7 @@ export default async function LoginPage({ searchParams }: PageProps<"/login">) {
       ) : (
         <p className="mt-6 text-center text-sm text-muted-foreground">
           ¿Aún no tienes cuenta? Se crea al comprar tu entrada en un punto de venta o por mensaje.{" "}
-          <Link href="/entradas" className="font-medium text-olive hover:underline">
+          <Link href="/festival/entradas" className="font-medium text-olive hover:underline">
             Cómo comprar
           </Link>
         </p>

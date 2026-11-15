@@ -15,13 +15,13 @@ const display = Cormorant_Garamond({
 
 export const metadata: Metadata = {
   metadataBase: new URL(getSiteUrl()),
-  title: { default: "Good Life Wellness Fest · Lago Ávila, Los Mochis", template: "%s · Good Life Wellness Fest" },
+  title: { default: "Good Life Wellness · Comunidad, eventos y lifestyle en Los Mochis", template: "%s · Good Life Wellness" },
   description:
-    "Festival de bienestar en el Lago Ávila, Los Mochis, Sinaloa. Clases, conferencias, experiencias y marcas de bienestar.",
+    "Good Life Wellness: marca de bienestar en Los Mochis, Sinaloa. Comunidad, eventos, ropa y accesorios. Organizadores de Good Life Wellness Fest.",
   openGraph: {
     type: "website",
     locale: "es_MX",
-    siteName: "Good Life Wellness Fest",
+    siteName: "Good Life Wellness",
     images: ["/images/hero-logo-lago.jpg"],
   },
 };

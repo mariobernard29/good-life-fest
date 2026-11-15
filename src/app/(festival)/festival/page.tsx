@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Link from "next/link";
 import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
 import { Button } from "@/components/ui/button";
@@ -10,7 +11,9 @@ import { IMG } from "@/content/images";
 import { DAY_REEL, HERO_REEL, VID } from "@/content/videos";
 import { CHALLENGES, COMMUNITY, DIFFERENT, FEST, INTRO, JOURNEY, PILLARS, PREMIUM, VERBS, VISION, ZONES } from "@/content/festival";
 
-export default function HomePage() {
+export const metadata: Metadata = { title: { absolute: "Good Life Wellness Fest · Lago Ávila, Los Mochis" } };
+
+export default function FestivalHomePage() {
   return (
     <>
       {/* HERO */}
@@ -33,12 +36,12 @@ export default function HomePage() {
           <p className="display fade-up mt-6 max-w-2xl text-3xl text-cream/95 italic sm:text-5xl">{FEST.tagline}</p>
           <div className="fade-up mt-8 flex flex-wrap items-center gap-3">
             <Button asChild size="lg" className="h-12 rounded-full bg-cream px-7 text-ink hover:bg-cream/90">
-              <Link href="/experiencias">
+              <Link href="/festival/experiencias">
                 Descubre la experiencia <ArrowRight />
               </Link>
             </Button>
             <Button asChild size="lg" variant="outline" className="h-12 rounded-full border-cream/50 bg-transparent px-7 text-cream hover:bg-cream/10 hover:text-cream">
-              <Link href="/entradas">Boletos · Próximamente</Link>
+              <Link href="/festival/entradas">Boletos · Próximamente</Link>
             </Button>
           </div>
           <p className="mt-8 flex items-center gap-2 text-sm text-cream/75">
@@ -120,7 +123,7 @@ export default function HomePage() {
             <h2 className="display mt-3 text-5xl sm:text-6xl">Seis formas de vivir mejor</h2>
           </div>
           <Button asChild variant="link" className="self-start px-0 text-olive">
-            <Link href="/experiencias">
+            <Link href="/festival/experiencias">
               Conoce cada pilar <ArrowRight />
             </Link>
           </Button>
@@ -128,7 +131,7 @@ export default function HomePage() {
         <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-6">
           {PILLARS.map((p, i) => (
             <Reveal key={p.slug} delay={i * 80}>
-              <Link href={`/experiencias#${p.slug}`} className="group">
+              <Link href={`/festival/experiencias#${p.slug}`} className="group">
                 <Photo photo={p.photos[0]} sizes="(min-width: 1024px) 16vw, 50vw" className="aspect-[3/4] rounded-2xl" imgClassName="group-hover:scale-105" />
                 <p className="mt-3 font-mono text-xs text-muted-foreground">{p.n}</p>
                 <p className="display text-2xl leading-tight">{p.title}</p>

@@ -18,6 +18,15 @@ const nextConfig: NextConfig = {
       { protocol: "https", hostname: "images.unsplash.com" },
     ],
   },
+  // El festival se mudó a /festival al convertirse el inicio en la marca Good Life
+  // Wellness: los enlaces viejos (correos, redes) siguen funcionando.
+  async redirects() {
+    return ["experiencias", "programa", "conferencias", "expositores", "faq", "entradas"].map((p) => ({
+      source: `/${p}`,
+      destination: `/festival/${p}`,
+      permanent: true,
+    }));
+  },
   async headers() {
     return [
       {

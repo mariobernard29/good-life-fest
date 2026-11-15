@@ -13,11 +13,11 @@ export const FEST = {
   city: "Los Mochis, Sinaloa",
   // Ubicación real en Google Maps (Lago Ávila Eventos, 25.8306, -109.0467).
   mapsUrl: "https://maps.app.goo.gl/VRNatKywZ2Pkqot16",
-  instagramUrl: "https://www.instagram.com/goodlifewellnessfestlosmochis/",
-  instagramHandle: "@goodlifewellnessfestlosmochis",
+  instagramUrl: "https://www.instagram.com/goodlifewellnesslm/",
+  instagramHandle: "@goodlifewellnesslm",
   // Las entradas se venden SOLO en puntos físicos o por mensaje (WhatsApp / DM).
   // El personal registra a cada persona y le llega un correo para activar su cuenta.
-  // salesOpen: muestra los puntos de venta y el contacto en /entradas.
+  // salesOpen: muestra los puntos de venta y el contacto en /festival/entradas.
   salesOpen: false,
   // Compra en línea (/comprar) y registro libre (/registro): desactivados; el código
   // se conserva por si algún día se reactivan.
@@ -158,7 +158,7 @@ export const CHALLENGES = ["Reto funcional", "Reto de fuerza", "Reto de resisten
 export const CHALLENGE_PRIZES = ["Premios", "Productos", "Experiencias", "Reconocimientos"];
 
 /**
- * Dónde y cómo se compran las entradas (se muestra en /entradas cuando FEST.salesOpen).
+ * Dónde y cómo se compran las entradas (se muestra en /festival/entradas cuando FEST.salesOpen).
  * Completa los puntos de venta y el número de WhatsApp antes de abrir la venta.
  */
 export const TICKET_SALES: {
@@ -255,12 +255,12 @@ export const FAQS = [
   { q: "¿Qué es Good Life Wellness Fest?", a: "Un evento premium de bienestar y estilo de vida que combina clases, conferencias, activaciones, marcas, productos y servicios. No es solo una expo ni una competencia: es una experiencia integral para vivir, probar y experimentar." },
   { q: "¿Dónde será?", a: "En el Lago Ávila, en Los Mochis, Sinaloa." },
   { q: "¿Cuándo es?", a: "Un solo día: el domingo 24 de enero de 2027, de 6:30 a 18:00 h (hora de Los Mochis)." },
-  { q: "¿Cómo compro mi entrada?", a: "Las entradas se venden en nuestros puntos de venta físicos y por mensaje (WhatsApp o DM en Instagram @goodlifewellnessfestlosmochis). Al comprar registramos tu nombre, correo, teléfono y edad; te llegará un correo para crear tu contraseña y entrar a tu portal." },
+  { q: "¿Cómo compro mi entrada?", a: "Las entradas se venden en nuestros puntos de venta físicos y por mensaje (WhatsApp o DM en Instagram @goodlifewellnesslm). Al comprar registramos tu nombre, correo, teléfono y edad; te llegará un correo para crear tu contraseña y entrar a tu portal." },
   { q: "¿Cómo aparto mi lugar en las clases?", a: "Con tu cuenta activada entra a «Mi cuenta» → «Reservar». Los cupos son limitados; si activas las notificaciones te avisaremos antes de cada clase que apartes." },
   { q: "¿A quién va dirigido?", a: "A personas de aproximadamente 18 a 50 años interesadas en fitness, salud, nutrición, running, yoga, belleza, recuperación, salud mental y estilo de vida saludable. Activos, profesionales, empresarios, deportistas y familias." },
   { q: "¿Qué incluye mi entrada?", a: "Acceso al festival con tu pulsera oficial Good Life y la reserva de clases y actividades desde tu portal. Los detalles se darán a conocer con el lanzamiento de boletos." },
   { q: "¿Para qué sirve la pulsera Good Life?", a: "Es tu identificación durante todo el festival: acceso, control de clases, dinámicas, activaciones, beneficios, concursos y acceso a experiencias especiales." },
   { q: "¿Habrá cupo limitado?", a: "Sí. La propuesta es menos personas, mayor experiencia y mayor valor: capacidad controlada para ofrecer mejor atención, comodidad e interacción con las marcas." },
   { q: "¿Puedo tomar más de una clase?", a: "Sí. El programa se organiza por bloques (mañana, mediodía, tarde y cierre) y una misma disciplina podrá tener dos horarios para que más personas la disfruten." },
-  { q: "Tengo una marca, ¿cómo participo?", a: "Puedes participar como patrocinador (visibilidad, posicionamiento y beneficios de marca), con un stand en el Good Life Market (espacio comercial) o ambos. Envíanos un mensaje directo (DM) a nuestro Instagram @goodlifewellnessfestlosmochis y te damos toda la información." },
+  { q: "Tengo una marca, ¿cómo participo?", a: "Puedes participar como patrocinador (visibilidad, posicionamiento y beneficios de marca), con un stand en el Good Life Market (espacio comercial) o ambos. Envíanos un mensaje directo (DM) a nuestro Instagram @goodlifewellnesslm y te damos toda la información." },
 ];
