@@ -8,7 +8,7 @@ import { IMG, type Photo } from "@/content/images";
 export const FEST = {
   name: "Good Life Wellness Fest",
   tagline: "Vive mejor. Muévete mejor. Siéntete mejor.",
-  arrival: "Una nueva experiencia de bienestar llega a Los Mochis.",
+  arrival: "Un día completo de bienestar frente al Lago Ávila.",
   venue: "Lago Ávila",
   city: "Los Mochis, Sinaloa",
   // Ubicación real en Google Maps (Lago Ávila Eventos, 25.8306, -109.0467).
@@ -32,22 +32,38 @@ export const FEST = {
   closing: ["Vive la experiencia.", "Descubre tu mejor versión.", "Live the Good Life."],
 };
 
+/** Menú del sitio del festival (todas sus páginas viven bajo /festival). */
+export const FESTIVAL_NAV = [
+  { href: "/festival/experiencias", label: "La experiencia" },
+  { href: "/festival/programa", label: "Programa" },
+  { href: "/festival/conferencias", label: "Good Life Stage" },
+  { href: "/festival/expositores", label: "Marcas" },
+  { href: "/festival/faq", label: "Preguntas" },
+];
+
 export const INTRO = {
-  title: "Una experiencia integral de bienestar",
+  title: "Un día para moverte, probar cosas nuevas y pasarla bien.",
   body: [
-    "Good Life Wellness Fest reúne en un mismo lugar actividad física, salud, nutrición, belleza, recuperación, entretenimiento y estilo de vida.",
-    "Un evento creado para personas que buscan mejorar su calidad de vida, descubrir nuevas experiencias, conectar con marcas y profesionales, y disfrutar un día completo dedicado a sentirse y vivir mejor.",
-    "No se trata de observar o comprar: aquí vives, pruebas y experimentas cada actividad.",
+    "Good Life Wellness Fest es el festival de Good Life Wellness. Un domingo entero con clases, charlas, comida saludable, marcas y música en el Lago Ávila.",
+    "Aquí no vienes a ver desde lejos: entras a las clases, pruebas productos, platicas con especialistas y te llevas ideas para tu día a día.",
   ],
 };
 
+/** Datos clave del festival. */
+export const FACTS = [
+  { label: "Fecha", value: "24 ene 2027", note: "Domingo" },
+  { label: "Horario", value: "6:30 – 18:00", note: "Hora de Los Mochis" },
+  { label: "Lugar", value: "Lago Ávila", note: "Los Mochis, Sinaloa" },
+  { label: "Cupo", value: "Limitado", note: "Para que todo se disfrute mejor" },
+];
+
 export const VERBS: { title: string; text: string; photo: Photo }[] = [
-  { title: "Te mueves", text: "Clases, entrenamiento y actividades físicas.", photo: IMG.functional },
-  { title: "Te nutres", text: "Nutrición, alimentación saludable y productos wellness.", photo: IMG.acai },
-  { title: "Te recuperas", text: "Recovery, movilidad, relajación y cuidado corporal.", photo: IMG.massage },
+  { title: "Te mueves", text: "Clases, entrenamiento y actividades físicas.", photo: IMG.fieldGolden },
+  { title: "Te nutres", text: "Nutrición, alimentación saludable y productos wellness.", photo: IMG.smoothieBowl },
+  { title: "Te recuperas", text: "Recovery, movilidad, relajación y cuidado corporal.", photo: IMG.massageWarm },
   { title: "Te cuidas", text: "Salud, prevención, belleza y bienestar.", photo: IMG.skincare },
   { title: "Te conectas", text: "Marcas, profesionales, comunidad y nuevas experiencias.", photo: IMG.talk },
-  { title: "Te diviertes", text: "Música, dinámicas, retos, activaciones y entretenimiento.", photo: IMG.dancingSunset },
+  { title: "Te diviertes", text: "Música, dinámicas, retos, activaciones y entretenimiento.", photo: IMG.friendsOcean },
 ];
 
 export type Pillar = { n: string; slug: string; title: string; lead: string; items: string[]; photos: [Photo, Photo, Photo] };
@@ -57,39 +73,39 @@ export const PILLARS: Pillar[] = [
     n: "01",
     slug: "fitness",
     title: "Fitness & Movement",
-    lead: "El movimiento como parte fundamental de una vida saludable.",
+    lead: "Clases para todos los niveles, de yoga a Hyrox.",
     items: ["Hyrox principiantes", "Hyrox avanzados", "Yoga", "Meditación", "Movilidad", "Funcional fitness", "CrossFit", "Y más por anunciar"],
-    photos: [IMG.yogaPark, IMG.functional, IMG.battleRopes],
+    photos: [IMG.parkYogaGolden, IMG.kettlebell, IMG.sleds],
   },
   {
     n: "02",
     slug: "nutrition",
     title: "Nutrition",
-    lead: "Un espacio dedicado a la alimentación y la nutrición.",
+    lead: "Comida, bebidas y asesoría para comer mejor sin complicarte.",
     items: ["Nutriólogos", "Marcas saludables", "Suplementación", "Bebidas funcionales", "Snacks saludables", "Degustaciones", "Educación nutricional", "Productos wellness"],
-    photos: [IMG.bowl, IMG.drinks, IMG.fruits],
+    photos: [IMG.smoothieBowl, IMG.granola, IMG.breakfastPool],
   },
   {
     n: "03",
     slug: "health",
     title: "Health",
-    lead: "Prevención y cuidado de la salud.",
+    lead: "Chequeos y charlas con profesionales de la salud.",
     items: ["Profesionales de la salud", "Evaluaciones", "Estudios y mediciones", "Charlas", "Prevención", "Salud integral"],
-    photos: [IMG.bloodPressure, IMG.running, IMG.doctor],
+    photos: [IMG.runSunrise, IMG.bloodPressure, IMG.doctor],
   },
   {
     n: "04",
     slug: "recovery",
     title: "Recovery",
-    lead: "Porque entrenar también significa aprender a recuperarse.",
+    lead: "Entrenar también es saber descansar.",
     items: ["Masajes", "Recovery", "Movilidad", "Fisioterapia", "Terapias", "Stretching", "Recuperación muscular", "Técnicas de relajación"],
-    photos: [IMG.massageBack, IMG.physio, IMG.mobility],
+    photos: [IMG.massageWarm, IMG.massageHerbal, IMG.stretchPath],
   },
   {
     n: "05",
     slug: "beauty",
     title: "Beauty & Self Care",
-    lead: "El bienestar también se refleja en cómo nos cuidamos.",
+    lead: "Cuidado personal para sentirte bien por dentro y por fuera.",
     items: ["Skincare", "Cuidado personal", "Belleza", "Estética", "Productos especializados", "Tratamientos", "Wellness beauty"],
     photos: [IMG.beautyPortrait, IMG.serum, IMG.cream],
   },
@@ -97,9 +113,9 @@ export const PILLARS: Pillar[] = [
     n: "06",
     slug: "mind",
     title: "Mind & Balance",
-    lead: "El bienestar no solamente es físico.",
+    lead: "Respirar, bajar el ritmo y aclarar la mente.",
     items: ["Manejo del estrés", "Mindfulness", "Meditación", "Respiración", "Motivación", "Conferencias", "Desarrollo personal"],
-    photos: [IMG.meditation, IMG.soundBath, IMG.breathe],
+    photos: [IMG.meditateField, IMG.benchSunset, IMG.sunWoman],
   },
 ];
 
@@ -117,40 +133,40 @@ export const JOURNEY = [
 ];
 
 export const DAY_BLOCKS: { time: string; title: string; text: string; photo: Photo }[] = [
-  { time: "Mañana", title: "Activación y entrenamiento", text: "Arrancamos el día en movimiento: clases y entrenamientos para despertar el cuerpo.", photo: IMG.yogaSunset },
-  { time: "Mediodía", title: "Nutrición, wellness y conferencias", text: "Experiencias de nutrición y bienestar, y pláticas en el Good Life Stage.", photo: IMG.bowlMeat },
-  { time: "Tarde", title: "Nuevas clases, retos y activaciones", text: "Segunda ronda de clases, retos Good Life y activaciones de marcas.", photo: IMG.battleRopes },
-  { time: "Cierre", title: "Experiencia especial", text: "Música, reconocimiento y cierre del festival.", photo: IMG.djSunset },
+  { time: "Mañana", title: "Despierta el cuerpo", text: "Arrancamos temprano con clases y entrenamientos al aire libre.", photo: IMG.parkYogaGolden },
+  { time: "Mediodía", title: "Come, escucha y aprende", text: "Charlas en el Good Life Stage, comida saludable y tiempo para recorrer las marcas.", photo: IMG.lawnTalk },
+  { time: "Tarde", title: "Segunda ronda", text: "Más clases, retos Good Life y actividades con las marcas.", photo: IMG.kettlebell },
+  { time: "Cierre", title: "Cerramos con el atardecer", text: "Música, premiación de retos y el cierre frente al lago.", photo: IMG.festivalGolden },
 ];
 
 export const ZONES: { name: string; kicker: string; text: string; items: string[]; photo: Photo }[] = [
   {
     name: "Good Life Stage",
     kicker: "Escenario principal",
-    text: "Uno de los puntos centrales del evento. Aquí suceden las conversaciones, los lanzamientos y los momentos que todos recordarán.",
+    text: "El escenario principal. Aquí pasan las charlas, las entrevistas y los momentos más importantes del día.",
     items: ["Conferencias", "Pláticas de especialistas", "Entrevistas", "Presentaciones", "Lanzamientos", "Retos", "Activaciones de patrocinadores", "Experiencias especiales"],
     photo: IMG.stage,
   },
   {
     name: "Good Life Experience Zone",
     kicker: "Prueba y vive",
-    text: "Una zona para probar productos y vivir experiencias. Aquí el patrocinador deja de ser solamente un logotipo y se convierte en parte de la experiencia.",
+    text: "Las marcas no solo ponen su logo: aquí pruebas sus productos, participas en dinámicas y te llevas regalos.",
     items: ["Degustaciones", "Demostraciones", "Dinámicas", "Pruebas de producto", "Juegos", "Concursos", "Regalos", "Activaciones"],
     photo: IMG.experienceHall,
   },
   {
     name: "Good Life Market",
     kicker: "Área comercial",
-    text: "Marcas que presentan y venden sus productos para tu bienestar.",
+    text: "Ropa deportiva, suplementos, belleza y más, para seguir cuidándote después del festival.",
     items: ["Fitness", "Ropa deportiva", "Suplementos", "Alimentos", "Bebidas", "Belleza", "Salud", "Tecnología", "Wellness", "Servicios"],
     photo: IMG.market,
   },
   {
     name: "Food & Wellness",
     kicker: "Área gastronómica",
-    text: "Opciones alineadas al concepto del festival para recargar energía y quedarte más tiempo.",
+    text: "Comida rica y saludable para recargar energía y quedarte todo el día.",
     items: ["Comida saludable", "Bowls", "Smoothies", "Café", "Bebidas funcionales", "Snacks", "Opciones altas en proteína", "Productos naturales"],
-    photo: IMG.acai,
+    photo: IMG.breakfastPool,
   },
 ];
 
@@ -194,7 +210,7 @@ export const AUDIENCE = [
   "Nuevas tendencias de bienestar",
 ];
 export const AUDIENCE_PROFILE =
-  "Hombres y mujeres de aproximadamente 18 a 50 años: personas activas, profesionales, empresarios, deportistas, familias y consumidores interesados en mejorar su estilo de vida.";
+  "Para quien quiere cuidarse, desde quien apenas empieza hasta quien entrena todos los días. Pensado para adultos de 18 a 50 años, más o menos, y para venir con amigos o en familia.";
 
 export const PREMIUM = {
   formula: ["Menos personas", "Mayor experiencia", "Mayor valor"],
@@ -233,13 +249,13 @@ export const SPONSOR_BENEFITS = [
 ];
 
 export const SPONSOR_EXPERIENCES: { brand: string; idea: string; photo: Photo }[] = [
-  { brand: "Marca deportiva", idea: "Reto fitness", photo: IMG.jump },
+  { brand: "Marca deportiva", idea: "Reto fitness", photo: IMG.sleds },
   { brand: "Bebida", idea: "Estación de hidratación", photo: IMG.hydration },
-  { brand: "Gimnasio", idea: "Clase especial", photo: IMG.groupField },
-  { brand: "Nutriólogo", idea: "Evaluación o asesoría", photo: IMG.breakfast },
+  { brand: "Gimnasio", idea: "Clase especial", photo: IMG.classLeader },
+  { brand: "Nutriólogo", idea: "Evaluación o asesoría", photo: IMG.breakfastPool },
   { brand: "Marca de belleza", idea: "Experiencia de skincare", photo: IMG.skincare },
-  { brand: "Marca de recuperación", idea: "Recovery zone", photo: IMG.foamRoller },
-  { brand: "Marca de alimentos", idea: "Degustación", photo: IMG.proteinBar },
+  { brand: "Marca de recuperación", idea: "Zona de recovery", photo: IMG.massageHerbal },
+  { brand: "Marca de alimentos", idea: "Degustación", photo: IMG.granola },
 ];
 
 export const PRE_EVENT = ["Save the date", "Presentación de clases", "Revelación de patrocinadores", "Presentación de speakers", "Dinámicas", "Cuenta regresiva", "Lanzamiento de boletos"];
@@ -252,15 +268,15 @@ export const OBJECTIVES = [
 ];
 
 export const FAQS = [
-  { q: "¿Qué es Good Life Wellness Fest?", a: "Un evento premium de bienestar y estilo de vida que combina clases, conferencias, activaciones, marcas, productos y servicios. No es solo una expo ni una competencia: es una experiencia integral para vivir, probar y experimentar." },
+  { q: "¿Qué es Good Life Wellness Fest?", a: "Es el festival de Good Life Wellness: un día con clases, charlas, comida saludable, marcas y música en el Lago Ávila. La idea es que participes, no solo que mires." },
   { q: "¿Dónde será?", a: "En el Lago Ávila, en Los Mochis, Sinaloa." },
   { q: "¿Cuándo es?", a: "Un solo día: el domingo 24 de enero de 2027, de 6:30 a 18:00 h (hora de Los Mochis)." },
-  { q: "¿Cómo compro mi entrada?", a: "Las entradas se venden en nuestros puntos de venta físicos y por mensaje (WhatsApp o DM en Instagram @goodlifewellnesslm). Al comprar registramos tu nombre, correo, teléfono y edad; te llegará un correo para crear tu contraseña y entrar a tu portal." },
+  { q: "¿Cómo compro mi entrada?", a: "En nuestros puntos de venta o por mensaje (WhatsApp o DM en Instagram a @goodlifewellnesslm). Al comprar te pedimos nombre, correo, teléfono y edad. Después te llega un correo para crear tu contraseña y entrar a tu cuenta." },
   { q: "¿Cómo aparto mi lugar en las clases?", a: "Con tu cuenta activada entra a «Mi cuenta» → «Reservar». Los cupos son limitados; si activas las notificaciones te avisaremos antes de cada clase que apartes." },
-  { q: "¿A quién va dirigido?", a: "A personas de aproximadamente 18 a 50 años interesadas en fitness, salud, nutrición, running, yoga, belleza, recuperación, salud mental y estilo de vida saludable. Activos, profesionales, empresarios, deportistas y familias." },
+  { q: "¿A quién va dirigido?", a: "A cualquier persona que quiera cuidarse, desde quien apenas empieza hasta quien entrena diario. Está pensado para adultos de 18 a 50 años, más o menos, y para venir con amigos o en familia." },
   { q: "¿Qué incluye mi entrada?", a: "Acceso al festival con tu pulsera oficial Good Life y la reserva de clases y actividades desde tu portal. Los detalles se darán a conocer con el lanzamiento de boletos." },
   { q: "¿Para qué sirve la pulsera Good Life?", a: "Es tu identificación durante todo el festival: acceso, control de clases, dinámicas, activaciones, beneficios, concursos y acceso a experiencias especiales." },
-  { q: "¿Habrá cupo limitado?", a: "Sí. La propuesta es menos personas, mayor experiencia y mayor valor: capacidad controlada para ofrecer mejor atención, comodidad e interacción con las marcas." },
+  { q: "¿Habrá cupo limitado?", a: "Sí. Preferimos menos gente y que todos la pasen bien: más espacio en las clases, mejor atención y más tiempo con las marcas." },
   { q: "¿Puedo tomar más de una clase?", a: "Sí. El programa se organiza por bloques (mañana, mediodía, tarde y cierre) y una misma disciplina podrá tener dos horarios para que más personas la disfruten." },
-  { q: "Tengo una marca, ¿cómo participo?", a: "Puedes participar como patrocinador (visibilidad, posicionamiento y beneficios de marca), con un stand en el Good Life Market (espacio comercial) o ambos. Envíanos un mensaje directo (DM) a nuestro Instagram @goodlifewellnesslm y te damos toda la información." },
+  { q: "Tengo una marca, ¿cómo participo?", a: "Puedes ser patrocinador, poner un stand en el Good Life Market o ambas cosas. Mándanos un DM a @goodlifewellnesslm y te pasamos toda la información." },
 ];

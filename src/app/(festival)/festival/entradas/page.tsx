@@ -1,10 +1,10 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import { MapPin, MessageCircle, Watch } from "lucide-react";
+import { MapPin } from "lucide-react";
 import { InstagramIcon } from "@/components/brand/instagram-icon";
-import { Button } from "@/components/ui/button";
 import { Photo } from "@/components/site/photo";
-import { Chips, ImageHero } from "@/components/site/visual";
+import { PageHero, PillLink, SectionHead, SectionLabel, TagList } from "@/components/site/visual";
+import { ImageReveal, Reveal, SplitText } from "@/components/site/motion";
 import { IMG } from "@/content/images";
 import { FEST, HOW_TO_BUY, TICKET_SALES, WRISTBAND_USES } from "@/content/festival";
 
@@ -18,45 +18,46 @@ export default function TicketsPage() {
 
   return (
     <>
-      <ImageHero photo={IMG.lakeEntrance} eyebrow="Boletos" title={open ? "Consigue tu entrada" : "Próximamente"}>
+      <PageHero photo={IMG.lakeEntrance} label="Boletos" title={open ? "Consigue tu entrada." : "Muy pronto."} italic={["entrada.", "pronto."]}>
         {FEST.dateLabel} · {FEST.venue}, {FEST.city}.
-      </ImageHero>
+      </PageHero>
 
-      <section className="container-page py-20 text-center md:py-28">
-        <p className="eyebrow">Venta de boletos</p>
-        <h2 className="display mx-auto mt-3 max-w-3xl text-5xl text-balance sm:text-6xl">
-          {open ? "En puntos de venta y por mensaje." : "Muy pronto te contaremos todos los detalles."}
-        </h2>
-        <p className="mx-auto mt-5 max-w-xl text-lg text-foreground/75">
-          {open
-            ? "Escríbenos por WhatsApp o Instagram, o visita uno de nuestros puntos de venta. No hay venta en línea."
-            : "La venta será en puntos físicos y por mensaje. Síguenos en Instagram para enterarte en cuanto abramos."}
-        </p>
-        <div className="mt-8 flex flex-col justify-center gap-3 sm:flex-row">
-          {open && whatsappUrl && (
-            <Button asChild size="lg" className="h-12 rounded-full px-7">
-              <a href={whatsappUrl} target="_blank" rel="noopener noreferrer">
-                <MessageCircle className="size-4" /> Comprar por WhatsApp
-              </a>
-            </Button>
-          )}
-          <Button asChild size="lg" variant={open && whatsappUrl ? "outline" : "default"} className="h-12 rounded-full px-7">
-            <a href={FEST.instagramUrl} target="_blank" rel="noopener noreferrer">
-              <InstagramIcon className="size-4" /> {open ? "Comprar por DM" : FEST.instagramHandle}
-            </a>
-          </Button>
+      <section className="container-page grid gap-12 py-24 sm:py-32 lg:grid-cols-12">
+        <div className="lg:col-span-7">
+          <SectionLabel n="01">Venta de boletos</SectionLabel>
+          <SplitText
+            text={open ? "En puntos de venta y por mensaje." : "Te avisamos en cuanto abra la venta."}
+            className="display mt-7 text-5xl text-balance text-forest sm:text-6xl"
+          />
         </div>
+        <Reveal className="lg:col-span-4 lg:col-start-9 lg:pt-16">
+          <p className="text-lg leading-relaxed text-foreground/75">
+            {open
+              ? "Escríbenos por WhatsApp o Instagram, o visita uno de nuestros puntos de venta. No hay venta en línea."
+              : "La venta será en puntos físicos y por mensaje. Síguenos en Instagram para enterarte primero."}
+          </p>
+          <div className="mt-8 flex flex-wrap gap-3">
+            {open && whatsappUrl && (
+              <PillLink href={whatsappUrl} icon="external">
+                Comprar por WhatsApp
+              </PillLink>
+            )}
+            <PillLink href={FEST.instagramUrl} variant={open && whatsappUrl ? "outline-dark" : "dark"} icon="external">
+              <InstagramIcon className="size-4" /> {open ? "Comprar por DM" : FEST.instagramHandle}
+            </PillLink>
+          </div>
+        </Reveal>
 
         {open && TICKET_SALES.points.length > 0 && (
-          <div className="mx-auto mt-14 grid max-w-4xl gap-4 text-left sm:grid-cols-2">
+          <div className="grid gap-x-6 gap-y-8 sm:grid-cols-2 lg:col-span-12">
             {TICKET_SALES.points.map((p) => (
-              <article key={p.name} className="rounded-3xl border border-border bg-card p-6">
+              <article key={p.name} className="border-t border-forest/20 pt-6">
                 <MapPin className="size-5 text-olive" />
-                <h3 className="mt-3 text-lg font-semibold">{p.name}</h3>
-                <p className="mt-1 text-sm text-foreground/75">{p.address}</p>
-                {p.hours && <p className="mt-1 text-sm text-muted-foreground">{p.hours}</p>}
+                <h3 className="display mt-3 text-3xl text-forest">{p.name}</h3>
+                <p className="mt-2 text-foreground/75">{p.address}</p>
+                {p.hours && <p className="mt-1 text-sm text-foreground/55">{p.hours}</p>}
                 {p.mapsUrl && (
-                  <a href={p.mapsUrl} target="_blank" rel="noopener noreferrer" className="mt-3 inline-block text-sm font-medium text-olive hover:underline">
+                  <a href={p.mapsUrl} target="_blank" rel="noopener noreferrer" className="link-line mt-3 inline-block text-sm font-semibold text-forest">
                     Ver en el mapa
                   </a>
                 )}
@@ -67,38 +68,38 @@ export default function TicketsPage() {
       </section>
 
       {/* Cómo funciona */}
-      <section className="container-page mb-20">
-        <p className="eyebrow text-center">Cómo funciona</p>
-        <ol className="mx-auto mt-6 grid max-w-5xl gap-4 sm:grid-cols-2 lg:grid-cols-4">
-          {HOW_TO_BUY.map((step, i) => (
-            <li key={step.title} className="rounded-3xl border border-border bg-card p-6">
-              <span className="display text-4xl text-olive">{i + 1}</span>
-              <h3 className="mt-2 font-semibold">{step.title}</h3>
-              <p className="mt-1 text-sm text-foreground/75">{step.text}</p>
-            </li>
-          ))}
-        </ol>
-        <p className="mt-6 text-center text-sm text-muted-foreground">
-          ¿Ya activaste tu cuenta?{" "}
-          <Link href="/login" className="font-medium text-olive hover:underline">
-            Entra a Mi cuenta
-          </Link>
-        </p>
+      <section className="bg-secondary/60 py-24 sm:py-32">
+        <div className="container-page">
+          <SectionHead n="02" label="Cómo funciona" title="Cuatro pasos y listo." italic={["listo."]} />
+          <ol className="mt-16 grid gap-x-6 gap-y-12 sm:grid-cols-2 lg:grid-cols-4">
+            {HOW_TO_BUY.map((step, i) => (
+              <Reveal as="li" key={step.title} delay={i * 110} className="border-t border-forest/20 pt-6">
+                <span className="display text-6xl text-sunset">{i + 1}</span>
+                <h3 className="mt-4 text-lg font-semibold text-forest">{step.title}</h3>
+                <p className="mt-2 text-foreground/70">{step.text}</p>
+              </Reveal>
+            ))}
+          </ol>
+          <p className="mt-14 text-sm text-foreground/60">
+            ¿Ya activaste tu cuenta?{" "}
+            <Link href="/login" className="link-line font-semibold text-forest">
+              Entra a Mi cuenta
+            </Link>
+          </p>
+        </div>
       </section>
 
       {/* Pulsera */}
-      <section className="container-page">
-        <article className="grid overflow-hidden rounded-[2rem] bg-ink text-cream md:grid-cols-2">
-          <Photo photo={IMG.concert} sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[16/10] md:aspect-auto md:min-h-80" />
-          <div className="self-center p-8 md:p-12">
-            <Watch className="size-7 text-sunset" />
-            <h2 className="display mt-3 text-4xl">Pulsera Good Life</h2>
-            <p className="mt-2 text-cream/80">El elemento que te identifica durante todo el festival.</p>
-            <div className="mt-5">
-              <Chips items={WRISTBAND_USES} tone="dark" />
-            </div>
-          </div>
-        </article>
+      <section className="container-page grid gap-12 py-24 sm:py-32 lg:grid-cols-12 lg:items-center">
+        <ImageReveal className="aspect-[4/3] lg:col-span-6">
+          <Photo photo={IMG.festivalCanopy} sizes="(min-width: 1024px) 50vw, 100vw" className="h-full w-full" />
+        </ImageReveal>
+        <div className="lg:col-span-5 lg:col-start-8">
+          <SectionLabel n="03">Pulsera Good Life</SectionLabel>
+          <h2 className="display mt-7 text-5xl text-forest sm:text-6xl">Tu llave del festival.</h2>
+          <p className="mt-5 text-lg text-foreground/75">Te identifica durante todo el día. Te la entregamos antes del evento o al llegar.</p>
+          <TagList items={WRISTBAND_USES} className="mt-10" />
+        </div>
       </section>
     </>
   );

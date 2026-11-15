@@ -1,84 +1,77 @@
 import { IMG, type Photo } from "@/content/images";
 
 /**
- * Good Life Wellness: la marca paraguas. Comunidad en redes, eventos, ropa y
- * accesorios. Good Life Wellness Fest es uno de sus eventos (ver content/festival.ts).
+ * Good Life Wellness: la marca. Comunidad en redes, eventos, ropa y accesorios.
+ * Good Life Wellness Fest es su evento principal (ver content/festival.ts).
+ * Tono (brandbook): cercano, de tú, frases cortas, sin tecnicismos ni promesas médicas.
  */
 export const BRAND = {
   name: "Good Life Wellness",
   tagline: "Live the Good Life.",
-  lead: "Una marca de bienestar y estilo de vida nacida en Los Mochis: comunidad, eventos, ropa y experiencias para vivir mejor todos los días.",
   city: "Los Mochis, Sinaloa",
   instagramUrl: "https://www.instagram.com/goodlifewellnesslm/",
   instagramHandle: "@goodlifewellnesslm",
-  words: ["Comunidad", "Movimiento", "Nutrición", "Mind", "Eventos", "Apparel", "Lifestyle", "Recovery"],
 };
 
 export const BRAND_NAV = [
-  { href: "/#nosotros", label: "Nosotros" },
+  { href: "/#que-es", label: "Qué es" },
   { href: "/#comunidad", label: "Comunidad" },
   { href: "/#eventos", label: "Eventos" },
   { href: "/#shop", label: "Shop" },
   { href: "/festival", label: "Wellness Fest" },
 ];
 
-export const MANIFESTO = {
-  title: "Una buena vida empieza por cómo decides vivirla.",
+export const HERO = {
+  title: "Sentirte bien es mejor en compañía.",
+  text: "Somos Good Life Wellness, una comunidad de bienestar en Los Mochis. Entrenamos juntos, organizamos eventos y compartimos lo que nos ayuda a vivir mejor.",
+};
+
+/** La definición de la marca, sin rodeos. */
+export const ABOUT = {
+  title: "Una comunidad para moverte, comer mejor y convivir.",
   body: [
-    "Good Life Wellness es más que un evento: es una forma de vivir. Reunimos a personas que quieren moverse más, comer mejor, descansar de verdad y rodearse de gente que suma.",
-    "Lo hacemos en redes, en la calle, en el gimnasio, frente al lago y en todo lo que llevas puesto.",
+    "Good Life Wellness nació en Los Mochis con una idea sencilla: cuidarte es más fácil cuando no lo haces solo.",
+    "Por eso juntamos a personas que quieren sentirse mejor, sin importar si apenas empiezan o si ya entrenan todos los días. Nos vemos en clases, carreras, talleres y en nuestro festival. Y entre evento y evento, seguimos en contacto por Instagram.",
   ],
 };
 
-export const WHAT_WE_DO: { id: string; title: string; text: string; photo: Photo; href: string; cta: string }[] = [
-  {
-    id: "comunidad",
-    title: "Comunidad",
-    text: "Contenido, retos, tips y gente con la misma intención. Todo empieza en nuestro Instagram.",
-    photo: IMG.handsUp,
-    href: "#comunidad",
-    cta: "Únete",
-  },
-  {
-    id: "eventos",
-    title: "Eventos",
-    text: "Experiencias de bienestar en vivo: clases, encuentros y nuestro festival en el Lago Ávila.",
-    photo: IMG.yogaPark,
-    href: "#eventos",
-    cta: "Ver eventos",
-  },
-  {
-    id: "shop",
-    title: "Ropa y accesorios",
-    text: "Good Life Apparel: prendas y accesorios para entrenar, moverte y vivir el lifestyle.",
-    photo: IMG.apparel,
-    href: "#shop",
-    cta: "Próximamente",
-  },
-  {
-    id: "marcas",
-    title: "Alianzas",
-    text: "Marcas, gimnasios y profesionales que comparten la visión de vivir mejor.",
-    photo: IMG.expo,
-    href: "#alianzas",
-    cta: "Colabora",
-  },
+/** Lo que hace la marca, en cuatro partes. */
+export const PILLARS: { n: string; title: string; text: string; href: string; photo: Photo }[] = [
+  { n: "01", title: "Comunidad", text: "Rutinas, recetas, retos y avisos de cada evento. Todo empieza en nuestro Instagram.", href: "/#comunidad", photo: IMG.highFive },
+  { n: "02", title: "Eventos", text: "Clases al aire libre, salidas a correr, talleres y el Good Life Wellness Fest.", href: "/#eventos", photo: IMG.pavilionYoga },
+  { n: "03", title: "Ropa y accesorios", text: "Prendas cómodas para entrenar y para tu día a día. Muy pronto.", href: "/#shop", photo: IMG.apparelWoman },
+  { n: "04", title: "Alianzas", text: "Trabajamos con marcas, gimnasios y especialistas de la región.", href: "/#alianzas", photo: IMG.classLeader },
 ];
 
-export const COMMUNITY_FEED: Photo[] = [IMG.yogaBeach, IMG.acai, IMG.running, IMG.meditation, IMG.functional, IMG.smoothie];
+/** Valores (frases cortas, sin promesas). */
+export const VALUES = [
+  { title: "A tu ritmo", text: "No hace falta ser atleta. Vienes como estás y avanzas a tu paso." },
+  { title: "En compañía", text: "Entrenar con más gente motiva, y de ahí salen buenas amistades." },
+  { title: "Al aire libre", text: "Aprovechamos el clima y los espacios de la ciudad: parques, el lago, la playa." },
+];
 
-export const COMMUNITY_PERKS = ["Contenido de entrenamiento", "Nutrición y recetas", "Retos mensuales", "Meetups y clases", "Beneficios con marcas", "Preventa de eventos"];
+export const COMMUNITY = {
+  title: "La comunidad vive en Instagram.",
+  text: "Ahí publicamos rutinas, recetas, retos y las fechas de cada evento. Si quieres ser de los primeros en enterarte, síguenos.",
+  feed: [IMG.yogaLawn, IMG.smoothieBowl, IMG.womenRun, IMG.sunWoman, IMG.matsWalk, IMG.granola] as Photo[],
+  perks: ["Rutinas y tips de entrenamiento", "Recetas fáciles y saludables", "Retos mensuales", "Fechas de clases y eventos", "Descuentos con marcas aliadas", "Preventa del festival"],
+};
 
-/** Formatos de evento de la comunidad (sin fechas: se anuncian en Instagram). */
+/** Tipos de evento de la comunidad (sin fechas: se anuncian en Instagram). */
 export const EVENT_FORMATS: { title: string; text: string; photo: Photo }[] = [
-  { title: "Sunrise sessions", text: "Yoga, movilidad y respiración al amanecer.", photo: IMG.yogaSunset },
-  { title: "Run & train", text: "Salidas a correr y entrenamientos en grupo.", photo: IMG.groupField },
-  { title: "Workshops", text: "Nutrición, recovery y mente con especialistas.", photo: IMG.breakfast },
+  { title: "Clases al amanecer", text: "Yoga, movilidad y respiración para empezar el día.", photo: IMG.parkYogaGolden },
+  { title: "Salidas a correr", text: "Grupos para todos los niveles. Corremos, estiramos y desayunamos.", photo: IMG.stretchGroup },
+  { title: "Talleres", text: "Nutrición, descanso y salud con especialistas locales.", photo: IMG.morningMug },
 ];
 
 export const SHOP = {
   title: "Good Life Apparel",
-  text: "Ropa deportiva, básicos y accesorios con la identidad Good Life. Diseñados para entrenar, moverte por la ciudad y llevar el lifestyle contigo.",
-  categories: ["Activewear", "Básicos", "Gorras", "Tote bags", "Termos", "Accesorios"],
-  photos: [IMG.apparel, IMG.sneakers, IMG.tote] as [Photo, Photo, Photo],
+  text: "Estamos preparando nuestra primera colección: ropa para entrenar, básicos y accesorios con la identidad Good Life. Cómoda, de buena calidad y en los colores de la marca.",
+  categories: ["Ropa deportiva", "Playeras y sudaderas", "Tote bags", "Termos", "Accesorios"],
+  photos: [IMG.hoodie, IMG.tees, IMG.tote] as [Photo, Photo, Photo],
+};
+
+export const PARTNERS = {
+  title: "¿Tienes una marca o un negocio de bienestar?",
+  text: "Hacemos colaboraciones de contenido, activaciones en eventos y patrocinios. Escríbenos por mensaje directo y platicamos.",
 };

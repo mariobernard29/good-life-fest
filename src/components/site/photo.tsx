@@ -22,7 +22,7 @@ export function Photo({
   imgClassName?: string;
 }) {
   return (
-    <div className={cn("relative overflow-hidden bg-secondary", className)}>
+    <div className={cn("photo-grade relative overflow-hidden bg-secondary", className)}>
       <Image
         src={photo.src}
         alt={photo.alt}

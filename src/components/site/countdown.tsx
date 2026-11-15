@@ -19,15 +19,15 @@ export function Countdown({ to }: { to: string }) {
   const hours = Math.floor((ms % 86_400_000) / 3_600_000);
   const minutes = Math.floor((ms % 3_600_000) / 60_000);
   return (
-    <div className="fade-up mt-6 flex gap-3" aria-label={`Faltan ${days} días`}>
+    <div className="flex divide-x divide-current/20 border-y border-current/20" aria-label={`Faltan ${days} días`}>
       {[
         [days, "días"],
         [hours, "horas"],
         [minutes, "min"],
       ].map(([n, label]) => (
-        <div key={label} className="min-w-20 rounded-2xl border border-cream/25 bg-cream/10 px-4 py-2 text-center backdrop-blur-sm">
-          <p className="display text-3xl tabular-nums">{n}</p>
-          <p className="text-[0.65rem] tracking-[0.2em] text-cream/70 uppercase">{label}</p>
+        <div key={label} className="min-w-24 px-5 py-3 first:pl-0">
+          <p className="display text-5xl tabular-nums">{n}</p>
+          <p className="mt-1 text-[0.65rem] tracking-[0.2em] uppercase opacity-60">{label}</p>
         </div>
       ))}
     </div>

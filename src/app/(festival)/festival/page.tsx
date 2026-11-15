@@ -1,293 +1,248 @@
 import type { Metadata } from "next";
-import Link from "next/link";
-import { ArrowRight, CalendarDays, MapPin } from "lucide-react";
-import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import type { CSSProperties } from "react";
+import { MapPin } from "lucide-react";
 import { Photo } from "@/components/site/photo";
 import { Countdown } from "@/components/site/countdown";
-import { Chips, CtaBand, Marquee, Mosaic, PhotoCard } from "@/components/site/visual";
-import { HeroReel, LoopVideo, PromoPlayer, Reveal, SpinBadge } from "@/components/site/motion";
+import { CtaBand, PillLink, SectionHead, SectionLabel, TagList, TextLink } from "@/components/site/visual";
+import { HeroReel, HorizontalScroll, HoverList, ImageReveal, LoopVideo, Parallax, PromoPlayer, Reveal, SplitText } from "@/components/site/motion";
 import { VenueMap } from "@/components/site/venue-map";
 import { IMG } from "@/content/images";
 import { DAY_REEL, HERO_REEL, VID } from "@/content/videos";
-import { CHALLENGES, COMMUNITY, DIFFERENT, FEST, INTRO, JOURNEY, PILLARS, PREMIUM, VERBS, VISION, ZONES } from "@/content/festival";
+import { CHALLENGES, FACTS, FEST, INTRO, PILLARS, VERBS, WRISTBAND_USES, ZONES } from "@/content/festival";
 
 export const metadata: Metadata = { title: { absolute: "Good Life Wellness Fest · Lago Ávila, Los Mochis" } };
 
 export default function FestivalHomePage() {
   return (
     <>
-      {/* HERO */}
-      <section className="film-grain relative isolate flex min-h-[calc(100svh-4rem)] items-end overflow-hidden">
+      {/* HÉROE */}
+      <section className="relative isolate flex min-h-svh items-end overflow-hidden bg-forest text-cream">
         <Photo photo={IMG.lakeHero} priority className="absolute inset-0 -z-20" />
         <HeroReel clips={HERO_REEL} />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/90 via-ink/35 to-ink/10" />
-        <SpinBadge text="Lago Ávila · Los Mochis · 24.01.27 · " className="absolute top-8 right-6 hidden text-cream/85 sm:block lg:right-12" />
-        <div className="container-page pb-14 text-cream sm:pb-20">
-          <a href={FEST.mapsUrl} target="_blank" rel="noopener noreferrer" className="eyebrow fade-up flex w-fit items-center gap-2 text-cream/80 hover:text-cream">
-            <MapPin className="size-3.5" /> {FEST.venue} · {FEST.city}
-          </a>
-          <h1 className="display word-in mt-6 max-w-3xl text-6xl leading-[0.95] text-balance sm:text-8xl">
-            {["Good", "Life", "Wellness", "Fest"].map((w, i) => (
-              <span key={w} style={{ animationDelay: `${150 + i * 140}ms` }}>
-                {w}&nbsp;
-              </span>
-            ))}
+        <div className="absolute inset-0 -z-10 bg-gradient-to-t from-forest/95 via-forest/35 to-forest/30" />
+        <div className="container-page pt-40 pb-12 lg:pb-16">
+          <SectionLabel tone="dark" className="fade-up">
+            Un evento de Good Life Wellness
+          </SectionLabel>
+          <h1 className="fade-up mt-8" style={{ "--d": "150ms" } as CSSProperties}>
+            <span className="sr-only">Good Life Wellness Fest</span>
+            <Image src="/images/logo-wordmark-light.png" alt="" width={438} height={109} priority className="h-auto w-full max-w-[44rem]" />
           </h1>
-          <p className="display fade-up mt-6 max-w-2xl text-3xl text-cream/95 italic sm:text-5xl">{FEST.tagline}</p>
-          <div className="fade-up mt-8 flex flex-wrap items-center gap-3">
-            <Button asChild size="lg" className="h-12 rounded-full bg-cream px-7 text-ink hover:bg-cream/90">
-              <Link href="/festival/experiencias">
-                Descubre la experiencia <ArrowRight />
-              </Link>
-            </Button>
-            <Button asChild size="lg" variant="outline" className="h-12 rounded-full border-cream/50 bg-transparent px-7 text-cream hover:bg-cream/10 hover:text-cream">
-              <Link href="/festival/entradas">Boletos · Próximamente</Link>
-            </Button>
+          <SplitText as="p" text={FEST.tagline} delay={400} className="display mt-8 max-w-3xl text-4xl text-cream/95 italic sm:text-5xl" />
+          <div className="mt-12 grid gap-8 border-t border-cream/20 pt-8 lg:grid-cols-12 lg:items-center">
+            <dl className="fade-up grid grid-cols-2 gap-6 sm:grid-cols-3 lg:col-span-7" style={{ "--d": "700ms" } as CSSProperties}>
+              {FACTS.slice(0, 3).map((f) => (
+                <div key={f.label}>
+                  <dt className="text-xs tracking-[0.18em] text-cream/55 uppercase">{f.label}</dt>
+                  <dd className="display mt-1 text-2xl sm:text-3xl">{f.value}</dd>
+                </div>
+              ))}
+            </dl>
+            <div className="fade-up flex flex-wrap gap-3 lg:col-span-5 lg:justify-end" style={{ "--d": "850ms" } as CSSProperties}>
+              <PillLink href="/festival/entradas" variant="light">
+                Boletos · Próximamente
+              </PillLink>
+              <PillLink href="/festival/programa" variant="outline-light">
+                Ver programa
+              </PillLink>
+            </div>
           </div>
-          <p className="mt-8 flex items-center gap-2 text-sm text-cream/75">
-            <CalendarDays className="size-4" /> {FEST.dateLabel} · {FEST.arrival}
-          </p>
-          <Countdown to={FEST.startsAt} />
         </div>
       </section>
 
-      <Marquee />
-
       {/* QUÉ ES */}
-      <section className="container-page grid items-center gap-12 py-20 md:grid-cols-2 md:py-28">
-        <div>
-          <p className="eyebrow">¿Qué es Good Life Wellness Fest?</p>
-          <h2 className="display mt-3 text-5xl text-balance sm:text-6xl">{INTRO.title}</h2>
-          <div className="mt-6 space-y-4 text-lg text-foreground/75">
+      <section className="py-24 sm:py-32 lg:py-40">
+        <div className="container-page grid gap-12 lg:grid-cols-12">
+          <div className="lg:col-span-7">
+            <SectionLabel n="01">El festival</SectionLabel>
+            <SplitText text={INTRO.title} italic={["pasarla", "bien."]} className="display mt-7 text-5xl text-balance text-forest sm:text-6xl lg:text-7xl" />
+          </div>
+          <Reveal className="space-y-5 text-lg leading-relaxed text-foreground/75 lg:col-span-4 lg:col-start-9 lg:pt-16">
             {INTRO.body.map((p) => (
               <p key={p}>{p}</p>
             ))}
-          </div>
+            <TextLink href="/festival/experiencias" className="pt-2">
+              Conoce la experiencia
+            </TextLink>
+          </Reveal>
         </div>
-        <Reveal>
-          <Mosaic photos={[IMG.yogaPark, IMG.bowl, IMG.massage]} />
-        </Reveal>
+
+        {/* Verbos */}
+        <div className="container-page mt-20 lg:mt-28">
+          <ul className="border-t border-forest/15">
+            {VERBS.map((v, i) => (
+              <Reveal as="li" key={v.title} delay={i * 60} className="grid grid-cols-[3rem_1fr] items-baseline gap-4 border-b border-forest/15 py-5 sm:grid-cols-[5rem_1fr_1fr]">
+                <span className="font-mono text-xs text-forest/45">0{i + 1}</span>
+                <span className="display text-4xl text-forest sm:text-6xl">{v.title}</span>
+                <span className="col-start-2 text-foreground/65 sm:col-start-3">{v.text}</span>
+              </Reveal>
+            ))}
+          </ul>
+        </div>
+
+        {/* Datos */}
+        <dl className="container-page mt-20 grid grid-cols-2 gap-x-6 gap-y-10 lg:mt-28 lg:grid-cols-4">
+          {FACTS.map((f, i) => (
+            <Reveal key={f.label} delay={i * 100} className="border-t border-forest/20 pt-5">
+              <dt className="text-xs tracking-[0.18em] text-forest/55 uppercase">{f.label}</dt>
+              <dd className="display mt-3 text-4xl text-forest sm:text-5xl">{f.value}</dd>
+              <dd className="mt-2 text-sm text-foreground/60">{f.note}</dd>
+            </Reveal>
+          ))}
+        </dl>
       </section>
 
       {/* UN DÍA EN GOOD LIFE */}
-      <section className="bg-ink py-20 text-cream md:py-28">
-        <div className="container-page">
-          <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-            <div>
-              <p className="eyebrow text-cream/60">{FEST.hours}</p>
-              <h2 className="display mt-3 text-5xl sm:text-6xl">
-                Un día <em className="text-sunset">entero</em> para ti
-              </h2>
+      <section className="bg-forest text-cream">
+        <HorizontalScroll
+          className="py-24 lg:py-0"
+          header={
+            <div className="container-page mb-12 flex flex-col gap-6 lg:mb-14 lg:flex-row lg:items-end lg:justify-between">
+              <div>
+                <SectionLabel n="02" tone="dark">
+                  {FEST.hours}
+                </SectionLabel>
+                <SplitText text="Del amanecer al atardecer." italic={["atardecer."]} className="display mt-6 text-5xl sm:text-7xl" />
+              </div>
+              <p className="max-w-sm text-cream/70">Así se vive un domingo en el Lago Ávila. Desliza para recorrer el día.</p>
             </div>
-            <p className="max-w-sm text-cream/70">Del primer saludo al sol hasta la última luz sobre el lago.</p>
-          </div>
-          <ol className="mt-12 grid grid-cols-2 gap-3 lg:grid-cols-4">
-            {DAY_REEL.map((d, i) => (
-              <li key={d.title} className={i % 2 ? "lg:mt-16" : ""}>
-                <Reveal delay={i * 120} className="group relative isolate aspect-[3/4] overflow-hidden rounded-3xl">
-                  <LoopVideo src={d.clip.src} poster={d.clip.poster} className="absolute inset-0 -z-10 transition-transform duration-[1.2s] group-hover:scale-105" />
-                  <div className="absolute inset-0 -z-10 bg-gradient-to-t from-ink/80 via-transparent to-ink/20" />
-                  <div className="flex h-full flex-col justify-between p-5">
-                    <span className="w-fit rounded-full border border-cream/30 px-3 py-1 font-mono text-[0.65rem] tracking-[0.2em] uppercase backdrop-blur-sm">
-                      {String(i + 1).padStart(2, "0")} · {d.time}
-                    </span>
-                    <p className="display text-4xl italic sm:text-5xl">{d.title}</p>
-                  </div>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
-        </div>
-      </section>
-
-      {/* UNA EXPERIENCIA DONDE... */}
-      <section className="bg-secondary/50 py-20 md:py-28">
-        <div className="container-page">
-          <p className="eyebrow">Una experiencia donde</p>
-          <h2 className="display mt-3 max-w-3xl text-5xl text-balance sm:text-6xl">Vives, pruebas y experimentas.</h2>
-          <div className="mt-10 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {VERBS.map((v, i) => (
-              <Reveal key={v.title} delay={(i % 3) * 110}>
-                <PhotoCard photo={v.photo} title={v.title} text={v.text} />
-              </Reveal>
-            ))}
-          </div>
-        </div>
+          }
+        >
+          {DAY_REEL.map((d, i) => (
+            <article key={d.title} className="relative isolate aspect-[3/4] w-[78vw] shrink-0 snap-start overflow-hidden sm:w-[46vw] lg:h-[62svh] lg:w-auto">
+              <LoopVideo src={d.clip.src} poster={d.clip.poster} className="absolute inset-0 -z-10" />
+              <div className="absolute inset-0 -z-10 bg-gradient-to-t from-forest/85 via-transparent to-forest/20" />
+              <div className="flex h-full flex-col justify-between p-6">
+                <span className="font-mono text-xs tracking-wider text-cream/80">
+                  0{i + 1} — {d.time}
+                </span>
+                <p className="display text-5xl italic sm:text-6xl">{d.title}</p>
+              </div>
+            </article>
+          ))}
+          <article className="flex aspect-[3/4] w-[78vw] shrink-0 snap-start flex-col justify-between border border-cream/20 p-8 sm:w-[46vw] lg:h-[62svh] lg:w-auto">
+            <span className="font-mono text-xs text-cream/60">05 — Tu día</span>
+            <div>
+              <p className="display text-5xl">Arma tu propio recorrido.</p>
+              <p className="mt-4 text-cream/70">Con tu entrada reservas clases desde tu cuenta y eliges cómo vivir el festival.</p>
+              <PillLink href="/festival/programa" variant="light" className="mt-8">
+                Ver programa
+              </PillLink>
+            </div>
+          </article>
+        </HorizontalScroll>
       </section>
 
       {/* PILARES */}
-      <section className="container-page py-20 md:py-28">
-        <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="eyebrow">Los pilares</p>
-            <h2 className="display mt-3 text-5xl sm:text-6xl">Seis formas de vivir mejor</h2>
-          </div>
-          <Button asChild variant="link" className="self-start px-0 text-olive">
-            <Link href="/festival/experiencias">
-              Conoce cada pilar <ArrowRight />
-            </Link>
-          </Button>
-        </div>
-        <div className="mt-10 grid grid-cols-2 gap-3 lg:grid-cols-6">
-          {PILLARS.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 80}>
-              <Link href={`/festival/experiencias#${p.slug}`} className="group">
-                <Photo photo={p.photos[0]} sizes="(min-width: 1024px) 16vw, 50vw" className="aspect-[3/4] rounded-2xl" imgClassName="group-hover:scale-105" />
-                <p className="mt-3 font-mono text-xs text-muted-foreground">{p.n}</p>
-                <p className="display text-2xl leading-tight">{p.title}</p>
-              </Link>
-            </Reveal>
-          ))}
-        </div>
-      </section>
-
-      {/* RECORRIDO */}
-      <section className="film-grain relative isolate overflow-hidden py-24 text-cream">
-        <LoopVideo src={VID.crowd.src} poster={VID.crowd.poster} className="absolute inset-0 -z-10" />
-        <div className="absolute inset-0 -z-10 bg-ink/75" />
+      <section className="py-24 sm:py-32">
         <div className="container-page">
-          <p className="eyebrow text-cream/70">La experiencia Good Life</p>
-          <h2 className="display mt-3 max-w-3xl text-5xl text-balance sm:text-6xl">No compras una entrada. Compras una experiencia.</h2>
-          <p className="mt-4 max-w-2xl text-cream/80">Desde que llegas encuentras zonas y actividades que te mantienen involucrado durante todo el día.</p>
-          <ol className="mt-10 grid grid-cols-2 gap-3 sm:grid-cols-5">
-            {JOURNEY.map((step, i) => (
-              <li key={step}>
-                <Reveal delay={i * 100} className="h-full rounded-2xl border border-cream/15 bg-cream/5 p-4 backdrop-blur-sm">
-                  <span className="font-mono text-xs text-sunset">{String(i + 1).padStart(2, "0")}</span>
-                  <p className="display mt-1 text-2xl leading-tight">{step}</p>
-                </Reveal>
-              </li>
-            ))}
-          </ol>
+          <SectionHead n="03" label="Los pilares" title="Seis formas de sentirte mejor." italic={["sentirte", "mejor."]} aside={<TextLink href="/festival/experiencias">Ver todos los detalles</TextLink>}>
+            Cada pilar tiene sus clases, especialistas y marcas. Tú decides por dónde empezar.
+          </SectionHead>
+          <div className="mt-16">
+            <HoverList items={PILLARS.map((p) => ({ href: `/festival/experiencias#${p.slug}`, n: p.n, title: p.title, text: p.lead, photo: p.photos[0] }))} />
+          </div>
         </div>
       </section>
 
       {/* ZONAS */}
-      <section className="container-page space-y-20 py-20 md:space-y-28 md:py-28">
-        {ZONES.map((z, i) => (
-          <div key={z.name} className="grid items-center gap-10 md:grid-cols-2">
-            <Reveal className={i % 2 ? "md:order-2" : ""}>
-              <Photo photo={z.photo} sizes="(min-width: 768px) 50vw, 100vw" className={`aspect-[4/3] rounded-[2rem] ${i % 2 ? "md:rotate-1" : "md:-rotate-1"}`} />
-            </Reveal>
-            <Reveal delay={120}>
-              <p className="eyebrow">{z.kicker}</p>
-              <h2 className="display mt-3 text-5xl text-balance">{z.name}</h2>
-              <p className="mt-4 text-lg text-foreground/75">{z.text}</p>
-              <div className="mt-6">
-                <Chips items={z.items} />
-              </div>
-            </Reveal>
-          </div>
-        ))}
-      </section>
-
-      {/* RETOS + PULSERA */}
-      <section className="bg-secondary/50 py-20 md:py-28">
-        <div className="container-page grid gap-5 md:grid-cols-2">
-          <article className="overflow-hidden rounded-3xl bg-card">
-            <Photo photo={IMG.battleRopes} sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[4/3]" />
-            <div className="p-6">
-              <p className="eyebrow">Retos Good Life</p>
-              <h3 className="display mt-2 text-3xl">Compite todo el día</h3>
-              <p className="mt-2 text-sm text-foreground/70">Por premios, productos, experiencias y reconocimientos.</p>
-              <div className="mt-4">
-                <Chips items={CHALLENGES} />
-              </div>
-            </div>
-          </article>
-          <article className="overflow-hidden rounded-3xl bg-card">
-            <Photo photo={IMG.handsUp} sizes="(min-width: 768px) 50vw, 100vw" className="aspect-[4/3]" />
-            <div className="p-6">
-              <p className="eyebrow">Pulsera Good Life</p>
-              <h3 className="display mt-2 text-3xl">Tu llave del festival</h3>
-              <p className="mt-2 text-sm text-foreground/70">Te identifica durante todo el día: acceso, control de clases, dinámicas, activaciones, beneficios y concursos.</p>
-            </div>
-          </article>
+      <section className="bg-secondary/60 py-24 sm:py-32">
+        <div className="container-page">
+          <SectionHead n="04" label="Zonas" title="Un lugar para cada momento." italic={["momento."]} />
+        </div>
+        <div className="container-page mt-16 space-y-24 lg:mt-24 lg:space-y-36">
+          {ZONES.map((z, i) => (
+            <article key={z.name} className="grid gap-10 lg:grid-cols-12 lg:items-center">
+              <ImageReveal className={`aspect-[4/3] lg:col-span-7 ${i % 2 ? "lg:order-2 lg:col-start-6" : ""}`}>
+                <Parallax className="h-full w-full" speed={0.1}>
+                  <Photo photo={z.photo} sizes="(min-width: 1024px) 58vw, 100vw" className="h-full w-full" />
+                </Parallax>
+              </ImageReveal>
+              <Reveal className={`lg:col-span-4 ${i % 2 ? "lg:order-1 lg:col-start-1" : "lg:col-start-9"}`}>
+                <p className="font-mono text-xs text-forest/50">
+                  0{i + 1} · {z.kicker}
+                </p>
+                <h3 className="display mt-3 text-4xl text-forest sm:text-5xl">{z.name}</h3>
+                <p className="mt-5 text-lg leading-relaxed text-foreground/75">{z.text}</p>
+                <TagList items={z.items.slice(0, 6)} className="mt-8" />
+              </Reveal>
+            </article>
+          ))}
         </div>
       </section>
 
       {/* PROMO */}
-      <section className="container-page pt-20 md:pt-28">
-        <Reveal className="grid items-end gap-6 md:grid-cols-[1fr_2fr]">
-          <div>
-            <p className="eyebrow">Mira el promo</p>
-            <h2 className="display mt-3 text-5xl text-balance">Así se vive Good Life</h2>
-            <p className="mt-4 text-foreground/70">Dale play con sonido.</p>
+      <section className="py-24 sm:py-32">
+        <div className="container-page grid gap-10 lg:grid-cols-12 lg:items-end">
+          <div className="lg:col-span-4">
+            <SectionLabel n="05">El video</SectionLabel>
+            <SplitText text="Así se vive Good Life." italic={["good", "life."]} className="display mt-7 text-5xl text-forest sm:text-6xl" />
+            <p className="mt-5 text-foreground/70">Dale play con sonido.</p>
           </div>
-          <PromoPlayer src={VID.promo.src} poster={VID.promo.poster} label="Reproducir video promocional de Good Life Wellness Fest" />
-        </Reveal>
+          <Reveal className="lg:col-span-8">
+            <PromoPlayer src={VID.promo.src} poster={VID.promo.poster} label="Reproducir el video de Good Life Wellness Fest" />
+          </Reveal>
+        </div>
       </section>
 
-      {/* PREMIUM */}
-      <section className="container-page py-20 text-center md:py-28">
-        <p className="eyebrow">Experiencia premium</p>
-        <p className="display mx-auto mt-6 max-w-5xl text-4xl leading-tight text-balance sm:text-6xl">
-          {PREMIUM.formula.map((f, i) => (
-            <span key={f}>
-              {i > 0 && <span className="text-sunset"> + </span>}
-              {f}
-            </span>
-          ))}
-        </p>
-        <p className="mx-auto mt-6 max-w-2xl text-lg text-foreground/70">
-          Capacidad controlada para ofrecer {PREMIUM.benefits.map((b) => b.toLowerCase()).join(", ")}.
-        </p>
+      {/* RETOS Y PULSERA */}
+      <section className="container-page grid gap-16 pb-24 sm:pb-32 lg:grid-cols-2 lg:gap-10">
+        <article>
+          <ImageReveal className="aspect-[4/3]">
+            <Photo photo={IMG.sleds} sizes="(min-width: 1024px) 50vw, 100vw" className="h-full w-full" />
+          </ImageReveal>
+          <p className="mt-8 font-mono text-xs text-forest/50">Retos Good Life</p>
+          <h3 className="display mt-2 text-4xl text-forest">Compite durante el día</h3>
+          <p className="mt-3 text-foreground/70">Retos para todos los niveles, con premios de las marcas participantes.</p>
+          <TagList items={CHALLENGES} className="mt-6" />
+        </article>
+        <article className="lg:mt-24">
+          <ImageReveal className="aspect-[4/3]">
+            <Photo photo={IMG.festivalCanopy} sizes="(min-width: 1024px) 50vw, 100vw" className="h-full w-full" />
+          </ImageReveal>
+          <p className="mt-8 font-mono text-xs text-forest/50">Pulsera Good Life</p>
+          <h3 className="display mt-2 text-4xl text-forest">Tu llave del festival</h3>
+          <p className="mt-3 text-foreground/70">Te la entregamos al llegar. Con ella entras, tomas tus clases y participas en todo.</p>
+          <TagList items={WRISTBAND_USES.slice(0, 6)} className="mt-6" />
+        </article>
       </section>
 
       {/* SEDE */}
-      <section className="relative isolate overflow-hidden bg-ink py-20 text-cream md:py-28">
-        <LoopVideo src={VID.lakeSunset.src} poster={VID.lakeSunset.poster} className="absolute inset-0 -z-10 opacity-35" />
-        <div className="absolute inset-0 -z-10 bg-gradient-to-r from-ink via-ink/85 to-ink/40" />
-        <div className="container-page grid items-center gap-10 lg:grid-cols-[5fr_7fr]">
-          <Reveal>
-            <p className="eyebrow text-cream/60">La sede</p>
-            <h2 className="display mt-3 text-5xl sm:text-7xl">{FEST.venue}</h2>
-            <p className="mt-5 flex items-center gap-2 text-cream/85">
+      <section className="bg-forest py-24 text-cream sm:py-32">
+        <div className="container-page grid gap-12 lg:grid-cols-12 lg:items-center">
+          <div className="lg:col-span-5">
+            <SectionLabel n="06" tone="dark">
+              La sede
+            </SectionLabel>
+            <SplitText text={FEST.venue} className="display mt-7 text-6xl sm:text-8xl" />
+            <p className="mt-5 flex items-center gap-2 text-cream/80">
               <MapPin className="size-4 text-sunset" /> {FEST.city}
             </p>
-            <p className="mt-6 max-w-md text-lg text-cream/80">Jardines, palmeras, muelles de madera y un pabellón de cristal frente al agua: el escenario para moverte, descubrir y descansar.</p>
-            <Button asChild size="lg" className="mt-8 h-12 rounded-full bg-cream px-7 text-ink hover:bg-cream/90">
-              <a href={FEST.mapsUrl} target="_blank" rel="noopener noreferrer">
-                Cómo llegar <ArrowRight />
-              </a>
-            </Button>
-            <div className="mt-10 grid max-w-xs grid-cols-2 gap-3">
-              <Photo photo={IMG.lakeSunset} sizes="200px" className="aspect-square -rotate-3 rounded-2xl border-4 border-cream" />
-              <Photo photo={IMG.lakeNight} sizes="200px" className="mt-6 aspect-square rotate-2 rounded-2xl border-4 border-cream" />
+            <p className="mt-6 max-w-md text-lg leading-relaxed text-cream/75">Jardines, palmeras, muelles de madera y un pabellón de cristal frente al agua. El lugar ideal para moverte, descubrir y descansar.</p>
+            <PillLink href={FEST.mapsUrl} variant="light" icon="external" className="mt-10">
+              Cómo llegar
+            </PillLink>
+            <div className="mt-12 grid max-w-sm grid-cols-2 gap-3">
+              <ImageReveal className="aspect-square">
+                <Photo photo={IMG.lakeSunset} sizes="200px" className="h-full w-full" />
+              </ImageReveal>
+              <ImageReveal className="aspect-square" delay={150}>
+                <Photo photo={IMG.lakeNight} sizes="200px" className="h-full w-full" />
+              </ImageReveal>
             </div>
-          </Reveal>
-          <Reveal delay={150} className="h-[28rem] overflow-hidden rounded-[2rem] border border-cream/15 shadow-[0_40px_100px_-40px_rgba(0,0,0,0.8)] sm:h-[34rem]">
+          </div>
+          <Reveal className="h-[28rem] overflow-hidden lg:col-span-7 lg:h-[38rem]">
             <VenueMap venueLabel={FEST.venue} cityLabel="Centro · Los Mochis" />
           </Reveal>
         </div>
-      </section>
-
-      {/* DIFERENTE + COMUNIDAD */}
-      <section className="container-page grid gap-12 py-20 md:grid-cols-2 md:py-28">
-        <div>
-          <p className="eyebrow">¿Qué hace diferente a Good Life?</p>
-          <ul className="mt-6 space-y-2">
-            {DIFFERENT.notOnly.map((n) => (
-              <li key={n} className="display text-3xl text-foreground/40 line-through decoration-1">
-                No es únicamente {n}.
-              </li>
-            ))}
-          </ul>
-          <p className="display mt-6 text-4xl text-balance">{DIFFERENT.is}</p>
-          <p className="mt-4 text-sm font-medium tracking-wide text-olive uppercase">{DIFFERENT.formula}</p>
-        </div>
-        <div className="rounded-[2rem] bg-ink p-8 text-cream sm:p-10">
-          <p className="eyebrow text-cream/60">Good Life Community</p>
-          <h2 className="display mt-3 text-4xl">{COMMUNITY.title}</h2>
-          <p className="mt-4 text-cream/80">{COMMUNITY.text}</p>
-          <div className="mt-6">
-            <Chips items={COMMUNITY.items} tone="dark" />
-          </div>
-          <blockquote className="display mt-10 border-l-2 border-sunset pl-5 text-2xl text-cream/90 italic">{VISION.motto}</blockquote>
+        <div className="container-page mt-20 border-t border-cream/15 pt-10">
+          <p className="mb-4 text-xs tracking-[0.18em] text-cream/55 uppercase">Faltan</p>
+          <Countdown to={FEST.startsAt} />
         </div>
       </section>
 
-      <CtaBand title={FEST.closing.join(" ")} text={FEST.dateLabel} label="Boletos · Próximamente" />
+      <CtaBand title="Vive la experiencia. Descubre tu mejor versión." italic={["mejor", "versión."]} text={FEST.dateLabel} label="Boletos · Próximamente" photo={IMG.lakeSunset} />
     </>
   );
 }

@@ -1,49 +1,75 @@
+import Image from "next/image";
 import Link from "next/link";
 import { InstagramIcon } from "@/components/brand/instagram-icon";
-import { Logo } from "@/components/brand/logo";
-import { FEST } from "@/content/festival";
-import { PUBLIC_NAV } from "@/components/site/site-header";
+import { SplitText } from "@/components/site/motion";
+import { BRAND, BRAND_NAV } from "@/content/brand";
+import { FEST, FESTIVAL_NAV } from "@/content/festival";
 
-/** Pie del sitio del festival. */
-export function SiteFooter() {
+/** Pie compartido por el sitio de la marca y el del festival. */
+export function SiteFooter({ variant }: { variant: "wellness" | "fest" }) {
+  const isFest = variant === "fest";
   return (
-    <footer className="mt-24 bg-ink text-cream">
-      <div className="container-page grid gap-10 py-14 md:grid-cols-[1.4fr_1fr_1fr]">
-        <div className="space-y-4">
-          <Logo brand="fest" variant="light" className="w-44" />
-          <p className="max-w-sm text-sm text-cream/70">{FEST.arrival}</p>
-          <a href={FEST.mapsUrl} target="_blank" rel="noopener noreferrer" className="block text-sm text-cream/70 hover:text-cream">
-            {FEST.venue} · {FEST.city}
-          </a>
-          <a href={FEST.instagramUrl} target="_blank" rel="noopener noreferrer" className="flex w-fit items-center gap-2 text-sm text-cream/70 hover:text-cream">
-            <InstagramIcon className="size-4" /> {FEST.instagramHandle}
+    <footer className="overflow-hidden bg-forest text-cream">
+      <div className="container-page grid gap-12 border-b border-cream/10 py-20 lg:grid-cols-12 lg:py-28">
+        <div className="lg:col-span-6">
+          <SplitText text="Live the Good Life." italic={["good", "life."]} className="display text-6xl sm:text-7xl" />
+          <p className="mt-6 max-w-md text-cream/70">
+            {isFest
+              ? `${FEST.date} · ${FEST.venue}, ${FEST.city}. Un evento de Good Life Wellness.`
+              : "Comunidad de bienestar en Los Mochis. Síguenos para enterarte de los próximos eventos y lanzamientos."}
+          </p>
+          <a
+            href={BRAND.instagramUrl}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="mt-8 inline-flex h-12 items-center gap-2.5 rounded-full bg-cream px-6 text-sm font-semibold text-forest transition-colors hover:bg-white"
+          >
+            <InstagramIcon className="size-4" /> {BRAND.instagramHandle}
           </a>
         </div>
-        <div>
-          <p className="eyebrow mb-4 text-cream/50">Festival</p>
-          <ul className="space-y-2 text-sm">
-            {[{ href: "/festival", label: "Inicio del festival" }, ...PUBLIC_NAV, { href: "/festival/entradas", label: "Boletos" }].map((i) => (
-              <li key={i.href}>
-                <Link href={i.href} className="text-cream/80 hover:text-cream">
-                  {i.label}
-                </Link>
-              </li>
-            ))}
-          </ul>
-        </div>
-        <div className="space-y-4">
-          <p className="eyebrow text-cream/50">Un evento de</p>
-          <Logo brand="wellness" variant="light" className="w-40" />
-          <p className="text-sm text-cream/70">Comunidad, eventos, ropa y accesorios para vivir mejor.</p>
-          <Link href="/" className="inline-block text-sm text-cream/85 underline-offset-4 hover:text-cream hover:underline">
-            Conoce Good Life Wellness →
-          </Link>
+        <div className="grid grid-cols-2 gap-8 text-sm lg:col-span-5 lg:col-start-8">
+          <div>
+            <p className="mb-5 text-xs tracking-[0.18em] text-cream/45 uppercase">Good Life Wellness</p>
+            <ul className="space-y-3">
+              {BRAND_NAV.map((i) => (
+                <li key={i.href}>
+                  <Link href={i.href} className="link-line text-cream/80 hover:text-cream">
+                    {i.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
+          <div>
+            <p className="mb-5 text-xs tracking-[0.18em] text-cream/45 uppercase">Wellness Fest</p>
+            <ul className="space-y-3">
+              {[{ href: "/festival", label: "El festival" }, ...FESTIVAL_NAV, { href: "/festival/entradas", label: "Boletos" }].map((i) => (
+                <li key={i.href}>
+                  <Link href={i.href} className="link-line text-cream/80 hover:text-cream">
+                    {i.label}
+                  </Link>
+                </li>
+              ))}
+            </ul>
+          </div>
         </div>
       </div>
-      <div className="border-t border-cream/10">
-        <div className="container-page flex flex-col gap-2 py-6 text-xs text-cream/50 sm:flex-row sm:justify-between">
-          <p>© {new Date().getFullYear()} Good Life Wellness · Good Life Wellness Fest</p>
-          <p>Fotografías de referencia: Unsplash · Sede: Lago Ávila</p>
+      <div className="container-page pt-12 pb-8">
+        <Image
+          src={isFest ? "/images/logo-wordmark-light.png" : "/images/logo-wellness-light.png"}
+          alt={isFest ? "Good Life Wellness Fest" : "Good Life Wellness"}
+          width={439}
+          height={108}
+          className="h-auto w-full opacity-90"
+        />
+        <div className="mt-10 flex flex-col gap-2 text-xs text-cream/45 sm:flex-row sm:justify-between">
+          <p>© {new Date().getFullYear()} Good Life Wellness · Los Mochis, Sinaloa</p>
+          <p>
+            <Link href="/mi-cuenta" className="hover:text-cream">
+              Mi cuenta
+            </Link>{" "}
+            · Fotografías de referencia: Unsplash
+          </p>
         </div>
       </div>
     </footer>

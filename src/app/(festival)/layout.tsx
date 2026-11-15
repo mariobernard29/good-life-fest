@@ -1,5 +1,6 @@
 import type { Metadata } from "next";
-import { SiteHeader } from "@/components/site/site-header";
+import { FestivalHeader } from "@/components/site/site-header";
+import { SmoothScroll } from "@/components/site/motion";
 import { SiteFooter } from "@/components/site/site-footer";
 
 export const metadata: Metadata = {
@@ -12,11 +13,12 @@ export const metadata: Metadata = {
 export default function FestivalLayout({ children }: { children: React.ReactNode }) {
   return (
     <>
-      <SiteHeader />
+      <SmoothScroll />
+      <FestivalHeader />
       <main id="contenido" className="flex-1">
         {children}
       </main>
-      <SiteFooter />
+      <SiteFooter variant="fest" />
     </>
   );
 }
